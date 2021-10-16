@@ -60,12 +60,20 @@ g.loaded_spec         = 1
 --------------------------------------------------------
 cmd[[
 	nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+	nnoremap <leader>fo <cmd>lua require('telescope.builtin').oldfiles()<cr>
 	nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser()<cr>
 	nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 	nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 	nnoremap <leader>fm <cmd>lua require('telescope.builtin').man_pages()<cr>
 	nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 	nnoremap <leader>fp <cmd>Telescope projects<cr>
+
+	nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME'})<cr>
+
+	nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/nvim'})<cr>
+	nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/xmonad'})<cr>
+	nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/sway'})<cr>
+	nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
 
 	nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 	nnoremap <leader>fs <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
