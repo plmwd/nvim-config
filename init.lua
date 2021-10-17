@@ -17,6 +17,7 @@ local map = function(mode, lhs, rhs, opts)
 	vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
+-- require('impatient').enable_profile()
 --------------------------------------------------------
 --
 --									Options
@@ -29,6 +30,7 @@ o.completeopt = 'menu,menuone,noselect'
 o.foldexpr = 'expr'
 o.cursorline = true
 o.mouse = 'a'
+o.termguicolors = true
 
 g.mapleader = ' '
 g.maplocalleader = ','
@@ -119,6 +121,16 @@ default_installed_servers = {
 --									Packer Setup
 --
 --------------------------------------------------------
+-- Borrowed from NvChad :)
+-- packer_lazy_load = function(plugin, timer)
+--    if plugin then
+--       timer = timer or 0
+--       vim.defer_fn(function()
+--          require("packer").loader(plugin)
+--       end, timer)
+--    end
+-- end
+
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
@@ -129,18 +141,42 @@ end
 local use = require('packer').use
 require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
+	use 'lewis6991/impatient.nvim'
 	use {
 		'williamboman/nvim-lsp-installer',
+		after = 'cmp-nvim-lsp',
 		config = lsp_setup,
 	}
 
+	use 'dstein64/vim-startuptime'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-  use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
+
+	-- LSP source for nvim-cmp
+  use {
+		'hrsh7th/cmp-nvim-lsp',
+		after = 'nvim-cmp',
+	}
+
+	-- Snippets source for nvim-cmp
+  use {
+		'saadparwaiz1/cmp_luasnip',
+		after = 'nvim-cmp',
+	}
+
+	-- Snippets plugin
+  use {
+		'L3MON4D3/LuaSnip',
+		event = 'InsertEnter',
+	}
+
+	use {
+		'hrsh7th/cmp-buffer',
+		after = 'nvim-cmp',
+	}
+
 	use {
 		'hrsh7th/nvim-cmp',
-		--event = 'InsertEnter',
+		after = 'LuaSnip',
 		config = cmp_setup,
 		requires = {
 			'neovim/nvim-lspconfig',
@@ -159,15 +195,16 @@ require('packer').startup(function()
 
 	use {
 		'sudormrfbin/cheatsheet.nvim',
-		config = function()
-			require("cheatsheet").setup({
-				bundled_cheatsheets = {
-						-- only show the default cheatsheet
-						enabled = { "default" },
-				},
-				bundled_plugin_cheatsheets = true,
-			})
-		end,
+		event = 'VimEnter',
+		-- config = function()
+		-- 	require("cheatsheet").setup({
+		-- 		bundled_cheatsheets = {
+		-- 				-- only show the default cheatsheet
+		-- 				enabled = { "default" },
+		-- 		},
+		-- 		bundled_plugin_cheatsheets = true,
+		-- 	})
+		-- end,
 
 		requires = {
 			{'nvim-telescope/telescope.nvim'},
@@ -180,6 +217,7 @@ require('packer').startup(function()
 	use {
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
+		after = 'nvim-cmp',
 		config = function()
 			require("trouble").setup {
 				-- your configuration comes here
@@ -195,15 +233,21 @@ require('packer').startup(function()
 		run = ':TSUpdate',
 	}
 
-	use 'kyazdani42/nvim-web-devicons'
+	use {
+		'kyazdani42/nvim-web-devicons',
+		module = 'nvim-web-devicons',
+	}
 
 	use {
 		'nvim-telescope/telescope.nvim',
 		config = tele_setup,
+		module = 'telescope',
+		cmd = 'Telescope',
 		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-treesitter/nvim-treesitter',
 			'kyazdani42/nvim-web-devicons',
+			'ahmedkhalf/project.nvim',
 		}
 	}
 
@@ -216,6 +260,7 @@ require('packer').startup(function()
 
 	use {
 		'lewis6991/gitsigns.nvim',
+		event = 'VimEnter',
 		requires = {
 			'nvim-lua/plenary.nvim'
 		},
@@ -256,7 +301,7 @@ require('packer').startup(function()
 
 	use {
 		'lervag/vimtex',
-		filetype = 'latex',
+		ft = 'latex',
 	}
 
 	use 'RRethy/nvim-treesitter-textsubjects'
@@ -277,12 +322,11 @@ require('packer').startup(function()
     end
 	}
 
-	-- Lua
 	use {
 		"ahmedkhalf/project.nvim",
-		requires = {'nvim-telescope/telescope.nvim'},
+		event = 'VimEnter',
+		-- requires = {'nvim-telescope/telescope.nvim'},
 		config = function()
-			require('telescope').load_extension('projects')
 			require("project_nvim").setup {
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
@@ -346,9 +390,8 @@ end
 function lsp_setup()
 	local lsp_installer = require("nvim-lsp-installer")
 
-	-- Automatically install default servers 
+	-- Automatically install default servers
 	vim.defer_fn(function()
-		local lsp_installer = require("nvim-lsp-installer")
 		local lsp_installer_servers = require'nvim-lsp-installer.servers'
 		local lsp_installer_win_open = false
 
@@ -456,6 +499,7 @@ function tele_setup()
 			theme = 'dropdown'
 		}
 	})
+	require('telescope').load_extension('projects')
 end
 
 function ts_setup()
