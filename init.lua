@@ -176,9 +176,10 @@ end
 local use = require('packer').use
 require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
-	use 'lewis6991/impatient.nvim'
+	-- use 'lewis6991/impatient.nvim'
 	use {
 		'williamboman/nvim-lsp-installer',
+		-- event = 'VimEnter',
 		after = 'cmp-nvim-lsp',
 		config = lsp_setup,
 	}
@@ -550,7 +551,7 @@ function ts_setup()
 	vim.cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
 	require'nvim-treesitter.configs'.setup{
-		ensure_installed = default_installed_ts_support,
+		ensure_installed = 'maintained',
 		highlight = {
 			enable = true,
 		},
