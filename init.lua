@@ -17,7 +17,6 @@ local map = function(mode, lhs, rhs, opts)
 	vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-require('impatient').enable_profile()
 --------------------------------------------------------
 --
 --									Options
@@ -133,6 +132,20 @@ default_installed_servers = {
 	'vimls',
 }
 
+default_installed_ts_support = {
+	'lua',
+	'rust',
+	'bash',
+	'c',
+	'cpp',
+	'css',
+	'go',
+	'html',
+	'java',
+	'javascript',
+	'vim',
+}
+
 
 --------------------------------------------------------
 --
@@ -154,6 +167,10 @@ local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+end
+
+if not packer_bootstrap then
+	-- require('impatient').enable_profile()
 end
 
 local use = require('packer').use
@@ -209,6 +226,7 @@ require('packer').startup(function()
 	use {
 		'windwp/nvim-autopairs',
 		config = function() require('nvim-autopairs').setup{} end,
+		-- opt = true,
 	}
 
 	use {
@@ -288,11 +306,13 @@ require('packer').startup(function()
 	}
 
 
+	--[[
 	use {
 		'ellisonleao/glow.nvim',
 		filetype = 'markdown',
 		run = ':GlowInstall',
 	}
+	--]]
 
 	use {
 		'mizlan/iswap.nvim',
@@ -301,6 +321,7 @@ require('packer').startup(function()
 				autoswap = true,
 			})
 		end,
+		opt = true,
 	}
 
 	--[[
@@ -320,9 +341,14 @@ require('packer').startup(function()
 	use {
 		'lervag/vimtex',
 		ft = 'latex',
+		opt = true,
 	}
 
-	use 'RRethy/nvim-treesitter-textsubjects'
+	use {
+		'RRethy/nvim-treesitter-textsubjects',
+		after = 'nvim-treesitter',
+	}
+
 
 	use {
 		'hoob3rt/lualine.nvim',
@@ -365,7 +391,7 @@ require('packer').startup(function()
 	use 'mangeshrex/uwu.vim'
 
   if packer_bootstrap then
-    require('packer').sync()
+    --require('packer').sync()
   end
 end)
 
@@ -419,7 +445,7 @@ function lsp_setup()
 					if not server:is_installed() then
 							server:install()
 							if not lsp_installer_win_open then
-								vim.cmd('LspInstallInfo<cr>')
+								vim.cmd('LspInstallInfo')
 								lsp_installer_win_open = true
 							end
 					end
@@ -524,6 +550,7 @@ function ts_setup()
 	vim.cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
 	require'nvim-treesitter.configs'.setup{
+		ensure_installed = default_installed_ts_support,
 		highlight = {
 			enable = true,
 		},
@@ -570,4 +597,6 @@ cmd[[
   augroup end
 ]]
 
-cmd('colorscheme ' .. colorscheme)
+if not packer_bootstrap then
+	cmd('colorscheme ' .. colorscheme)
+end
