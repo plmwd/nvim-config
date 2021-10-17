@@ -17,7 +17,7 @@ local map = function(mode, lhs, rhs, opts)
 	vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
--- require('impatient').enable_profile()
+require('impatient').enable_profile()
 --------------------------------------------------------
 --
 --									Options
@@ -31,6 +31,7 @@ o.foldexpr = 'expr'
 o.cursorline = true
 o.mouse = 'a'
 o.termguicolors = true
+o.scrolloff = 5
 
 g.mapleader = ' '
 g.maplocalleader = ','
@@ -62,9 +63,11 @@ g.loaded_spec         = 1
 --------------------------------------------------------
 cmd[[
 	nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+	nnoremap <leader>. <cmd>lua require('telescope.builtin').find_files()<cr>
 	nnoremap <leader>fo <cmd>lua require('telescope.builtin').oldfiles()<cr>
 	nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser()<cr>
 	nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+	nnoremap <leader>/ <cmd>lua require('telescope.builtin').live_grep()<cr>
 	nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 	nnoremap <leader>fm <cmd>lua require('telescope.builtin').man_pages()<cr>
 	nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
@@ -91,10 +94,25 @@ cmd[[
 
 map('n', '<leader>?', '<cmd>Cheatsheet<cr>')
 map('n', '<esc>', '<cmd>noh<cr>')
+map('i', '<C-e>', '<cmd>noh<cr>')
 map('n', 'cp', '<cmd>ISwap<cr>')
 map('n', 'cP', '<cmd>ISwapWith<cr>')
 map('n', '<C-s>', '<cmd>w<cr>')
 map('i', '<C-s>', '<cmd>w<cr>')
+map('n', 'H', '^')
+map('n', 'L', '$')
+map('n', 'n', 'nzzzv')
+map('n', 'N', 'Nzzzv')
+map('n', '<bs>', '<C-^>')
+map('n', '<tab>', '<C-w>w')
+map('n', '<leader>h', '<C-w>h')
+map('n', '<leader>j', '<C-w>j')
+map('n', '<leader>k', '<C-w>k')
+map('n', '<leader>l', '<C-w>l')
+map('n', '<leader>wq', '<cmd>q<cr>')
+map('n', '/', 'ms/')
+map('n', '?', 'ms?')
+map('n', '*', 'ms*')
 
 
 --------------------------------------------------------
