@@ -31,14 +31,15 @@ o.cursorline = true
 o.mouse = 'a'
 o.termguicolors = true
 o.scrolloff = 5
+o.tw = 80
+o.cc = "+1"
 
 g.mapleader = ' '
 g.maplocalleader = ','
 g.tokyonight_style = 'night'
 g.dashboard_default_executive = 'telescope'
 g.material_style = 'deep ocean'
-
-wo.colorcolumn = '81'
+g.vimtex_view_method = 'zathura'
 
 colorscheme = 'material'
 
@@ -73,10 +74,10 @@ cmd[[
 	nnoremap <leader>fp <cmd>Telescope projects<cr>
 
 	nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME'})<cr>
-
 	nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/nvim'})<cr>
 	nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/xmonad'})<cr>
 	nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/sway'})<cr>
+	nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
 	nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
 
 	nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
@@ -199,6 +200,7 @@ require('packer').startup(function()
 		after = 'nvim-cmp',
 	}
 
+	use 'wakatime/vim-wakatime'
 	-- Snippets plugin
   use {
 		'L3MON4D3/LuaSnip',
@@ -322,7 +324,7 @@ require('packer').startup(function()
 				autoswap = true,
 			})
 		end,
-		opt = true,
+		event = 'InsertEnter',
 	}
 
 	--[[
@@ -341,7 +343,7 @@ require('packer').startup(function()
 
 	use {
 		'lervag/vimtex',
-		ft = 'latex',
+		ft = 'tex',
 		opt = true,
 	}
 
