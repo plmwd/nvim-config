@@ -189,7 +189,7 @@ function lsp_on_attach()
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>bf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
@@ -477,10 +477,10 @@ require('packer').startup(function()
 
 	use {
 		'nvim-telescope/telescope.nvim',
-		config = tele_setup,
+		config = function() vim.defer_fn(tele_setup, 0) end,
 		module = 'telescope',
-		cmd = 'Telescope',
-		event = 'VimEnter',
+		--cmd = 'Telescope',
+		--event = 'VimEnter',
 		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-treesitter/nvim-treesitter',
