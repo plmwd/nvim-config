@@ -9,7 +9,9 @@ set termguicolors
 set scrolloff=5
 set tw=80
 set cc=+1
-colorscheme tokyonight
+set ignorecase
+set smartcase
+set noswapfile
 
 let g:mapleader=" "
 let g:maplocalleader=","
@@ -18,13 +20,20 @@ let g:dashboard_default_executive="telescope"
 let g:material_style="deep ocean"
 let g:vimtex_view_method="zathura"
 
+syn enable
+syn on
+colorscheme tokyonight
+
 "--------------------------------------------------------
 "--
 "--									Keybindings
 "--
 "--------------------------------------------------------
+nnoremap ; :
+nnoremap : ;
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>. <cmd>Telescope find_files<cr>
+nnoremap <leader>/ <cmd>Telescope find_files<cr>
+nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fe <cmd>Telescope file_browser<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -41,9 +50,9 @@ nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$
 nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
 nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
 
-nnoremap <leader>fr <cmd>Telescope lsp_references<cr>
-nnoremap <leader>fs <cmd>Telescope lsp_document_symbols<cr>
-nnoremap <leader>fw <cmd>Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>lr <cmd>Telescope lsp_references<cr>
+nnoremap <leader>ls <cmd>Telescope lsp_document_symbols<cr>
+nnoremap <leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
 
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
@@ -66,7 +75,10 @@ nnoremap <leader>h <C-w>h
 nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
-nnoremap <leader>wq <cmd>q<cr>
+nnoremap <leader>ww <cmd>w<cr>
+nnoremap <leader>wq <cmd>wq<cr>
+nnoremap <leader>q <cmd>q<cr>
+nnoremap <leader>wQ <cmd>wqa<cr>
 nnoremap / ms/
 nnoremap ? ms?
 nnoremap * ms*
@@ -87,6 +99,7 @@ augroup end
 augroup latex
 	autocmd!
 	autocmd BufEnter *.tex setlocal spell
+	autocmd BufEnter *.tex syn on
 	" autocmd BufRead,BufNewFile *.tex syn match TexCmdNoSpell /"\\\w\+"/ contains=@NoSpell
 augroup end
 
@@ -484,7 +497,6 @@ require('packer').startup(function()
 	use {
 		'lervag/vimtex',
 		ft = 'tex',
-		opt = true,
 	}
 
 	use {
