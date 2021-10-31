@@ -22,7 +22,8 @@ let g:material_style="deep ocean"
 let g:vimtex_view_method="zathura"
 
 syn enable
-syn on
+" For some reason only works once vim is loaded...idfk why
+lua vim.defer_fn(function() vim.cmd'syn on' end, 0)
 colorscheme tokyonight
 
 "--------------------------------------------------------
