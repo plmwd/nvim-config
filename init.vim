@@ -205,6 +205,10 @@ function lsp_setup()
 
 			opts.on_attach = on_attach
 			opts.capabilities = capabilities
+
+			if server.name == "texlab" then
+				opts.root_dir = require'lspconfig/util'.root_pattern({'.git', 'main.tex'})
+			end
 			-- (optional) Customize the options passed to the server
 			-- if server.name == "tsserver" then
 			--     opts.root_dir = function() ... end
@@ -272,7 +276,9 @@ end
 function tele_setup()
 	require'telescope'.setup({
 		defaults = {
-			theme = 'dropdown'
+			layout_strategy = 'flex',
+			winblend = 5,
+			theme = 'dropdown',
 		}
 	})
 	require('telescope').load_extension('projects')
@@ -340,6 +346,11 @@ require('packer').startup(function()
 
 	use 'dstein64/vim-startuptime'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+
+	use {
+		"luukvbaal/nnn.nvim",
+		config = function() require("nnn").setup() end
+	}
 
 	-- LSP source for nvim-cmp
   use {
