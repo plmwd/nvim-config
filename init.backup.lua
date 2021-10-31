@@ -598,8 +598,17 @@ cmd[[
     autocmd!
     autocmd BufWritePost init.lua source <afile> | PackerCompile
   augroup end
+
+	augroup latex
+		autocmd!
+			autocmd BufEnter *.tex set spell
+		augroup end
 ]]
 
 if not packer_bootstrap then
 	cmd('colorscheme ' .. colorscheme)
 end
+
+
+cmd "syn match UrlNoSpell '\\w\\+:\\/\\/[^[:space:]]\\+' contains=@NoSpell"
+cmd "syn match TexCmdNoSpell '\\\\\\w\\+' contains=@NoSpell"
