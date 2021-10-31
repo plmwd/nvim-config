@@ -12,6 +12,7 @@ set cc=+1
 set ignorecase
 set smartcase
 set noswapfile
+set showtabline=2
 
 let g:mapleader=" "
 let g:maplocalleader=","
@@ -31,18 +32,22 @@ colorscheme tokyonight
 "--------------------------------------------------------
 nnoremap ; :
 nnoremap : ;
+
+nnoremap <leader>/ <cmd>Telescope current_buffer_fuzzy_find<cr>
+nnoremap <leader>. <cmd>Telescope find_files<cr>
+nnoremap <leader>] gt
+nnoremap <leader>[ gT
+
+" Fuzzy finders
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>/ <cmd>Telescope find_files<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fe <cmd>Telescope file_browser<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>/ <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fm <cmd>Telescope man_pages<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fp <cmd>Telescope projects<cr>
-
 nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME'})<cr>
 nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/nvim'})<cr>
 nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/xmonad'})<cr>
@@ -50,16 +55,30 @@ nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$
 nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
 nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
 
+" LSP
 nnoremap <leader>lr <cmd>Telescope lsp_references<cr>
 nnoremap <leader>ls <cmd>Telescope lsp_document_symbols<cr>
 nnoremap <leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
 
+" Diagnostics (trouble)
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
 nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
 nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 
+" Plugin management (packer)
+nnoremap <leader>pc <cmd>PackerCompile<cr>
+nnoremap <leader>ps <cmd>PackerSync<cr>
+
+" Debugging (nvim-dap)
+nnoremap <leader>db <cmd>lua require'dap'.toggle_breakpoint()<cr>
+nnoremap <leader>dc <cmd>lua require'dap'.continue()<cr>
+nnoremap <leader>di <cmd>lua require'dap'.step_into()<cr>
+nnoremap <leader>do <cmd>lua require'dap'.step_over()<cr>
+nnoremap <leader>dr <cmd>lua require'dap'.repl.open()<cr>
+
+" Other
 nnoremap <leader>? <cmd>Cheatsheet<cr>
 nnoremap <esc> <cmd>noh<cr>
 nnoremap cp <cmd>ISwap<cr>
@@ -441,11 +460,26 @@ require('packer').startup(function()
 		module = 'nvim-web-devicons',
 	}
 
+	use 'mfussenegger/nvim-dap'
+	use { 
+		"rcarriga/nvim-dap-ui", 
+		requires = {"mfussenegger/nvim-dap"},
+		config = function() require("dapui").setup() end
+	}
+	use {
+		'simrat39/rust-tools.nvim',
+		requires = {"mfussenegger/nvim-dap"},
+		config = function() require("rust-tools").setup({}) end
+	}
+
+
+
 	use {
 		'nvim-telescope/telescope.nvim',
 		config = tele_setup,
 		module = 'telescope',
 		cmd = 'Telescope',
+		event = 'VimEnter',
 		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-treesitter/nvim-treesitter',
