@@ -1,6 +1,7 @@
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set expandtab
 set completeopt=menu,menuone,noselect
 set foldexpr=expr
 set cursorline
@@ -12,19 +13,24 @@ set cc=+1
 set ignorecase
 set smartcase
 set noswapfile
-set showtabline=2
+set title
+" set showtabline=2
 
+let g:indent_blankline_use_treesitter = v:true
+let g:indent_blankline_show_first_indent_level = v:false
 let g:mapleader=" "
 let g:maplocalleader=","
-let g:tokyonight_style="night"
+let g:tokyonight_style="storm"
 let g:dashboard_default_executive="telescope"
+
 let g:material_style="deep ocean"
+" let g:rose_pine_variant="moon"
 let g:vimtex_view_method="zathura"
 
 syn enable
 " For some reason only works once vim is loaded...idfk why
 lua vim.defer_fn(function() vim.cmd'syn on' end, 0)
-colorscheme tokyonight
+colorscheme rose-pine
 
 "--------------------------------------------------------
 "--
@@ -43,7 +49,7 @@ nnoremap <leader>[ gT
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
-nnoremap <leader>fe <cmd>Telescope file_browser<cr>
+nnoremap <leader>fe <cmd>Telescope file_browser cwd=expand("%:p:h")<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fm <cmd>Telescope man_pages<cr>
@@ -55,6 +61,10 @@ nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$
 nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/sway'})<cr>
 nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
 nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
+
+" Git
+nnoremap <leader>gg <cmd>Neogit<cr>
+nnoremap <leader>gc <cmd>Neogit commit<cr>
 
 " LSP
 nnoremap <leader>lr <cmd>Telescope lsp_references<cr>
@@ -80,6 +90,7 @@ nnoremap <leader>do <cmd>lua require'dap'.step_over()<cr>
 nnoremap <leader>dr <cmd>lua require'dap'.repl.open()<cr>
 
 " Other
+nnoremap <leader>z <cmd>ZenMode<cr>
 nnoremap <leader>? <cmd>Cheatsheet<cr>
 nnoremap <esc> <cmd>noh<cr>
 nnoremap cp <cmd>ISwap<cr>
@@ -87,10 +98,12 @@ nnoremap cP <cmd>ISwapWith<cr>
 nnoremap <C-s> <cmd>w<cr>
 nnoremap H ^
 nnoremap L $
+vnoremap H ^
+vnoremap L $
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap <bs> <C-^>
-nnoremap <tab> <C-w>w
+nnoremap <leader><tab> <C-w>w
 nnoremap <leader>h <C-w>h
 nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
@@ -102,6 +115,11 @@ nnoremap <leader>wQ <cmd>wqa<cr>
 nnoremap / ms/
 nnoremap ? ms?
 nnoremap * ms*
+map f <cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>
+map F <cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>
+map t <cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>
+map T <cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>
+nnoremap gl <cmd>HopLineStart<cr>
 
 inoremap <C-e> <cmd>noh<cr>
 inoremap <C-s> <cmd>w<cr>
@@ -143,7 +161,7 @@ default_installed_servers = {
 	'clangd',
 	'cmake',
 	'cssls',
-	'denols',
+	-- 'denols',
 	'texlab',
 	'pyright',
 	'vimls',
@@ -216,27 +234,27 @@ function lsp_setup()
 	end, 1000)
 
 	lsp_installer.on_server_ready(function(server)
-			local opts = {}
-			local on_attach = lsp_on_attach
+    local opts = {}
+    local on_attach = lsp_on_attach
 
-			-- Add additional capabilities supported by nvim-cmp
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+    -- Add additional capabilities supported by nvim-cmp
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-			opts.on_attach = on_attach
-			opts.capabilities = capabilities
+    opts.on_attach = on_attach
+    opts.capabilities = capabilities
 
-			if server.name == "texlab" then
-				opts.root_dir = require'lspconfig/util'.root_pattern({'.git', 'main.tex'})
-			end
-			-- (optional) Customize the options passed to the server
-			-- if server.name == "tsserver" then
-			--     opts.root_dir = function() ... end
-			-- end
+    if server.name == "texlab" then
+      opts.root_dir = require'lspconfig/util'.root_pattern({'.git', 'main.tex'})
+    end
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
 
-			-- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-			server:setup(opts)
-			vim.cmd [[ do User LspAttachBuffers ]]
+    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
 	end)
 end
 
@@ -313,6 +331,16 @@ function ts_setup()
 			enable = true,
 		},
 
+    -- incremental_selection = {
+    --   enable = true,
+    --   keymaps = {
+    --     init_selection = 'gnn',
+    --     node_increment = 'gi',
+    --     scope_increment = 'gnI',
+    --     node_decrement = 'gnd',
+    --   }
+    -- },
+
 		--indent = {
 		--	enable = true,
 		--},
@@ -342,6 +370,26 @@ function lualine_setup()
 	})
 end
 
+function specs_setup()
+  require('specs').setup{ 
+    show_jumps  = true,
+    min_jump = 20,
+    popup = {
+        delay_ms = 0, -- delay before popup displays
+        inc_ms = 3, -- time increments used for fade/resize effects 
+        blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
+        width = 30,
+        winhl = "ModesVisual",
+        fader = require('specs').pulse_fader,
+        resizer = require('specs').slide_resizer
+    },
+    ignore_filetypes = {},
+    ignore_buftypes = {
+      nofile = true,
+    },
+  }
+end
+
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
@@ -367,10 +415,11 @@ require('packer').startup(function()
 	use 'dstein64/vim-startuptime'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
 
-	use {
-		"luukvbaal/nnn.nvim",
-		config = function() require("nnn").setup() end
-	}
+  use { 
+    'TimUntersberger/neogit', 
+    requires = 'nvim-lua/plenary.nvim' ,
+    config = function() require('neogit').setup() end,
+  }
 
 	-- LSP source for nvim-cmp
   use {
@@ -409,6 +458,8 @@ require('packer').startup(function()
 			'windwp/nvim-autopairs',
 		}
 	}
+
+  use 'tpope/vim-fugitive'
 
 	use {
 		'windwp/nvim-autopairs',
@@ -474,11 +525,36 @@ require('packer').startup(function()
 	}
 
 
+  use {
+    'mvllow/modes.nvim',
+    event = 'BufRead', -- optional lazy loading
+    config = function()
+      vim.opt.cursorline = true
+      require('modes').setup()
+    end
+  }
+
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require('indent_blankline').setup {
+        show_current_context = true,
+        show_current_context_start = true,
+      }
+    end
+  }
+
+  use {
+    'edluffy/specs.nvim',
+    config = function() specs_setup() end,
+  }
+
+
 
 	use {
 		'nvim-telescope/telescope.nvim',
 		config = function() vim.defer_fn(tele_setup, 0) end,
-		module = 'telescope',
+		--module = 'telescope',
 		--cmd = 'Telescope',
 		--event = 'VimEnter',
 		requires = {
@@ -506,6 +582,17 @@ require('packer').startup(function()
 			require('gitsigns').setup()
 		end
 	}
+
+  use {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
 
 	--[[
@@ -537,7 +624,11 @@ require('packer').startup(function()
 	}
 	--]]
 
-	use 'ggandor/lightspeed.nvim'
+	-- use 'ggandor/lightspeed.nvim'
+  use {
+    'phaazon/hop.nvim',
+    config = function() require'hop'.setup() end
+  } 
 
 
 	use {
@@ -563,7 +654,7 @@ require('packer').startup(function()
 	use {
     'numToStr/Comment.nvim',
     config = function()
-        require('Comment').setup()
+      require('Comment').setup()
     end
 	}
 
@@ -580,7 +671,7 @@ require('packer').startup(function()
 		end
 	}
 
-
+	use 'baskerville/vim-sxhkdrc'
 
 	-- Color schemes
 	use 'shaunsingh/moonlight.nvim'
@@ -590,6 +681,7 @@ require('packer').startup(function()
 	use 'bluz71/vim-nightfly-guicolors'
 	use 'shaunsingh/nord.nvim'
 	use 'mangeshrex/uwu.vim'
+	use 'rose-pine/neovim'
 
   if packer_bootstrap then
     require('packer').sync()
