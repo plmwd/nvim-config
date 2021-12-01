@@ -14,10 +14,16 @@ set ignorecase
 set smartcase
 set noswapfile
 set title
+set updatetime=500
+set formatoptions=tcqjn1
+set breakindent
+set lbr
 " set showtabline=2
 
 let g:indent_blankline_use_treesitter = v:true
 let g:indent_blankline_show_first_indent_level = v:false
+let g:indent_blankline_show_trailing_blankline_indent = v:false
+let g:indent_blankline_filetype_exclude = ['help', 'dashboard']
 let g:mapleader=" "
 let g:maplocalleader=","
 let g:tokyonight_style="storm"
@@ -46,10 +52,11 @@ nnoremap <leader>] gt
 nnoremap <leader>[ gT
 
 " Fuzzy finders
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fF <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>Telescope git_files<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
-nnoremap <leader>fe <cmd>Telescope file_browser cwd=expand("%:p:h")<cr>
+nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser({cwd = require('telescope.utils').buffer_dir()})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fm <cmd>Telescope man_pages<cr>
@@ -65,6 +72,7 @@ nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$
 " Git
 nnoremap <leader>gg <cmd>Neogit<cr>
 nnoremap <leader>gc <cmd>Neogit commit<cr>
+nnoremap <leader>gb <cmd>Git blame<cr>
 
 " LSP
 nnoremap <leader>lr <cmd>Telescope lsp_references<cr>
@@ -123,12 +131,15 @@ nnoremap gl <cmd>HopLineStart<cr>
 
 inoremap <C-e> <cmd>noh<cr>
 inoremap <C-s> <cmd>w<cr>
+nnoremap <C-j> <C-d>
 
 "--------------------------------------------------------
 "--
 "--									Autocommands
 "--
 "--------------------------------------------------------
+" autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+
 augroup packer_user_config
 	autocmd!
 	autocmd BufWritePost init.vim source <afile> | PackerCompile
@@ -153,6 +164,7 @@ syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
 "--									Lua Config
 "--
 "--------------------------------------------------------
+
 lua << EOF
 default_installed_servers = {
 	'rust_analyzer',
@@ -162,7 +174,7 @@ default_installed_servers = {
 	'cmake',
 	'cssls',
 	-- 'denols',
-	'texlab',
+	-- 'texlab',
 	'pyright',
 	'vimls',
 }
@@ -247,10 +259,21 @@ function lsp_setup()
     if server.name == "texlab" then
       opts.root_dir = require'lspconfig/util'.root_pattern({'.git', 'main.tex'})
     end
+
+    if server.name == 'tsserver' then
+      vim.cmd[[ au BufWritePost <buffer> lua require('lint').try_lint() ]]
+    end
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
     --     opts.root_dir = function() ... end
     -- end
+
+    local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+    for type, icon in pairs(signs) do
+        local hl = "LspDiagnosticsSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
+
 
     -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
     server:setup(opts)
@@ -390,6 +413,32 @@ function specs_setup()
   }
 end
 
+function pressence_setup()
+  -- The setup config table shows all available config options with their default values:
+  require("presence"):setup({
+    -- General options
+    auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+    neovim_image_text   = "The One True Text Editor", -- Text displayed when hovered over the Neovim image
+    main_image          = "neovim",                   -- Main image display (either "neovim" or "file")
+    client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
+    log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+    debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+    enable_line_number  = false,                      -- Displays the current line number instead of the current project
+    blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+    buttons             = true,                       -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
+
+    -- Rich Presence text options
+    editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+    file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+    git_commit_text     = "Committing changes",       -- Format string rendered when committing changes in git (either string or function(filename: string): string)
+    plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
+    reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+    workspace_text      = "Working on %s",            -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+    line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+})
+
+end
+
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
@@ -413,7 +462,12 @@ require('packer').startup(function()
 	}
 
 	use 'dstein64/vim-startuptime'
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+  use {
+    'neovim/nvim-lspconfig', -- Collection of configurations for built-in LSP client
+    config = function()
+      require'lspconfig'.eslint.setup{}
+    end,
+  }
 
   use { 
     'TimUntersberger/neogit', 
@@ -461,6 +515,11 @@ require('packer').startup(function()
 
   use 'tpope/vim-fugitive'
 
+  use {
+    'andweeb/presence.nvim',
+    -- config = function() pressence_setup() end
+  }
+
 	use {
 		'windwp/nvim-autopairs',
 		config = function() require('nvim-autopairs').setup{} end,
@@ -500,6 +559,15 @@ require('packer').startup(function()
 			}
 		end
 	}
+
+  use {
+    'mfussenegger/nvim-lint',
+    config = function()
+      require('lint').linters_by_ft = {
+        typescript = {'eslint'},
+      }
+    end,
+  }
 
 	use {
 		'nvim-treesitter/nvim-treesitter',
