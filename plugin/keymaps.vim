@@ -7,8 +7,7 @@ nnoremap <leader>] gt
 nnoremap <leader>[ gT
 
 " Fuzzy finders
-nnoremap <leader>fF <cmd>Telescope find_files<cr>
-nnoremap <leader>ff <cmd>Telescope git_files<cr>
+nnoremap <leader>ff <cmd>lua require('utils').project_files()<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>

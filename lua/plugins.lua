@@ -99,7 +99,7 @@ local function init()
       -- setup = [[ require('config.telescope_setup') ]],
       config = [[ require('config.telescope') ]],
       cmd = 'Telescope',
-      module = 'Telescope',
+      module = {'Telescope', 'telescope', 'telescope.builtin'},
       requires = {
         'nvim-lua/popup.nvim', -- required by media files
         'nvim-telescope/telescope-media-files.nvim',
