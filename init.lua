@@ -10,8 +10,6 @@ g.maplocalleader = ','
 local disabled_built_ins = {
   'gzip',
   'man',
-  'matchit',
-  'matchparen',
   'shada_plugin',
   'tarPlugin',
   'tar',
@@ -20,8 +18,8 @@ local disabled_built_ins = {
   'netrwPlugin',
 }
 
-for i = 1, 10 do
-  g['loaded_' .. disabled_built_ins[i]] = 1
+for _, plugin in pairs(disabled_built_ins) do
+  g['loaded_' .. plugin] = 1
 end
 
 cmd [[command! PackerInstall packadd packer.nvim  | lua require('plugins').install()]]
@@ -30,4 +28,4 @@ cmd [[command! PackerSync packadd packer.nvim     | lua require('plugins').sync(
 cmd [[command! PackerClean packadd packer.nvim    | lua require('plugins').clean()]]
 cmd [[command! PackerCompile packadd packer.nvim  | lua require('plugins').compile()]]
 cmd [[command! PackerStatus packadd packer.nvim   | lua require('plugins').status()]]
-cmd [[command! Bootstrap packadd packer.nvim      | lua require('start').bootstrap()]]
+cmd [[command! Bootstrap packadd packer.nvim      | lua require('bootstrap').bootstrap()]]

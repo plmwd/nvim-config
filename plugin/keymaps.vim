@@ -11,20 +11,31 @@ nnoremap <leader>fF <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope git_files<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
-vnoremap <leader>fs <cmd>Telescope grep_string<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser({cwd = require('telescope.utils').buffer_dir()})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fm <cmd>Telescope man_pages<cr>
+nnoremap <leader>fM <cmd>Telescope media_files<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fp <cmd>Telescope projects<cr>
+nnoremap <leader>fj <cmd>Telescope symbols<cr>
 nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME'})<cr>
 nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/nvim'})<cr>
 nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/xmonad'})<cr>
 nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/sway'})<cr>
 nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
 nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
+
+" Terminal
+" nnoremap <leader>tt <cmd>ToggleTerm<cr>
+" nnoremap <leader>tf <cmd>ToggleTerm direction=float<cr>
+tnoremap <c-j><c-k> <c-\><c-n>
+tnoremap <c-]> <c-\><c-n> <bar> <cmd>2ToggleTerm<cr>
+tnoremap <c-h> <c-\><c-n><c-W>h
+tnoremap <c-j> <c-\><c-n><c-W>j
+tnoremap <c-k> <c-\><c-n><c-W>k
+tnoremap <c-l> <c-\><c-n><c-W>l
 
 " Git
 nnoremap <leader>gg <cmd>Neogit<cr>

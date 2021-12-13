@@ -1,5 +1,4 @@
 local lsp_installer = require("nvim-lsp-installer")
-local lspconfig = require 'lspconfig'
 local trouble = require 'trouble'
 local lspkind = require 'lspkind'
 
@@ -32,10 +31,15 @@ local kind_symbols = {
 }
 
 
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 lspkind.init { symbol_map = kind_symbols }
 trouble.setup()
 require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' } }
-
+require("grammar-guard").init()
 
 -- TODO: only do this with Bootstrap command
 -- Automatically install default servers
@@ -57,7 +61,7 @@ require('lsp_signature').setup { bind = true, handler_opts = { border = 'single'
 --   end
 -- end, 1000)
 
-function on_attach()
+local function on_attach(client, bufnr)
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -85,11 +89,19 @@ function on_attach()
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>bf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
 
-function extend_on_attach(func)
-  on_attach()
-  func()
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd [[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
+end
 end
 
 local servers = {
@@ -97,27 +109,56 @@ local servers = {
     root_dir = require'lspconfig/util'.root_pattern({'.git', 'main.tex'}),
   },
   tsserver = {
-    on_attach = extend_on_attach(function()
+    extra_on_attach = function(client, bufnr)
       vim.cmd[[ au BufWritePost <buffer> lua require('lint').try_lint() ]]
-    end),
+    end,
   },
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        diagnostics = { globals = { 'vim' } },
+        runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
+        workspace = {
+          library = {
+            [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+            [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
+          },
+        },
+      },
+    },
+  },
+  grammar_guard = {
+    settings = {
+      ltex = {
+        enabled = { "latex", "tex", "bib", "markdown" },
+        language = "en",
+        diagnosticSeverity = "information",
+        setenceCacheSize = 2000,
+        additionalRules = {
+          enablePickyRules = true,
+          motherTongue = "en",
+        },
+        trace = { server = "verbose" },
+        dictionary = {},
+        disabledRules = {},
+        hiddenFalsePositives = {},
+      },
+    }
+	},
 }
 
 lsp_installer.on_server_ready(function(server)
-  local config = servers[server] or {}
+  local config = servers[server.name] or {}
 
   -- Add additional capabilities supported by nvim-cmp
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-  -- TODO: do this the correct way
-  config.on_attach = config.on_attach or on_attach
-  config.capabilities = config.capabilities or capabilities
-
-  local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-  for type, icon in pairs(signs) do
-      local hl = "LspDiagnosticsSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  if config.extra_on_attach then
+    config.on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+      config.extra_on_attach(client, bufnr)
+    end
   end
 
   -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)

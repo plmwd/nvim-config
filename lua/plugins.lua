@@ -25,6 +25,13 @@ local function init()
     'ray-x/lsp_signature.nvim',
     -- TODO: figure out how to set this up without being annoying
     -- 'kosayoda/nvim-lightbulb',
+    {
+      'brymer-meneses/grammar-guard.nvim',
+      requires = {
+        'neovim/nvim-lspconfig',
+        'williamboman/nvim-lsp-installer',
+      },
+    }
   }
 
 
@@ -74,6 +81,7 @@ local function init()
   -- UI ------------------------------
   use {
 		'hoob3rt/lualine.nvim',
+    'akinsho/toggleterm.nvim',
   }
 
   use {
@@ -118,8 +126,10 @@ local function init()
 
   -- Util ------------------------------
   use {
-    'phaazon/hop.nvim',
-    'numToStr/Comment.nvim',
+    'windwp/nvim-autopairs',
+    'tpope/vim-surround',
+    'windwp/nvim-ts-autotag',
+    {'numToStr/Comment.nvim', config = [[ require('Comment').setup() ]] },
     'andweeb/presence.nvim',
 		'mizlan/iswap.nvim',
     'wakatime/vim-wakatime',
@@ -165,7 +175,6 @@ local function init()
 
   -- TODO: Look at surround.vim
 	-- use {
-	-- 	'windwp/nvim-autopairs',
 	-- 	config = function() require('nvim-autopairs').setup{} end,
 	-- 	-- opt = true,
 	-- }
@@ -225,6 +234,7 @@ local function init()
     'shaunsingh/nord.nvim',
     'mangeshrex/uwu.vim',
     { 'rose-pine/neovim', as = 'rose-pine' },
+    { 'catppuccin/nvim', as = 'catppuccin' },
   }
 end
 
