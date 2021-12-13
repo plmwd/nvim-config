@@ -1,5 +1,4 @@
 # nvim-config
-My simple single file nvim config.
 
 # Install
 ```sh
