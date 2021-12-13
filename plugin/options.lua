@@ -24,8 +24,7 @@ opt.tw = 100
 opt.cc = '+1'
 opt.ignorecase = true
 opt.smartcase = true
--- How tf do I set this in lua!?
-g.noswapfile = true
+opt.swapfile = false
 opt.title = true
 opt.updatetime = 500
 opt.breakindent = true
