@@ -1,65 +1,16 @@
 local lsp_installer = require("nvim-lsp-installer")
 local trouble = require 'trouble'
-local lspkind = require 'lspkind'
 
-local lsp = vim.lsp
-local buf_keymap = vim.api.nvim_buf_set_keymap
-local cmd = vim.cmd
 local sign_define = vim.fn.sign_define
 
-local kind_symbols = {
-  Text = '',
-  Method = 'Ƒ',
-  Function = 'ƒ',
-  Constructor = '',
-  Variable = '',
-  Class = '',
-  Interface = 'ﰮ',
-  Module = '',
-  Property = '',
-  Unit = '',
-  Value = '',
-  Enum = '了',
-  Keyword = '',
-  Snippet = '﬌',
-  Color = '',
-  File = '',
-  Folder = '',
-  EnumMember = '',
-  Constant = '',
-  Struct = '',
-}
-
-
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-lspkind.init { symbol_map = kind_symbols }
 trouble.setup()
 require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' } }
 require("grammar-guard").init()
-
--- TODO: only do this with Bootstrap command
--- Automatically install default servers
--- vim.defer_fn(function()
---   local lsp_installer_servers = require'nvim-lsp-installer.servers'
---   local lsp_installer_win_open = false
---
---   for _, server_name in pairs(default_installed_servers) do
---     local ok, server = lsp_installer_servers.get_server(server_name)
---     if ok then
---         if not server:is_installed() then
---             server:install()
---             if not lsp_installer_win_open then
---               vim.cmd('LspInstallInfo')
---               lsp_installer_win_open = true
---             end
---         end
---     end
---   end
--- end, 1000)
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.cmd('sign define ' .. hl .. ' text=' .. icon .. ' texthl=' .. hl .. ' linehl= numhl=')
+end
 
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -101,7 +52,8 @@ local function on_attach(client, bufnr)
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]]
-end
+  end
+
 end
 
 local servers = {
