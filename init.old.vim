@@ -1,3 +1,6 @@
+" Each plugin that has a require(...) to config it, put in a separate file
+" init.lua is for options and loading plugins
+" keymappings.lua
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
@@ -8,7 +11,7 @@ set cursorline
 set mouse=a
 set termguicolors
 set scrolloff=5
-set tw=80
+set tw=100
 set cc=+1
 set ignorecase
 set smartcase
@@ -18,6 +21,7 @@ set updatetime=500
 set formatoptions=tcqjn1
 set breakindent
 set lbr
+set nowrap
 " set showtabline=2
 
 let g:indent_blankline_use_treesitter = v:true
@@ -55,6 +59,8 @@ nnoremap <leader>[ gT
 nnoremap <leader>fF <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope git_files<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
+nnoremap <leader>fs <cmd>Telescope grep_string<cr>
+vnoremap <leader>fs <cmd>Telescope grep_string<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser({cwd = require('telescope.utils').buffer_dir()})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -112,11 +118,12 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap <bs> <C-^>
 nnoremap <leader><tab> <C-w>w
-nnoremap <leader>h <C-w>h
-nnoremap <leader>j <C-w>j
-nnoremap <leader>k <C-w>k
-nnoremap <leader>l <C-w>l
-nnoremap <leader>ww <cmd>w<cr>
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>W <cmd>w<cr>
 nnoremap <leader>wq <cmd>wq<cr>
 nnoremap <leader>q <cmd>q<cr>
 nnoremap <leader>wQ <cmd>wqa<cr>
@@ -131,7 +138,8 @@ nnoremap gl <cmd>HopLineStart<cr>
 
 inoremap <C-e> <cmd>noh<cr>
 inoremap <C-s> <cmd>w<cr>
-nnoremap <C-j> <C-d>
+nnoremap <C-j> <cmd>cprev<cr>
+nnoremap <C-k> <cmd>cnext<cr>
 
 "--------------------------------------------------------
 "--
@@ -157,7 +165,7 @@ augroup end
 "--									Syntax Highlighting
 "--
 "--------------------------------------------------------
-syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
+" syn match UrlNoSpell '\w\+:\/\/[^[:space:]]\+' contains=@NoSpell
 
 "--------------------------------------------------------
 "--
@@ -208,10 +216,10 @@ function lsp_on_attach()
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  -- buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -435,7 +443,190 @@ function pressence_setup()
     reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
     workspace_text      = "Working on %s",            -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
     line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
-})
+  })
+end
+
+function diffview_setup()
+    -- Lua
+  local cb = require'diffview.config'.diffview_callback
+
+  require'diffview'.setup {
+    diff_binaries = false,    -- Show diffs for binaries
+    enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+    use_icons = true,         -- Requires nvim-web-devicons
+    icons = {                 -- Only applies when use_icons is true.
+      folder_closed = "",
+      folder_open = "",
+    },
+    signs = {
+      fold_closed = "",
+      fold_open = "",
+    },
+    file_panel = {
+      position = "left",            -- One of 'left', 'right', 'top', 'bottom'
+      width = 35,                   -- Only applies when position is 'left' or 'right'
+      height = 10,                  -- Only applies when position is 'top' or 'bottom'
+      listing_style = "tree",       -- One of 'list' or 'tree'
+      tree_options = {              -- Only applies when listing_style is 'tree'
+        flatten_dirs = true,
+        folder_statuses = "always"  -- One of 'never', 'only_folded' or 'always'.
+      }
+    },
+    file_history_panel = {
+      position = "bottom",
+      width = 35,
+      height = 16,
+      log_options = {
+        max_count = 256,      -- Limit the number of commits
+        follow = false,       -- Follow renames (only for single file)
+        all = false,          -- Include all refs under 'refs/' including HEAD
+        merges = false,       -- List only merge commits
+        no_merges = false,    -- List no merge commits
+        reverse = false,      -- List commits in reverse order
+      },
+    },
+    default_args = {    -- Default args prepended to the arg-list for the listed commands
+      DiffviewOpen = {},
+      DiffviewFileHistory = {},
+    },
+    hooks = {},         -- See ':h diffview-config-hooks'
+    key_bindings = {
+      disable_defaults = false,                   -- Disable the default key bindings
+      -- The `view` bindings are active in the diff buffers, only when the current
+      -- tabpage is a Diffview.
+      view = {
+        ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
+        ["<s-tab>"]    = cb("select_prev_entry"),  -- Open the diff for the previous file
+        ["gf"]         = cb("goto_file"),          -- Open the file in a new split in previous tabpage
+        ["<C-w><C-f>"] = cb("goto_file_split"),    -- Open the file in a new split
+        ["<C-w>gf"]    = cb("goto_file_tab"),      -- Open the file in a new tabpage
+        ["<leader>e"]  = cb("focus_files"),        -- Bring focus to the files panel
+        ["<leader>b"]  = cb("toggle_files"),       -- Toggle the files panel.
+      },
+      file_panel = {
+        ["j"]             = cb("next_entry"),           -- Bring the cursor to the next file entry
+        ["<down>"]        = cb("next_entry"),
+        ["k"]             = cb("prev_entry"),           -- Bring the cursor to the previous file entry.
+        ["<up>"]          = cb("prev_entry"),
+        ["<cr>"]          = cb("select_entry"),         -- Open the diff for the selected entry.
+        ["o"]             = cb("select_entry"),
+        ["<2-LeftMouse>"] = cb("select_entry"),
+        ["-"]             = cb("toggle_stage_entry"),   -- Stage / unstage the selected entry.
+        ["S"]             = cb("stage_all"),            -- Stage all entries.
+        ["U"]             = cb("unstage_all"),          -- Unstage all entries.
+        ["X"]             = cb("restore_entry"),        -- Restore entry to the state on the left side.
+        ["R"]             = cb("refresh_files"),        -- Update stats and entries in the file list.
+        ["<tab>"]         = cb("select_next_entry"),
+        ["<s-tab>"]       = cb("select_prev_entry"),
+        ["gf"]            = cb("goto_file"),
+        ["<C-w><C-f>"]    = cb("goto_file_split"),
+        ["<C-w>gf"]       = cb("goto_file_tab"),
+        ["i"]             = cb("listing_style"),        -- Toggle between 'list' and 'tree' views
+        ["f"]             = cb("toggle_flatten_dirs"),  -- Flatten empty subdirectories in tree listing style.
+        ["<leader>e"]     = cb("focus_files"),
+        ["<leader>b"]     = cb("toggle_files"),
+      },
+      file_history_panel = {
+        ["g!"]            = cb("options"),            -- Open the option panel
+        ["<C-A-d>"]       = cb("open_in_diffview"),   -- Open the entry under the cursor in a diffview
+        ["y"]             = cb("copy_hash"),          -- Copy the commit hash of the entry under the cursor
+        ["zR"]            = cb("open_all_folds"),
+        ["zM"]            = cb("close_all_folds"),
+        ["j"]             = cb("next_entry"),
+        ["<down>"]        = cb("next_entry"),
+        ["k"]             = cb("prev_entry"),
+        ["<up>"]          = cb("prev_entry"),
+        ["<cr>"]          = cb("select_entry"),
+        ["o"]             = cb("select_entry"),
+        ["<2-LeftMouse>"] = cb("select_entry"),
+        ["<tab>"]         = cb("select_next_entry"),
+        ["<s-tab>"]       = cb("select_prev_entry"),
+        ["gf"]            = cb("goto_file"),
+        ["<C-w><C-f>"]    = cb("goto_file_split"),
+        ["<C-w>gf"]       = cb("goto_file_tab"),
+        ["<leader>e"]     = cb("focus_files"),
+        ["<leader>b"]     = cb("toggle_files"),
+      },
+      option_panel = {
+        ["<tab>"] = cb("select"),
+        ["q"]     = cb("close"),
+      },
+    },
+  }
+end
+
+function neogit_setup()
+  local neogit = require("neogit")
+
+  neogit.setup {
+    disable_signs = false,
+    disable_hint = false,
+    disable_context_highlighting = false,
+    disable_commit_confirmation = false,
+    auto_refresh = true,
+    disable_builtin_notifications = false,
+    commit_popup = {
+        kind = "split",
+    },
+    -- Change the default way of opening neogit
+    kind = "tab",
+    -- customize displayed signs
+    signs = {
+      -- { CLOSED, OPENED }
+      section = { ">", "v" },
+      item = { ">", "v" },
+      hunk = { "", "" },
+    },
+    integrations = {
+      -- Neogit only provides inline diffs. If you want a more traditional way to look at diffs, you can use `sindrets/diffview.nvim`.
+      -- The diffview integration enables the diff popup, which is a wrapper around `sindrets/diffview.nvim`.
+      --
+      -- Requires you to have `sindrets/diffview.nvim` installed.
+      -- use { 
+      --   'TimUntersberger/neogit', 
+      --   requires = { 
+      --     'nvim-lua/plenary.nvim',
+      --     'sindrets/diffview.nvim' 
+      --   }
+      -- }
+      --
+      diffview = true,
+    },
+    -- Setting any section to `false` will make the section not render at all
+    sections = {
+      untracked = {
+        folded = true
+      },
+      unstaged = {
+        folded = true
+      },
+      staged = {
+        folded = true
+      },
+      stashes = {
+        folded = true
+      },
+      unpulled = {
+        folded = true
+      },
+      unmerged = {
+        folded = true
+      },
+      recent = {
+        folded = true
+      },
+    },
+    -- -- override/add mappings
+    -- mappings = {
+    --   -- modify status buffer mappings
+    --   status = {
+    --     -- Adds a mapping with "B" as key that does the "BranchPopup" command
+    --     ["B"] = "BranchPopup",
+    --     -- Removes the default mapping of "s"
+    --     ["s"] = "",
+    --   }
+    -- }
+  }
 
 end
 
@@ -450,309 +641,4 @@ if not packer_bootstrap then
 	-- require('impatient').enable_profile()
 end
 
-local use = require('packer').use
-require('packer').startup(function()
-	use 'wbthomason/packer.nvim'
-	-- use 'lewis6991/impatient.nvim'
-	use {
-		'williamboman/nvim-lsp-installer',
-		-- event = 'VimEnter',
-		after = 'cmp-nvim-lsp',
-		config = lsp_setup,
-	}
-
-	use 'dstein64/vim-startuptime'
-  use {
-    'neovim/nvim-lspconfig', -- Collection of configurations for built-in LSP client
-    config = function()
-      require'lspconfig'.eslint.setup{}
-    end,
-  }
-
-  use { 
-    'TimUntersberger/neogit', 
-    requires = 'nvim-lua/plenary.nvim' ,
-    config = function() require('neogit').setup() end,
-  }
-
-	-- LSP source for nvim-cmp
-  use {
-		'hrsh7th/cmp-nvim-lsp',
-		after = 'nvim-cmp',
-	}
-
-	-- Snippets source for nvim-cmp
-  use {
-		'saadparwaiz1/cmp_luasnip',
-		after = 'nvim-cmp',
-	}
-
-	use 'wakatime/vim-wakatime'
-	-- Snippets plugin
-  use {
-		'L3MON4D3/LuaSnip',
-		event = 'InsertEnter',
-	}
-
-	use {
-		'hrsh7th/cmp-buffer',
-		after = 'nvim-cmp',
-	}
-
-	use {
-		'hrsh7th/nvim-cmp',
-		after = 'LuaSnip',
-		config = cmp_setup,
-		requires = {
-			'neovim/nvim-lspconfig',
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-buffer',
-			'saadparwaiz1/cmp_luasnip',
-			'L3MON4D3/LuaSnip',
-			'windwp/nvim-autopairs',
-		}
-	}
-
-  use 'tpope/vim-fugitive'
-
-  use {
-    'andweeb/presence.nvim',
-    -- config = function() pressence_setup() end
-  }
-
-	use {
-		'windwp/nvim-autopairs',
-		config = function() require('nvim-autopairs').setup{} end,
-		-- opt = true,
-	}
-
-	use {
-		'sudormrfbin/cheatsheet.nvim',
-		event = 'VimEnter',
-		-- config = function()
-		-- 	require("cheatsheet").setup({
-		-- 		bundled_cheatsheets = {
-		-- 				-- only show the default cheatsheet
-		-- 				enabled = { "default" },
-		-- 		},
-		-- 		bundled_plugin_cheatsheets = true,
-		-- 	})
-		-- end,
-
-		requires = {
-			{'nvim-telescope/telescope.nvim'},
-			{'nvim-lua/popup.nvim'},
-			{'nvim-lua/plenary.nvim'},
-		}
-	}
-
-	-- Lua
-	use {
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		after = 'nvim-cmp',
-		config = function()
-			require("trouble").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
-		end
-	}
-
-  use {
-    'mfussenegger/nvim-lint',
-    config = function()
-      require('lint').linters_by_ft = {
-        typescript = {'eslint'},
-      }
-    end,
-  }
-
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		config = ts_setup,
-		run = ':TSUpdate',
-	}
-
-	use {
-		'kyazdani42/nvim-web-devicons',
-		module = 'nvim-web-devicons',
-	}
-
-	use 'mfussenegger/nvim-dap'
-	use { 
-		"rcarriga/nvim-dap-ui", 
-		requires = {"mfussenegger/nvim-dap"},
-		config = function() require("dapui").setup() end
-	}
-	use {
-		'simrat39/rust-tools.nvim',
-		requires = {"mfussenegger/nvim-dap"},
-		config = function() require("rust-tools").setup({}) end
-	}
-
-
-  use {
-    'mvllow/modes.nvim',
-    event = 'BufRead', -- optional lazy loading
-    config = function()
-      vim.opt.cursorline = true
-      require('modes').setup()
-    end
-  }
-
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      require('indent_blankline').setup {
-        show_current_context = true,
-        show_current_context_start = true,
-      }
-    end
-  }
-
-  use {
-    'edluffy/specs.nvim',
-    config = function() specs_setup() end,
-  }
-
-
-
-	use {
-		'nvim-telescope/telescope.nvim',
-		config = function() vim.defer_fn(tele_setup, 0) end,
-		--module = 'telescope',
-		--cmd = 'Telescope',
-		--event = 'VimEnter',
-		requires = {
-			'nvim-lua/plenary.nvim',
-			'nvim-treesitter/nvim-treesitter',
-			'kyazdani42/nvim-web-devicons',
-			'ahmedkhalf/project.nvim',
-		}
-	}
-
-	use {
-    "nvim-lua/plenary.nvim",
-    module = "plenary"
-  }
-
-	use 'glepnir/dashboard-nvim'
-
-	use {
-		'lewis6991/gitsigns.nvim',
-		event = 'VimEnter',
-		requires = {
-			'nvim-lua/plenary.nvim'
-		},
-		config = function()
-			require('gitsigns').setup()
-		end
-	}
-
-  use {
-    "folke/zen-mode.nvim",
-    config = function()
-      require("zen-mode").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  }
-
-
-	--[[
-	use {
-		'ellisonleao/glow.nvim',
-		filetype = 'markdown',
-		run = ':GlowInstall',
-	}
-	--]]
-
-	use {
-		'mizlan/iswap.nvim',
-		config = function()
-			require('iswap').setup({
-				autoswap = true,
-			})
-		end,
-		event = 'InsertEnter',
-	}
-
-	--[[
-	use {
-		'phaazon/hop.nvim',
-		as = 'hop',
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-		end
-	}
-	--]]
-
-	-- use 'ggandor/lightspeed.nvim'
-  use {
-    'phaazon/hop.nvim',
-    config = function() require'hop'.setup() end
-  } 
-
-
-	use {
-		'lervag/vimtex',
-		ft = 'tex',
-	}
-
-	use {
-		'RRethy/nvim-treesitter-textsubjects',
-		after = 'nvim-treesitter',
-	}
-
-
-	use {
-		'hoob3rt/lualine.nvim',
-		config = lualine_setup,
-		requires = {
-			'kyazdani42/nvim-web-devicons',
-			'folke/tokyonight.nvim',
-		}
-	}
-
-	use {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end
-	}
-
-	use {
-		'ahmedkhalf/project.nvim',
-		event = 'VimEnter',
-		-- requires = {'nvim-telescope/telescope.nvim'},
-		config = function()
-			require("project_nvim").setup {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			}
-		end
-	}
-
-	use 'baskerville/vim-sxhkdrc'
-
-	-- Color schemes
-	use 'shaunsingh/moonlight.nvim'
-	use 'folke/tokyonight.nvim'
-	use 'EdenEast/nightfox.nvim'
-	use 'marko-cerovac/material.nvim'
-	use 'bluz71/vim-nightfly-guicolors'
-	use 'shaunsingh/nord.nvim'
-	use 'mangeshrex/uwu.vim'
-	use 'rose-pine/neovim'
-
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
 EOF
