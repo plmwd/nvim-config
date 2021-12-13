@@ -13,11 +13,11 @@ local function init()
 
   local use = packer.use
   packer.reset()
-	use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
 
-	-- LSP ------------------------------
-	use {
+  -- LSP ------------------------------
+  use {
     'williamboman/nvim-lsp-installer',
     'neovim/nvim-lspconfig',
     'onsails/lspkind-nvim',
@@ -80,7 +80,7 @@ local function init()
 
   -- UI ------------------------------
   use {
-		'hoob3rt/lualine.nvim',
+    'hoob3rt/lualine.nvim',
     'akinsho/toggleterm.nvim',
   }
 
@@ -93,8 +93,8 @@ local function init()
     run = ':TSUpdate',
   }
 
-	use {
-		{
+  use {
+    {
       'nvim-telescope/telescope.nvim',
       -- setup = [[ require('config.telescope_setup') ]],
       config = [[ require('config.telescope') ]],
@@ -114,7 +114,7 @@ local function init()
       'nvim-telescope/telescope-fzf-native.nvim',
       run = 'make',
     },
-	}
+  }
 
   -- VCS ------------------------------
   use {
@@ -131,26 +131,26 @@ local function init()
     'windwp/nvim-ts-autotag',
     {'numToStr/Comment.nvim', config = [[ require('Comment').setup() ]] },
     'andweeb/presence.nvim',
-		'mizlan/iswap.nvim',
+    'mizlan/iswap.nvim',
     'wakatime/vim-wakatime',
     'edluffy/specs.nvim',
     'nvim-lua/plenary.nvim',
-		'kyazdani42/nvim-web-devicons',
-	  'glepnir/dashboard-nvim',
+    'kyazdani42/nvim-web-devicons',
+    'glepnir/dashboard-nvim',
     'folke/zen-mode.nvim',
     'ThePrimeagen/refactoring.nvim',
   }
 
   -- TODO: maybe choose new event, or load on cmd
-	use {
-		'sudormrfbin/cheatsheet.nvim',
-		event = 'VimEnter',
-		requires = {
-			{'nvim-telescope/telescope.nvim'},
-			{'nvim-lua/popup.nvim'},
-			{'nvim-lua/plenary.nvim'},
-		}
-	}
+  use {
+    'sudormrfbin/cheatsheet.nvim',
+    event = 'VimEnter',
+    requires = {
+      {'nvim-telescope/telescope.nvim'},
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+    }
+  }
 
   use {
     'mvllow/modes.nvim',
@@ -174,10 +174,10 @@ local function init()
   }
 
   -- TODO: Look at surround.vim
-	-- use {
-	-- 	config = function() require('nvim-autopairs').setup{} end,
-	-- 	-- opt = true,
-	-- }
+  -- use {
+  --  config = function() require('nvim-autopairs').setup{} end,
+  --  -- opt = true,
+  -- }
 
 
   -- TODO: Do I need this?
@@ -192,40 +192,40 @@ local function init()
 
 
 
-	use {
-		'lewis6991/gitsigns.nvim',
-		event = 'VimEnter',
-		requires = {
-			'nvim-lua/plenary.nvim'
-		},
-		config = function() require('gitsigns').setup() end
-	}
+  use {
+    'lewis6991/gitsigns.nvim',
+    event = 'VimEnter',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function() require('gitsigns').setup() end
+  }
 
-	-- use 'ggandor/lightspeed.nvim'
+  -- use 'ggandor/lightspeed.nvim'
   -- TODO: reconfigure - off by one and would like to default to the first match like normal vim
   -- (key bindings)
 
-	use {
-		'ahmedkhalf/project.nvim',
-		event = 'VimEnter', -- TODO: is this really needed?
-		config = function() require("project_nvim").setup {} end,
-	}
+  use {
+    'ahmedkhalf/project.nvim',
+    event = 'VimEnter', -- TODO: is this really needed?
+    config = function() require("project_nvim").setup {} end,
+  }
 
 
   -- Filetypes ------------------------------
   use {
-	  'baskerville/vim-sxhkdrc',
+    'baskerville/vim-sxhkdrc',
   }
 
   -- vimtex is a pretty plugin
-	use {
-		'lervag/vimtex',
-		ft = 'tex',
-	}
+  use {
+    'lervag/vimtex',
+    ft = 'tex',
+  }
 
 
-	-- Color schemes ------------------------------
-	use {
+  -- Color schemes ------------------------------
+  use {
     'shaunsingh/moonlight.nvim',
     'folke/tokyonight.nvim',
     'EdenEast/nightfox.nvim',

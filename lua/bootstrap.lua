@@ -3,16 +3,16 @@ local plugins = require('plugins')
 local M = {}
 
 local default_installed_servers = {
-	'rust_analyzer',
-	'sumneko_lua',
-	'bashls',
-	'clangd',
-	'cmake',
-	'cssls',
-	-- 'denols',
-	-- 'texlab',
-	'pyright',
-	'vimls',
+  'rust_analyzer',
+  'sumneko_lua',
+  'bashls',
+  'clangd',
+  'cmake',
+  'cssls',
+  -- 'denols',
+  -- 'texlab',
+  'pyright',
+  'vimls',
   'ltex',
 }
 

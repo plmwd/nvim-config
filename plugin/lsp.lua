@@ -62,7 +62,7 @@ require("grammar-guard").init()
 -- end, 1000)
 
 local function on_attach(client, bufnr)
-	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   -- Enable completion triggered by <c-x><c-o>
@@ -144,7 +144,7 @@ local servers = {
         hiddenFalsePositives = {},
       },
     }
-	},
+  },
 }
 
 lsp_installer.on_server_ready(function(server)
