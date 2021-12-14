@@ -1,4 +1,5 @@
 local plugins = require('plugins')
+local cmd = vim.cmd
 
 local M = {}
 
@@ -27,11 +28,21 @@ M.install_default_ls = function()
   end
 end
 
+M.install_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  end
+end
+
 M.post_sync_bootstrap = function()
   M.install_default_ls()
 end
 
 M.bootstrap = function()
+  M.install_packer()
+  cmd[[ packadd packer.nvim ]]
   plugins.sync()
   vim.cmd[[ autocmd User PackerComplete lua require('bootstrap').post_sync_bootstrap() ]]
 end
