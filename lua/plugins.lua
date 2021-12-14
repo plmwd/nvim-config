@@ -1,5 +1,7 @@
 -- Shamelessly _borrowed_ from https://github.com/wbthomason/dotfiles/blob/linux/neovim/.config/nvim/lua/plugins.lua
 -- TODO: lsp-installer, lspoconfig, lspkind, lsp_signature in lsp.lua
+local utils = require 'utils'
+
 local packer = nil
 
 local function init()
@@ -8,6 +10,10 @@ local function init()
     packer.init {
       disable_commands = true,
       ensure_dependences = true,
+      profile = {
+        enable = true,
+        threshold = 1 -- the amount in ms that a plugins load time must be over for it to be included in the profile
+      },
     }
   end
 
@@ -31,6 +37,7 @@ local function init()
         'neovim/nvim-lspconfig',
         'williamboman/nvim-lsp-installer',
       },
+      disable = utils.do_minimal_install,
     }
   }
 

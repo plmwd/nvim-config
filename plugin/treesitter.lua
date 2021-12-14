@@ -1,6 +1,7 @@
+local utils = require 'utils'
 local ts_configs = require 'nvim-treesitter.configs'
 ts_configs.setup {
-  ensure_installed = 'maintained',
+  ensure_installed = utils.do_minimal_install and {} or 'maintained',
   highlight = { enable = true, use_languagetree = true },
 
   indent = { enable = false },

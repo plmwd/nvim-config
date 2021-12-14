@@ -4,6 +4,9 @@ local M = {}
 local cmd = vim.cmd
 local map_key = vim.api.nvim_set_keymap
 
+M.do_minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
+M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
+
 M.autocmd = function(group, cmds, clear)
   clear = clear == nil and false or clear
   if type(cmds) == 'string' then cmds = {cmds} end

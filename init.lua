@@ -1,4 +1,5 @@
 -- Parts shamelessly borrowed from https://github.com/wbthomason/dotfiles/blob/linux/neovim/.config/nvim/init.lua
+local utils = require 'utils'
 local cmd = vim.cmd
 local g, b, w, t = vim.g, vim.b, vim.w, vim.t
 local o, go, bo = vim.o, vim.go, vim.bo
@@ -29,3 +30,6 @@ cmd [[command! PackerClean packadd packer.nvim    | lua require('plugins').clean
 cmd [[command! PackerCompile packadd packer.nvim  | lua require('plugins').compile()]]
 cmd [[command! PackerStatus packadd packer.nvim   | lua require('plugins').status()]]
 cmd [[command! Bootstrap packadd packer.nvim      | lua require('bootstrap').bootstrap()]]
+if utils.do_profile then
+  cmd [[command! PackerProfile packadd packer.nvim      | lua require('plugins').profile_output()]]
+end
