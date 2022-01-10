@@ -11,7 +11,7 @@ nnoremap <leader>ff <cmd>lua require('utils').project_files()<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
-nnoremap <leader>fe <cmd>lua require('telescope.builtin').file_browser({cwd = require('telescope.utils').buffer_dir()})<cr>
+nnoremap <leader>fe <cmd>lua require'telescope'.extensions.file_browser.file_browser({cwd = require('telescope.utils').buffer_dir()})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fm <cmd>Telescope man_pages<cr>
@@ -45,6 +45,11 @@ nnoremap <leader>gb <cmd>Git blame<cr>
 nnoremap <leader>lr <cmd>Telescope lsp_references<cr>
 nnoremap <leader>ls <cmd>Telescope lsp_document_symbols<cr>
 nnoremap <leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>la <cmd>Telescope lsp_code_actions<cr>
+
+" Buffer
+nnoremap <leader>bf <cmd>Neoformat<cr>
+vnoremap <leader>bf <cmd>Neoformat<cr>
 
 " Diagnostics (trouble)
 nnoremap <leader>xx <cmd>TroubleToggle<cr>

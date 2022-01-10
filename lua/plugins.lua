@@ -29,6 +29,7 @@ local function init()
     'onsails/lspkind-nvim',
     'folke/trouble.nvim',
     'ray-x/lsp_signature.nvim',
+    'jose-elias-alvarez/nvim-lsp-ts-utils',
     -- TODO: figure out how to set this up without being annoying
     -- 'kosayoda/nvim-lightbulb',
     {
@@ -111,6 +112,7 @@ local function init()
         'nvim-lua/popup.nvim', -- required by media files
         'nvim-telescope/telescope-media-files.nvim',
         'nvim-telescope/telescope-symbols.nvim',
+        'nvim-telescope/telescope-file-browser.nvim',
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
         'kyazdani42/nvim-web-devicons',
@@ -134,6 +136,7 @@ local function init()
   -- Util ------------------------------
   use {
     'windwp/nvim-autopairs',
+    'sbdchd/neoformat',
     'tpope/vim-surround',
     'windwp/nvim-ts-autotag',
     {'numToStr/Comment.nvim', config = [[ require('Comment').setup() ]] },
@@ -222,6 +225,7 @@ local function init()
   -- Filetypes ------------------------------
   use {
     'baskerville/vim-sxhkdrc',
+    'elkowar/yuck.vim',
   }
 
   -- vimtex is a pretty plugin
@@ -233,6 +237,7 @@ local function init()
 
   -- Color schemes ------------------------------
   use {
+    'ap/vim-css-color',
     'shaunsingh/moonlight.nvim',
     'folke/tokyonight.nvim',
     'EdenEast/nightfox.nvim',
@@ -240,6 +245,7 @@ local function init()
     'bluz71/vim-nightfly-guicolors',
     'shaunsingh/nord.nvim',
     'mangeshrex/uwu.vim',
+    'rebelot/kanagawa.nvim',
     { 'rose-pine/neovim', as = 'rose-pine' },
     { 'catppuccin/nvim', as = 'catppuccin' },
   }

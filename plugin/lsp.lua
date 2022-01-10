@@ -44,9 +44,6 @@ local function on_attach(client, bufnr)
 
   if client.resolved_capabilities.document_highlight then
     vim.cmd [[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -63,7 +60,6 @@ local servers = {
   },
   tsserver = {
     extra_on_attach = function(client, bufnr)
-      vim.cmd[[ au BufWritePost <buffer> lua require('lint').try_lint() ]]
     end,
   },
   sumneko_lua = {

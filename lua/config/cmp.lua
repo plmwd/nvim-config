@@ -5,7 +5,7 @@ local cmp = require 'cmp'
 cmp.setup {
   formatting = {
     format = lspkind.cmp_format({
-      with_text = false, -- do not show text alongside icons
+      with_text = true, -- do not show text alongside icons
       preset = 'default',
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
 
@@ -52,10 +52,10 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = 'buffer' },
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
     { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+    { name = 'nvim_lua' },
     { name = 'luasnip' },
     { name = 'cmp_git' },
     { name = 'spell' },

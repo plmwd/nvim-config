@@ -4,6 +4,8 @@ local M = {}
 local cmd = vim.cmd
 local map_key = vim.api.nvim_set_keymap
 
+M.os_name = vim.loop.os_uname().sysname
+
 M.do_minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
 M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 

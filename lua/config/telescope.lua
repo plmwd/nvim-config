@@ -7,6 +7,9 @@ telescope.setup {
     winblend = 8,
   },
   extensions = {
+    file_browser = {
+      theme = 'ivy',
+    },
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
@@ -36,3 +39,4 @@ telescope.setup {
 telescope.load_extension 'fzf'
 telescope.load_extension 'projects'
 telescope.load_extension 'media_files'
+telescope.load_extension 'file_browser'
