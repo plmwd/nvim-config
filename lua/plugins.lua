@@ -136,6 +136,8 @@ local function init()
   -- Util ------------------------------
   use {
     'windwp/nvim-autopairs',
+    'norcalli/nvim-colorizer.lua',
+    'Shatur/neovim-session-manager',
     'sbdchd/neoformat',
     'tpope/vim-surround',
     'windwp/nvim-ts-autotag',
@@ -211,7 +213,7 @@ local function init()
     config = function() require('gitsigns').setup() end
   }
 
-  -- use 'ggandor/lightspeed.nvim'
+  use 'ggandor/lightspeed.nvim'
   -- TODO: reconfigure - off by one and would like to default to the first match like normal vim
   -- (key bindings)
 
@@ -237,7 +239,8 @@ local function init()
 
   -- Color schemes ------------------------------
   use {
-    'ap/vim-css-color',
+    'bluz71/vim-nightfly-guicolors',
+    'yashguptaz/calvera-dark.nvim',
     'shaunsingh/moonlight.nvim',
     'folke/tokyonight.nvim',
     'EdenEast/nightfox.nvim',

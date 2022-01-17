@@ -47,6 +47,17 @@ nnoremap <leader>ls <cmd>Telescope lsp_document_symbols<cr>
 nnoremap <leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
 nnoremap <leader>la <cmd>Telescope lsp_code_actions<cr>
 
+" Window
+nnoremap <c-h> <C-w>h
+nnoremap <c-j> <C-w>j
+nnoremap <c-k> <C-w>k
+nnoremap <c-l> <C-w>l
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>W <cmd>w<cr>
+nnoremap <leader>wq <cmd>wq<cr>
+nnoremap <leader>q <cmd>q<cr>
+nnoremap <leader>wQ <cmd>wqa<cr>
+
 " Buffer
 nnoremap <leader>bf <cmd>Neoformat<cr>
 vnoremap <leader>bf <cmd>Neoformat<cr>
@@ -84,15 +95,6 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap <bs> <C-^>
 nnoremap <leader><tab> <C-w>w
-nnoremap <leader>wh <C-w>h
-nnoremap <leader>wj <C-w>j
-nnoremap <leader>wk <C-w>k
-nnoremap <leader>wl <C-w>l
-nnoremap <leader>w= <C-w>=
-nnoremap <leader>W <cmd>w<cr>
-nnoremap <leader>wq <cmd>wq<cr>
-nnoremap <leader>q <cmd>q<cr>
-nnoremap <leader>wQ <cmd>wqa<cr>
 nnoremap / ms/
 nnoremap ? ms?
 nnoremap * ms*

@@ -7,9 +7,11 @@ local o, go, bo = vim.o, vim.go, vim.bo
 opt.wildignore = '__pycache__'
 opt.wildignore = opt.wildignore + { '*.o', '*~', '*.pyc', '*pycache*' }
 
+opt.termguicolors = true
 opt.pumblend = 17
 opt.wildmode = 'longest:full'
 opt.wildoptions = 'pum'
+opt.showmode = false
 
 opt.tabstop = 2
 opt.softtabstop = 2
