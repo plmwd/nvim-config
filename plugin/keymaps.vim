@@ -7,7 +7,8 @@ nnoremap <leader>] gt
 nnoremap <leader>[ gT
 
 " Fuzzy finders
-nnoremap <leader>ff <cmd>lua require('utils').project_files()<cr>
+nnoremap <leader>ff <cmd>lua require"telescope.builtin".find_files()<cr>
+nnoremap <leader>fa <cmd>lua require('utils').project_files()<cr>
 nnoremap <leader><space> <cmd>Telescope live_grep<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
@@ -48,6 +49,10 @@ nnoremap <leader>lw <cmd>Telescope lsp_workspace_symbols<cr>
 nnoremap <leader>la <cmd>Telescope lsp_code_actions<cr>
 
 " Window
+inoremap <c-h> <C-w>h
+inoremap <c-j> <C-w>j
+inoremap <c-k> <C-w>k
+inoremap <c-l> <C-w>l
 nnoremap <c-h> <C-w>h
 nnoremap <c-j> <C-w>j
 nnoremap <c-k> <C-w>k
@@ -106,5 +111,5 @@ nnoremap * ms*
 
 inoremap <C-e> <cmd>noh<cr>
 inoremap <C-s> <cmd>w<cr>
-nnoremap <C-j> <cmd>cprev<cr>
-nnoremap <C-k> <cmd>cnext<cr>
+nnoremap <C-p> <cmd>cprev<cr>
+nnoremap <C-n> <cmd>cnext<cr>

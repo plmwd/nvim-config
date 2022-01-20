@@ -24,6 +24,9 @@ telescope.setup {
     },
   },
   pickers = {
+    find_files = {
+      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" }
+    },
     lsp_references = { theme = 'dropdown' },
     lsp_code_actions = { theme = 'dropdown' },
     lsp_definitions = { theme = 'dropdown' },

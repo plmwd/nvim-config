@@ -133,11 +133,25 @@ local function init()
   }
 
 
+  -- Syntax
+  use {
+    'jparise/vim-graphql',
+  }
+
+
   -- Util ------------------------------
   use {
     'windwp/nvim-autopairs',
-    'norcalli/nvim-colorizer.lua',
-    'Shatur/neovim-session-manager',
+    {
+      'norcalli/nvim-colorizer.lua',
+      config = function()
+        require('auto-session').setup {
+          log_level = 'info',
+          auto_session_suppress_dirs = {'~/', '~/Projects'}
+        }
+      end
+    },
+    'rmagatti/auto-session',
     'sbdchd/neoformat',
     'tpope/vim-surround',
     'windwp/nvim-ts-autotag',
