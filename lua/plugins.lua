@@ -149,16 +149,7 @@ local function init()
       config = function() require'nvim-tree'.setup {} end
     },
     'windwp/nvim-autopairs',
-    {
-      'norcalli/nvim-colorizer.lua',
-      config = function()
-        require('auto-session').setup {
-          log_level = 'info',
-          auto_session_suppress_dirs = {'~/', '~/Projects'}
-        }
-      end
-    },
-    'rmagatti/auto-session',
+    'norcalli/nvim-colorizer.lua',
     'sbdchd/neoformat',
     'tpope/vim-surround',
     'windwp/nvim-ts-autotag',
