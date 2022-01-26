@@ -141,6 +141,13 @@ local function init()
 
   -- Util ------------------------------
   use {
+    {
+      'kyazdani42/nvim-tree.lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      },
+      config = function() require'nvim-tree'.setup {} end
+    },
     'windwp/nvim-autopairs',
     {
       'norcalli/nvim-colorizer.lua',
@@ -253,7 +260,6 @@ local function init()
 
   -- Color schemes ------------------------------
   use {
-    'bluz71/vim-nightfly-guicolors',
     'yashguptaz/calvera-dark.nvim',
     'shaunsingh/moonlight.nvim',
     'folke/tokyonight.nvim',
