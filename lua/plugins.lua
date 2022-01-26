@@ -132,6 +132,10 @@ local function init()
     'sindrets/diffview.nvim',
   }
 
+  -- Syntax ------------------------------
+  use {
+    'ARM9/arm-syntax-vim',
+  }
 
   -- Syntax
   use {
@@ -148,6 +152,7 @@ local function init()
       },
       config = function() require'nvim-tree'.setup {} end
     },
+    'NTBBloodbath/rest.nvim',
     'windwp/nvim-autopairs',
     'norcalli/nvim-colorizer.lua',
     'sbdchd/neoformat',

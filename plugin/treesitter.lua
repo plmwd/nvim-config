@@ -25,14 +25,6 @@ ts_configs.setup {
     -- highlight_current_scope = { enable = true }
   },
   textobjects = {
-    lsp_interop = {
-      enable = true,
-      border = 'none',
-      peek_definition_code = {
-        ["<leader>df"] = "@function.outer",
-        ["<leader>dF"] = "@class.outer",
-      },
-    },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
@@ -51,33 +43,6 @@ ts_configs.setup {
       goto_previous_end = {
         ["[M"] = "@function.outer",
         ["[]"] = "@class.outer",
-      },
-    },
-    select = {
-      enable = true,
-      keymaps = {
-        ['iF'] = {
-          python = '(function_definition) @function',
-          cpp = '(function_definition) @function',
-          c = '(function_definition) @function',
-          java = '(method_declaration) @function',
-        },
-        -- or you use the queries from supported languages with textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['aC'] = '@class.outer',
-        ['iC'] = '@class.inner',
-        ['ac'] = '@conditional.outer',
-        ['ic'] = '@conditional.inner',
-        ['ae'] = '@block.outer',
-        ['ie'] = '@block.inner',
-        ['al'] = '@loop.outer',
-        ['il'] = '@loop.inner',
-        ['is'] = '@statement.inner',
-        ['as'] = '@statement.outer',
-        ['ad'] = '@comment.outer',
-        ['am'] = '@call.outer',
-        ['im'] = '@call.inner',
       },
     },
   },
