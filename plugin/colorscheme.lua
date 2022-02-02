@@ -1,12 +1,13 @@
 local g = vim.g
 
-g.tokyonight_style="storm"
-g.dashboard_default_executive="telescope"
+g.tokyonight_style = "night"
+g.tokyonight_italic_functions = true
+g.dashboard_default_executive = "telescope"
 
-g.material_style="darker"
-g.rose_pine_variant="moon"
+g.material_style = "darker"
+g.rose_pine_variant = "moon"
 g.rose_pine_disable_italics = false
-g.vimtex_view_method="zathura"
+g.vimtex_view_method = "zathura"
 
 require'nightfox'.setup{
   fox = 'nightfox',
@@ -20,4 +21,4 @@ require'nightfox'.setup{
   }
 }
 
-vim.cmd[[ colorscheme nightfox ]]
+vim.cmd[[ colorscheme tokyonight ]]
