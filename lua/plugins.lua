@@ -161,7 +161,6 @@ local function init()
     {'numToStr/Comment.nvim', config = [[ require('Comment').setup() ]] },
     'andweeb/presence.nvim',
     'mizlan/iswap.nvim',
-    'wakatime/vim-wakatime',
     'edluffy/specs.nvim',
     'nvim-lua/plenary.nvim',
     'kyazdani42/nvim-web-devicons',
