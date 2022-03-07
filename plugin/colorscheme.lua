@@ -1,6 +1,6 @@
 local g = vim.g
 
-g.tokyonight_style = "night"
+g.tokyonight_style = "storm"
 g.tokyonight_italic_functions = true
 g.dashboard_default_executive = "telescope"
 

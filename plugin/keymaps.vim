@@ -113,3 +113,8 @@ inoremap <C-e> <cmd>noh<cr>
 inoremap <C-s> <cmd>w<cr>
 nnoremap <C-p> <cmd>cprev<cr>
 nnoremap <C-n> <cmd>cnext<cr>
+
+" Binary editing utils
+nnoremap <leader>XX :%!xxd<cr>
+nnoremap <leader>XR :%!xxd -r<cr>
+nnoremap <leader>XW :%!xxd -r<cr>:w<cr>:%!xxd<cr>
