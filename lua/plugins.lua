@@ -10,6 +10,7 @@ local function init()
 		packer.init({
 			disable_commands = true,
 			ensure_dependences = true,
+      max_jobs = 64,
 			profile = {
 				enable = true,
 				threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
@@ -255,6 +256,7 @@ local function init()
 	use({
 		"baskerville/vim-sxhkdrc",
 		"elkowar/yuck.vim",
+    "fladson/vim-kitty",
 	})
 
 	-- vimtex is a pretty plugin

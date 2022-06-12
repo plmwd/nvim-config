@@ -20,12 +20,10 @@ nnoremap <leader>fM <cmd>Telescope media_files<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fp <cmd>Telescope projects<cr>
 nnoremap <leader>fj <cmd>Telescope symbols<cr>
-nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME'})<cr>
-nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/nvim'})<cr>
-nnoremap <leader>fcx <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/xmonad'})<cr>
-nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/sway'})<cr>
-nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$XDG_CONFIG_HOME/kitty'})<cr>
-nnoremap <leader>fcd <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/repos/dwm'})<cr>
+nnoremap <leader>fca <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/.config'})<cr>
+nnoremap <leader>fcn <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/.config/nvim'})<cr>
+nnoremap <leader>fcs <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/.config/sway'})<cr>
+nnoremap <leader>fck <cmd>lua require('telescope.builtin').find_files({ cwd = '$HOME/.config/kitty'})<cr>
 
 " Terminal
 " nnoremap <leader>tt <cmd>ToggleTerm<cr>
@@ -95,7 +93,11 @@ nnoremap <C-s> <cmd>w<cr>
 nnoremap H ^
 nnoremap L $
 vnoremap H ^
+nnoremap J 15j
+nnoremap K 15k
 vnoremap L $
+" nnoremap <C-J> :move +1<cr>
+" nnoremap <C-K> :move -2<cr>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap <bs> <C-^>
