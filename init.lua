@@ -1,35 +1,16 @@
--- Parts shamelessly borrowed from https://github.com/wbthomason/dotfiles/blob/linux/neovim/.config/nvim/init.lua
-local utils = require 'utils'
 local cmd = vim.cmd
-local g, b, w, t = vim.g, vim.b, vim.w, vim.t
-local o, go, bo = vim.o, vim.go, vim.bo
+local g = vim.g
 
+-- Map leader
 g.mapleader = ' '
-g.maplocalleader = ','
 
--- Disable some built-in plugins we don't want
-local disabled_built_ins = {
-  'gzip',
-  'man',
-  'shada_plugin',
-  'tarPlugin',
-  'tar',
-  'zipPlugin',
-  'zip',
-  'netrwPlugin',
-}
+-- Plugin globals
+g.tokyonight_style = 'storm'
+g.tokyonight_italic_comments = true
+g.tokyonight_sidebars = { 'terminal' }
+g.tokyonight_dark_float = true
 
-for _, plugin in pairs(disabled_built_ins) do
-  g['loaded_' .. plugin] = 1
-end
-
-cmd [[command! PackerInstall packadd packer.nvim  | lua require('plugins').install()]]
-cmd [[command! PackerUpdate packadd packer.nvim   | lua require('plugins').update()]]
-cmd [[command! PackerSync packadd packer.nvim     | lua require('plugins').sync()]]
-cmd [[command! PackerClean packadd packer.nvim    | lua require('plugins').clean()]]
-cmd [[command! PackerCompile packadd packer.nvim  | lua require('plugins').compile()]]
-cmd [[command! PackerStatus packadd packer.nvim   | lua require('plugins').status()]]
-cmd [[command! Bootstrap packadd packer.nvim      | lua require('bootstrap').bootstrap()]]
-if utils.do_profile then
-  cmd [[command! PackerProfile packadd packer.nvim      | lua require('plugins').profile_output()]]
-end
+require 'options'
+require 'keymaps'
+require 'plugins'
+cmd 'silent! colo tokyonight'

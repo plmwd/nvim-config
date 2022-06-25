@@ -1,5 +1,10 @@
--- TODO: configure this to my liking
-require('neogit').setup {
+local present, neogit = pcall(require, 'neogit')
+
+if not present then
+  return
+end
+
+neogit.setup {
   disable_signs = false,
   disable_hint = false,
   disable_context_highlighting = false,

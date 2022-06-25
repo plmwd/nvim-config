@@ -1,7 +1,12 @@
-local utils = require 'utils'
-local ts_configs = require 'nvim-treesitter.configs'
-ts_configs.setup {
-  ensure_installed = utils.do_minimal_install and {} or 'maintained',
+local present, treesitter = pcall(require, 'nvim-treesitter.configs')
+if not present then
+  return
+end
+
+local config = require 'config'
+
+treesitter.setup {
+  ensure_installed = config.treesitter.ensure_installed,
   highlight = { enable = true, use_languagetree = true },
 
   indent = { enable = false },
@@ -18,11 +23,6 @@ ts_configs.setup {
       scope_incremental = 'grc',
       node_decremental = 'grm',
     },
-  },
-  refactor = {
-    smart_rename = { enable = true, keymaps = { smart_rename = 'grr' } },
-    highlight_definitions = { enable = true },
-    -- highlight_current_scope = { enable = true }
   },
   textobjects = {
     move = {

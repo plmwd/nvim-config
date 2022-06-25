@@ -1,18 +1,21 @@
--- Thanks teej https://github.com/tjdevries/config_manager/blob/master/xdg_config/nvim/plugin/options.lua
 local opt = vim.opt
-local g, b, w, t = vim.g, vim.b, vim.w, vim.t
-local o, go, bo = vim.o, vim.go, vim.bo
 
 -- Ignore compiled files
-opt.wildignore = '__pycache__'
-opt.wildignore = opt.wildignore + { '*.o', '*~', '*.pyc', '*pycache*' }
-
+opt.wildignore = {
+  '__pycache__',
+  '*.o',
+  '*~',
+  '*.pyc',
+  '*pycache*',
+  '**/node_modules/*',
+}
+opt.wildmode = 'longest:full,full'
+opt.wildoptions = 'pum'
+opt.wildignorecase = true
+opt.path = { '.', ',', '**' }
 opt.termguicolors = true
 opt.pumblend = 17
-opt.wildmode = 'longest:full'
-opt.wildoptions = 'pum'
 opt.showmode = false
-
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
@@ -20,8 +23,7 @@ opt.expandtab = true
 opt.completeopt = 'menu,menuone,noselect'
 opt.cursorline = true
 opt.mouse = 'a'
-opt.termguicolors = true
-opt.scrolloff = 10
+opt.scrolloff = 5
 opt.tw = 100
 opt.cc = '+1'
 opt.ignorecase = true

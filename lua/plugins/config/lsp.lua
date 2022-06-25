@@ -1,12 +1,11 @@
+local present, lsp_installer = pcall(require, 'nvim-lsp-installer')
+if not present then
+  return
+end
+
 local utils = require 'utils'
-local lsp_installer = require 'nvim-lsp-installer'
-local trouble = require 'trouble'
 
 local sign_define = vim.fn.sign_define
-
-trouble.setup()
-require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' } }
-if not utils.do_minimal_install then require("grammar-guard").init() end
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
