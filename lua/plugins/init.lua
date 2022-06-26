@@ -20,10 +20,9 @@ packer.startup(function(use)
   use 'feline-nvim/feline.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use {
-    'glepnir/dashboard-nvim', 
+    'glepnir/dashboard-nvim',
     config = function() require 'plugins.config.dashboard' end,
   }
-  use 'sbdchd/neoformat'
   use 'NTBBloodbath/rest.nvim'
   use 'folke/zen-mode.nvim'
   use 'ggandor/leap.nvim'
@@ -52,6 +51,7 @@ packer.startup(function(use)
 
   use {
     'lukas-reineke/indent-blankline.nvim',
+    after = 'nvim-treesitter',
     setup = function()
       require('utils').on_file_open 'indent-blankline.nvim'
     end,
@@ -66,7 +66,7 @@ packer.startup(function(use)
     setup = function()
       require('utils').on_file_open 'nvim-treesitter'
     end,
-    cmd = require('config').treesitter_cmds,
+    cmd = require('config').treesitter.cmds,
     run = ':TSUpdate',
     config = function()
       require 'plugins.config.treesitter'
@@ -113,7 +113,8 @@ packer.startup(function(use)
   -- LSP
   use {
     'williamboman/nvim-lsp-installer',
-    cmd = require('config').lsp_cmds,
+    opt = true,
+    cmd = require('config').lsp.cmds,
     setup = function()
       require('utils').on_file_open 'nvim-lsp-installer'
     end,
@@ -125,14 +126,6 @@ packer.startup(function(use)
     module = 'lspconfig',
     config = function()
       require 'plugins.config.lsp'
-    end,
-  }
-
-  use {
-    'ray-x/lsp_signature.nvim',
-    after = 'nvim-lspconfig',
-    config = function()
-      require 'plugins.config.lsp_signature'
     end,
   }
 
@@ -157,7 +150,6 @@ packer.startup(function(use)
     config = function()
       require 'plugins.config.luasnip'
     end,
-
   }
 
   use {
@@ -186,6 +178,21 @@ packer.startup(function(use)
   }
 
   use {
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    after = 'cmp-nvim-lua',
+  }
+
+  use {
+    'hrsh7th/cmp-nvim-lsp-document-symbol',
+    after = 'cmp-nvim-lua',
+  }
+
+  use {
+    'mtoohey31/cmp-fish',
+    after = 'cmp-nvim-lua',
+  }
+
+  use {
     'numToStr/Comment.nvim',
     module = 'Comment',
     keys = { 'gc', 'gb ' },
@@ -195,7 +202,14 @@ packer.startup(function(use)
   }
 
   -- Lsp Helpers
+  use 'folke/trouble.nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  use 'onsails/lspkind.nvim'
+  use 'simrat39/rust-tools.nvim'
+  use 'p00f/clangd_extensions.nvim'
+  use 'lukas-reineke/lsp-format.nvim'
+  use 'jose-elias-alvarez/null-ls.nvim'
+  use 'folke/lua-dev.nvim'
 
   -- UI
   use {

@@ -4,20 +4,6 @@ M.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
 M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 
 M.lsp = {
-  ensure_installed = {
-    'rust_analyzer',
-    'sumneko_lua',
-    'bashls',
-    'clangd',
-    'cmake',
-    'cssls',
-    -- 'denols',
-    -- 'texlab',
-    'pyright',
-    'vimls',
-    'ltex',
-  },
-
   cmds = {
    "LspInfo",
    "LspStart",
@@ -32,6 +18,52 @@ M.lsp = {
    "LspLog",
    "LspPrintInstalled",
   },
+  signs = {
+    Error = "",
+    Warn = "",
+    Hint = "",
+    Info = ""
+  },
+  diagnostic = {
+    virtual_text = false,
+  },
+  servers = {
+    cmake = {},
+    cssls = {},
+    dockerls = {},
+    eslint = {},
+    gopls = {},
+    html = {},
+    pyright = {},
+    tailwindcss = {},
+    terraformls = {},
+    texlab = {},
+    vimls = {},
+    yamlls = {},
+    sumneko_lua = require('lua-dev').setup(),
+    tsserver = {
+      on_attach = function (client, _)
+        require('nvim-lsp-ts-utils').setup_client(client)
+      end
+    },
+    clangd = function (on_attach, capabilities)
+      require('clangd_extensions').setup {
+        server = {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        },
+      }
+    end
+    ,
+    rust_analyzer = function (on_attach, capabilities)
+      require('rust-tools').setup {
+        server = {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        },
+      }
+    end
+  }
 }
 
 M.treesitter = {
@@ -77,9 +109,5 @@ M.packer = {
 }
 
 M.minimal_plugins = {}
-
--- Taken from https://github.com/NvChad/NvChad/blob/main/lua/core/lazy_load.lua
--- lspinstaller & lspconfig cmds for lazyloading
-
 
 return M

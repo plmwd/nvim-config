@@ -1,8 +1,18 @@
 local autocmd = vim.api.nvim_create_autocmd
-local cmd = vim.cmd
-local map_key = vim.api.nvim_set_keymap
 
 local M = {}
+
+M.nmap = function(lhs, rhs, opts)
+  vim.keymap.set('n', lhs, rhs, opts)
+end
+
+M.imap = function(lhs, rhs, opts)
+  vim.keymap.set('i', lhs, rhs, opts)
+end
+
+M.tmap = function(lhs, rhs, opts)
+  vim.keymap.set('t', lhs, rhs, opts)
+end
 
 M.os_name = vim.loop.os_uname().sysname
 
