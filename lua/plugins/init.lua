@@ -18,6 +18,8 @@ packer.startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'lewis6991/impatient.nvim'
   use 'feline-nvim/feline.nvim'
+  use 'nvim-lualine/lualine.nvim'
+  use 'SmiteshP/nvim-navic'
   use 'kyazdani42/nvim-web-devicons'
   use {
     'glepnir/dashboard-nvim',
@@ -78,6 +80,7 @@ packer.startup(function(use)
   use 'sindrets/diffview.nvim'
   use {
     'TimUntersberger/neogit',
+    after = 'plenary.nvim',
     config = function()
       require 'plugins.config.neogit'
     end
@@ -197,9 +200,19 @@ packer.startup(function(use)
     module = 'Comment',
     keys = { 'gc', 'gb ' },
     config = function()
-      require 'plugins.config.comment'
+      require('Comment').setup()
     end,
   }
+
+  -- use {
+  --   'jose-elias-alvarez/null-ls.nvim',
+  --   setup = function ()
+  --     require('utils').on_file_open 'null-ls.nvim'
+  --   end,
+  --   config = function ()
+  --     require 'plugins.config.null_ls'
+  --   end
+  -- }
 
   -- Lsp Helpers
   use 'folke/trouble.nvim'
@@ -208,7 +221,6 @@ packer.startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'p00f/clangd_extensions.nvim'
   use 'lukas-reineke/lsp-format.nvim'
-  use 'jose-elias-alvarez/null-ls.nvim'
   use 'folke/lua-dev.nvim'
 
   -- UI
@@ -239,11 +251,24 @@ packer.startup(function(use)
     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
   }
 
+  use 'folke/todo-comments.nvim'
+  use 'rcarriga/nvim-notify'
+  use 'b0o/incline.nvim'
+  use {
+    'j-hui/fidget.nvim',
+    config = function ()
+      require('fidget').setup{}
+    end
+  }
+  -- use {
+  --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+  --   config = function ()
+  --     require('lsp_lines').register_lsp_virtual_lines()
+  --   end
+  -- }
+
   use 'ARM9/arm-syntax-vim'
   use 'jparise/vim-graphql'
-  -- use 'onsails/lspkind-nvim'
-  -- use 'folke/trouble.nvim'
-  -- use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
   if packer_bootstrap then
     packer.sync()

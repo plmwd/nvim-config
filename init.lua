@@ -13,6 +13,6 @@ g.tokyonight_dark_float = true
 require 'options'
 require('keymaps').setup()
 require 'plugins'
-require 'ui'
+require('ui').setup()
 
-cmd 'silent! colo tokyonight'
+cmd 'silent! colo rose-pine'

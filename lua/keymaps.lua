@@ -1,17 +1,18 @@
 local map = vim.keymap.set
-local nmap = require('utils').nmap
+local utils = require 'utils'
+local nmap, tmap = utils.nmap, utils.tmap
 
 local M = {}
 
 M.setup = function()
-  nmap(':', ';')
-  nmap(';', ':')
+  nmap(':', ';', { silent = false })
+  nmap(';', ':', { silent = false })
   map({'n', 'v'}, 'H', '^')
   map({'n', 'v'}, 'L', '$')
   nmap('n', 'nzzzv')
   nmap('N', 'Nzzzv')
-  nmap('/', 'ms/')
-  nmap('?', 'ms?')
+  nmap('/', 'ms/', { silent = false})
+  nmap('?', 'ms?', { silent = false})
   nmap('*', 'ms*')
   nmap('<bs>', '<c-^>')
   nmap('<esc>', '<cmd>noh<cr>')
@@ -23,11 +24,16 @@ M.setup = function()
   nmap('<leader>gg', '<cmd>Neogit<cr>')
   nmap('<leader>gc', '<cmd>Neogit commit<cr>')
   nmap('<leader>ps', '<cmd>PackerSync<cr>')
+  tmap('<c-j><c-k>', '<c-\\><c-n>')
+  tmap('<c-j>', '<c-\\><c-n><c-W>j')
+  tmap('<c-k>', '<c-\\><c-n><c-W>k')
+  tmap('<c-h>', '<c-\\><c-n><c-W>h')
+  tmap('<c-l>', '<c-\\><c-n><c-W>l')
 end
 
 M.lsp = {
   setup = function(bufnr)
-    local opts = { buffer = bufnr, silent = true, }
+    local opts = { buffer = bufnr }
 
     nmap('gD', vim.lsp.buf.declaration, opts)
     nmap('gd', vim.lsp.buf.definition, opts)
@@ -46,7 +52,6 @@ M.lsp = {
     nmap('<leader>ll', vim.lsp.diagnostic.set_loclist, opts)
     nmap('<leader>bf', vim.lsp.buf.formatting, opts)
   end,
-  servers = {},
 }
 
 return M

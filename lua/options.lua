@@ -37,6 +37,7 @@ opt.wrap = false
 opt.belloff = 'all' -- Just turn the dang bell off
 opt.signcolumn = 'yes:1'
 opt.autoread = true
+opt.laststatus = 3
 
 opt.formatoptions = opt.formatoptions
   - 'a' -- Auto formatting is BAD.

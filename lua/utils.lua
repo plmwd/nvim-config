@@ -2,16 +2,21 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local M = {}
 
+local function map(modes, lhs, rhs, opts)
+  local opts = vim.tbl_extend('force', { silent = true }, opts or {})
+  vim.keymap.set(modes, lhs, rhs, opts)
+end
+
 M.nmap = function(lhs, rhs, opts)
-  vim.keymap.set('n', lhs, rhs, opts)
+  map('n', lhs, rhs, opts)
 end
 
 M.imap = function(lhs, rhs, opts)
-  vim.keymap.set('i', lhs, rhs, opts)
+  map('i', lhs, rhs, opts)
 end
 
 M.tmap = function(lhs, rhs, opts)
-  vim.keymap.set('t', lhs, rhs, opts)
+  map('t', lhs, rhs, opts)
 end
 
 M.os_name = vim.loop.os_uname().sysname
@@ -41,7 +46,7 @@ M.lazy_load = function(tb)
             -- This deferring only happens only when we do "nvim filename"
             if tb.plugins ~= "nvim-treesitter" then
                vim.defer_fn(function()
-                  vim.cmd("PackerLoad " .. tb.plugins)
+                vim.cmd("PackerLoad " .. tb.plugins)
                end, 0)
             else
                vim.cmd("PackerLoad " .. tb.plugins)

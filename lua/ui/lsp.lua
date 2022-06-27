@@ -10,6 +10,11 @@ M.setup = function ()
     vim.cmd('sign define ' .. hl .. ' text=' .. icon .. ' texthl=' .. hl .. ' linehl= numhl=')
   end
   vim.diagnostic.config(lsp_config.diagnostic)
+
+  local present, trouble = pcall(require, 'trouble')
+  if present then
+    trouble.setup {}
+  end
 end
 
 M.setup_buffer = function (client, bufnr)

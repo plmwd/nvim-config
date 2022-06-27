@@ -1,7 +1,6 @@
 # Things left to configure
 - LSP
   - Rust
-  - Lua
   - Python
   - C/C++
   - Javascript/Typescript
@@ -9,8 +8,6 @@
   - Shell
 - Telescope & keybindings
 - DAP
-- LuaSnip
-- Snippets
 - Keybindings
 - Dashboard actions
 

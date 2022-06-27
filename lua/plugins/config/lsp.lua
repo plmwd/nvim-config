@@ -1,5 +1,6 @@
 local installer_present, lsp_installer = pcall(require, 'nvim-lsp-installer')
 local lspconfig_present, lspconfig = pcall(require, 'lspconfig')
+local navic_present, navic = pcall(require, 'nvim-navic')
 if not installer_present or not lspconfig_present then
   return
 end
@@ -22,6 +23,10 @@ local function make_on_attach(server)
 
     keymaps.lsp.setup(bufnr)
     lsp_ui.setup_buffer(client, bufnr)
+
+    if navic_present then
+      navic.attach(client, bufnr)
+    end
   end
 end
 

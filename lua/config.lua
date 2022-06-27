@@ -1,5 +1,13 @@
 local M = {}
 
+local present, lua_dev = pcall(require, 'lua-dev')
+local lua_conf = {}
+if present then
+  lua_conf = lua_dev.setup()
+else
+  lua_conf = {}
+end
+
 M.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
 M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 
@@ -40,7 +48,7 @@ M.lsp = {
     texlab = {},
     vimls = {},
     yamlls = {},
-    sumneko_lua = require('lua-dev').setup(),
+    sumneko_lua = lua_conf,
     tsserver = {
       on_attach = function (client, _)
         require('nvim-lsp-ts-utils').setup_client(client)
@@ -63,7 +71,12 @@ M.lsp = {
         },
       }
     end
-  }
+  },
+  null_ls = {
+    formatters = {},
+    diagnostics = {},
+    actions = {},
+  },
 }
 
 M.treesitter = {
@@ -88,6 +101,7 @@ M.treesitter = {
     'toml',
     'vim',
     'yaml',
+    'markdown',
   },
   cmds = {
    "TSInstall",
