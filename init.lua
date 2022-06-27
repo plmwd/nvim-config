@@ -5,14 +5,14 @@ local g = vim.g
 g.mapleader = ' '
 
 -- Plugin globals
-g.tokyonight_style = 'storm'
+g.tokyonight_style = 'night'
 g.tokyonight_italic_comments = true
 g.tokyonight_sidebars = { 'terminal' }
 g.tokyonight_dark_float = true
 
 require 'options'
-require('keymaps').setup()
+require 'keymaps'
 require 'plugins'
-require('ui').setup()
+require 'ui'
 
-cmd 'silent! colo rose-pine'
+cmd 'silent! colo tokyonight'

@@ -227,15 +227,23 @@ packer.startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     -- ft = 'dashboard?'
-    cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+    cmd = {
+      'NvimTreeToggle',
+      'NvimTreeFocus',
+      'NvimTreeOpen',
+      'NvimTreeFindFile',
+      'NvimTreeFindFileToggle',
+    },
     config = function()
-      require 'plugins.config.nvimtree'
+      require('nvim-tree').setup{}
+      -- require 'plugins.config.nvimtree'
     end,
   }
 
   use {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
+    module = { 'telescope', 'telescope.builtin' },
     config = function()
       require 'plugins.config.telescope'
     end,

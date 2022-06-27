@@ -5,7 +5,7 @@ if not installer_present or not lspconfig_present then
   return
 end
 
-local keymaps = require 'keymaps'
+local keymaps = require 'keymaps.lsp'
 local lsp_ui = require 'ui.lsp'
 local config = require 'config'
 
@@ -21,7 +21,7 @@ local function make_on_attach(server)
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    keymaps.lsp.setup(bufnr)
+    keymaps.setup(bufnr)
     lsp_ui.setup_buffer(client, bufnr)
 
     if navic_present then
