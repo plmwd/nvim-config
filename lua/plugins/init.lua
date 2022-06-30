@@ -17,6 +17,12 @@ packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'lewis6991/impatient.nvim'
+  use {
+    'ahmedkhalf/project.nvim',
+    config = function ()
+      require('project_nvim').setup(require('config').project_nvim)
+    end,
+  }
   use 'feline-nvim/feline.nvim'
   use 'nvim-lualine/lualine.nvim'
   use 'SmiteshP/nvim-navic'
@@ -140,7 +146,7 @@ packer.startup(function(use)
 
   use {
     'hrsh7th/nvim-cmp',
-    after = 'friendly-snippets',
+    after = 'LuaSnip',
     config = function()
       require 'plugins.config.cmp'
     end,
@@ -149,7 +155,7 @@ packer.startup(function(use)
   use {
     'L3MON4D3/LuaSnip',
     wants = 'friendly-snippets',
-    after = 'nvim-cmp',
+    after = 'friendly-snippets',
     config = function()
       require 'plugins.config.luasnip'
     end,
@@ -157,7 +163,7 @@ packer.startup(function(use)
 
   use {
     'saadparwaiz1/cmp_luasnip',
-    after = 'LuaSnip',
+    after = 'nvim-cmp',
   }
 
   use {
@@ -235,15 +241,14 @@ packer.startup(function(use)
       'NvimTreeFindFileToggle',
     },
     config = function()
-      require('nvim-tree').setup{}
-      -- require 'plugins.config.nvimtree'
+      require 'plugins.config.nvimtree'
     end,
   }
 
   use {
     'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
-    module = { 'telescope', 'telescope.builtin' },
+    -- cmd = 'Telescope',
+    -- module = { 'telescope', 'telescope.builtin' },
     config = function()
       require 'plugins.config.telescope'
     end,

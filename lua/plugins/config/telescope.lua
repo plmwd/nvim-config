@@ -5,6 +5,16 @@ telescope.setup {
     layout_strategy = 'flex',
     scroll_strategy = 'cycle',
     winblend = 8,
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--trim",
+    },
   },
   extensions = {
     file_browser = {
@@ -25,7 +35,12 @@ telescope.setup {
   },
   pickers = {
     find_files = {
-      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" }
+      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+      mappings = {
+        i = {
+          ['<c-u>'] = require('ui.actions').goto_parent_dir,
+        },
+      },
     },
     lsp_references = { theme = 'dropdown' },
     lsp_code_actions = { theme = 'dropdown' },
@@ -40,6 +55,6 @@ telescope.setup {
 
 -- Extensions
 telescope.load_extension 'fzf'
--- telescope.load_extension 'projects'
+telescope.load_extension 'projects'
 telescope.load_extension 'media_files'
 telescope.load_extension 'file_browser'

@@ -2,30 +2,30 @@ local db = require 'dashboard'
 local home = os.getenv('HOME')
 
 db.custom_center = {
-  {
-    icon = '  ',
-    desc = 'Last Session             ',
-    action = '',
-  },
+  -- {
+  --   icon = '  ',
+  --   desc = 'Last Session             ',
+  --   action = '',
+  -- },
   {
     icon = '  ',
     desc = 'Recently Opened Files    ',
-    action = '',
+    action = 'Telescope oldfiles',
   },
   {
     icon = '  ',
-    desc = 'File Files               ',
-    action = '',
+    desc = 'Find Files               ',
+    action = 'Telescope find_files',
   },
   {
     icon = '  ',
     desc = 'Recent Projects          ',
-    action = '',                     
-  },                                 
-  {                                  
-    icon = '  ',                    
+    action = 'Telescope projects',
+  },
+  {
+    icon = '  ',
     desc = 'Neovim Config            ',
-    action = '',
+    action = 'Telescope find_files cwd=' .. home .. '/.config/nvim',
   },
 }
 

@@ -6,10 +6,9 @@
   - Javascript/Typescript
   - Go
   - Shell
-- Telescope & keybindings
 - DAP
-- Keybindings
 - Dashboard actions
+- Formatting
 
 # Ideas
 

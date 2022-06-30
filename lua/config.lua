@@ -43,7 +43,6 @@ M.lsp = {
     gopls = {},
     html = {},
     pyright = {},
-    tailwindcss = {},
     terraformls = {},
     texlab = {},
     vimls = {},
@@ -110,6 +109,20 @@ M.treesitter = {
    "TSEnable",
    "TSDisable",
    "TSModuleInhfo",
+  }
+}
+
+M.project_nvim = {
+  patterns = {
+    '.git',
+    '_darcs',
+    '.hg',
+    '.bzr',
+    '.svn',
+    'Makefile',
+    'package.json',
+    'CMakeLists.txt',
+    'Cargo.toml',
   }
 }
 
