@@ -17,6 +17,12 @@ nmap('<c-n>', '<cmd>cnext<cr>')
 nmap('<c-p>', '<cmd>cprev<cr>')
 
 nmap('<leader>gg', '<cmd>Neogit<cr>')
+nmap('<leader>gd', '<cmd>DiffviewOpen<cr>')
+nmap('<leader>gD', function ()
+  vim.ui.input({ prompt = 'git path: ' }, function (input)
+    vim.cmd('DiffviewOpen ' .. input)
+  end)
+end)
 
 nmap('<leader>ps', '<cmd>PackerSync<cr>')
 nmap('<leader>pc', '<cmd>PackerCompile<cr>')

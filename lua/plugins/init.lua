@@ -83,7 +83,12 @@ packer.startup(function(use)
 
   -- Git
   use 'tpope/vim-fugitive'
-  use 'sindrets/diffview.nvim'
+  use {
+    'sindrets/diffview.nvim',
+    config = function ()
+      require 'plugins.config.diffview'
+    end,
+  }
   use {
     'TimUntersberger/neogit',
     after = 'plenary.nvim',
