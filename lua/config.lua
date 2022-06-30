@@ -13,24 +13,24 @@ M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 
 M.lsp = {
   cmds = {
-   "LspInfo",
-   "LspStart",
-   "LspRestart",
-   "LspStop",
-   "LspInstall",
-   "LspUnInstall",
-   "LspUnInstallAll",
-   "LspInstall",
-   "LspInstallInfo",
-   "LspInstallLog",
-   "LspLog",
-   "LspPrintInstalled",
+    'LspInfo',
+    'LspStart',
+    'LspRestart',
+    'LspStop',
+    'LspInstall',
+    'LspUnInstall',
+    'LspUnInstallAll',
+    'LspInstall',
+    'LspInstallInfo',
+    'LspInstallLog',
+    'LspLog',
+    'LspPrintInstalled',
   },
   signs = {
-    Error = "",
-    Warn = "",
-    Hint = "",
-    Info = ""
+    Error = '',
+    Warn = '',
+    Hint = '',
+    Info = ''
   },
   diagnostic = {
     virtual_text = false,
@@ -49,11 +49,11 @@ M.lsp = {
     yamlls = {},
     sumneko_lua = lua_conf,
     tsserver = {
-      on_attach = function (client, _)
+      on_attach = function(client, _)
         require('nvim-lsp-ts-utils').setup_client(client)
       end
     },
-    clangd = function (on_attach, capabilities)
+    clangd = function(on_attach, capabilities)
       require('clangd_extensions').setup {
         server = {
           on_attach = on_attach,
@@ -62,7 +62,7 @@ M.lsp = {
       }
     end
     ,
-    rust_analyzer = function (on_attach, capabilities)
+    rust_analyzer = function(on_attach, capabilities)
       require('rust-tools').setup {
         server = {
           on_attach = on_attach,
@@ -103,12 +103,12 @@ M.treesitter = {
     'markdown',
   },
   cmds = {
-   "TSInstall",
-   "TSBufEnable",
-   "TSBufDisable",
-   "TSEnable",
-   "TSDisable",
-   "TSModuleInhfo",
+    "TSInstall",
+    "TSBufEnable",
+    "TSBufDisable",
+    "TSEnable",
+    "TSDisable",
+    "TSModuleInhfo",
   }
 }
 

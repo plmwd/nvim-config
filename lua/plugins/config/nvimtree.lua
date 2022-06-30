@@ -23,6 +23,6 @@ local group = vim.api.nvim_create_augroup('nvim_tree_resize', {})
 vim.api.nvim_create_autocmd('VimResized', {
   group = group,
   callback = function()
-    vim.cmd ('NvimTreeResize ' .. tree_width())
+    vim.cmd('NvimTreeResize ' .. tree_width())
   end,
 })

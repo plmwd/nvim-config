@@ -11,7 +11,7 @@ neogit.setup {
   auto_refresh = true,
   disable_builtin_notifications = false,
   commit_popup = {
-      kind = "split",
+    kind = "split",
   },
   -- Change the default way of opening neogit
   kind = "tab",

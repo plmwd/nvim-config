@@ -6,14 +6,14 @@ telescope.setup {
     scroll_strategy = 'cycle',
     winblend = 8,
     vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--trim",
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--trim',
     },
   },
   extensions = {
@@ -28,14 +28,14 @@ telescope.setup {
     },
     media_files = {
       -- filetypes whitelist
-      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg"},
-      find_cmd = "rg" -- find command (defaults to `fd`)
+      -- defaults to {'png', 'jpg', 'mp4', 'webm', 'pdf'}
+      filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
+      find_cmd = 'rg' -- find command (defaults to `fd`)
     },
   },
   pickers = {
     find_files = {
-      find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+      find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
       mappings = {
         i = {
           ['<c-u>'] = require('ui.actions').goto_parent_dir,

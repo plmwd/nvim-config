@@ -1,8 +1,9 @@
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local packer_bootstrap = nil
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
   vim.cmd [[ packadd packer.nvim ]]
 end
 
@@ -12,14 +13,14 @@ if not present then
   return
 end
 
-packer.init(require'config'.packer)
+packer.init(require 'config'.packer)
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'lewis6991/impatient.nvim'
   use {
     'ahmedkhalf/project.nvim',
-    config = function ()
+    config = function()
       require('project_nvim').setup(require('config').project_nvim)
     end,
   }
@@ -85,7 +86,7 @@ packer.startup(function(use)
   use 'tpope/vim-fugitive'
   use {
     'sindrets/diffview.nvim',
-    config = function ()
+    config = function()
       require 'plugins.config.diffview'
     end,
   }
@@ -215,15 +216,12 @@ packer.startup(function(use)
     end,
   }
 
-  -- use {
-  --   'jose-elias-alvarez/null-ls.nvim',
-  --   setup = function ()
-  --     require('utils').on_file_open 'null-ls.nvim'
-  --   end,
-  --   config = function ()
-  --     require 'plugins.config.null_ls'
-  --   end
-  -- }
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function()
+      require 'plugins.config.null_ls'
+    end
+  }
 
   -- Lsp Helpers
   use 'folke/trouble.nvim'
@@ -274,8 +272,8 @@ packer.startup(function(use)
   use 'b0o/incline.nvim'
   use {
     'j-hui/fidget.nvim',
-    config = function ()
-      require('fidget').setup{}
+    config = function()
+      require('fidget').setup {}
     end
   }
   -- use {

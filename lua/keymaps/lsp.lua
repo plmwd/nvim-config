@@ -4,7 +4,7 @@ local nmap, tmap = utils.nmap, utils.tmap
 
 local M = {}
 
-M.setup = function(bufnr)
+function M.setup(bufnr, server)
   local opts = { buffer = bufnr }
 
   nmap('gD', vim.lsp.buf.declaration, opts)
@@ -18,11 +18,9 @@ M.setup = function(bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, opts)
   nmap('<leader>ca', vim.lsp.buf.code_action, opts)
   nmap('gr', vim.lsp.buf.references, opts)
-  nmap('<leader>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
   nmap('[d', vim.diagnostic.goto_prev, opts)
   nmap(']d', vim.diagnostic.goto_next, opts)
-  nmap('<leader>ll', vim.lsp.diagnostic.set_loclist, opts)
-  nmap('<leader>bf', vim.lsp.buf.formatting, opts)
+  nmap('<leader>bf', '<cmd>Format<cr>', opts)
 end
 
 return M

@@ -1,6 +1,8 @@
 local installer_present, lsp_installer = pcall(require, 'nvim-lsp-installer')
 local lspconfig_present, lspconfig = pcall(require, 'lspconfig')
 local navic_present, navic = pcall(require, 'nvim-navic')
+local lsp_format_present, lsp_format = pcall(require, 'lsp-format')
+
 if not installer_present or not lspconfig_present then
   return
 end
@@ -14,18 +16,26 @@ lsp_installer.setup {
 }
 lsp_ui.setup()
 
+if lsp_format_present then
+  lsp_format.setup()
+end
+
 local function make_on_attach(server)
-  return function (client, bufnr)
+  return function(client, bufnr)
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    keymaps.setup(bufnr)
+    keymaps.setup(bufnr, server)
     lsp_ui.setup_buffer(client, bufnr)
 
     if navic_present then
       navic.attach(client, bufnr)
+    end
+
+    if lsp_format_present then
+      lsp_format.on_attach(client)
     end
   end
 end
@@ -40,7 +50,7 @@ for server, spec in pairs(config.lsp.servers) do
   else
     if spec.on_attach then
       local spec_on_attach = spec.on_attach
-      spec.on_attach = function (client, bufnr)
+      spec.on_attach = function(client, bufnr)
         on_attach(client, bufnr)
         spec_on_attach(client, bufnr)
       end
