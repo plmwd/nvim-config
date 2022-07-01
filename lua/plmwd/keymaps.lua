@@ -9,6 +9,7 @@ map({ 'n', 'v' }, 'L', '$')
 nmap('n', 'nzzzv')
 nmap('N', 'Nzzzv')
 nmap('/', 'ms/', { silent = false })
+nmap('<c-/>', '<cmd>Telescope current_buffer_fuzzy_find<cr>', { silent = false })
 nmap('?', 'ms?', { silent = false })
 nmap('*', 'ms*')
 nmap('<bs>', '<c-^>')
@@ -32,6 +33,7 @@ nmap('<leader>ck', '<cmd>Telescope find_files cwd=~/.config/kitty<cr>')
 
 nmap('<leader>`', '<cmd>NvimTreeFindFile<cr>')
 nmap('<leader>~', '<cmd>NvimTreeFocus<cr>')
+nmap('<leader><tab>', '<cmd>NvimTreeToggle<cr>')
 
 nmap('<leader>f', '<cmd>Telescope find_files<cr>')
 
@@ -64,6 +66,13 @@ nmap('<leader>tnr', function()
     vim.g.was_rnu = true
   end
 end)
+
+nmap('<leader>tdv', function()
+  vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+end)
+
+nmap('<leader>tds', vim.diagnostic.show)
+nmap('<leader>tdh', vim.diagnostic.hide)
 
 tmap('<c-j><c-k>', '<c-\\><c-n>')
 tmap('<c-j>', '<c-\\><c-n><c-W>j')

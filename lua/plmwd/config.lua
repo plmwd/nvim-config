@@ -33,7 +33,7 @@ M.lsp = {
     Info = ''
   },
   diagnostic = {
-    virtual_text = false,
+    virtual_text = true,
   },
   servers = {
     cmake = {},

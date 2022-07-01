@@ -12,7 +12,7 @@ autocmd('TextYankPost', {
   end
 })
 
-utils.safe_setup('todo_comments')
+utils.safe_setup('todo-comments')
 utils.safe_setup('notify', function(notify)
   vim.notify = notify
 end)
