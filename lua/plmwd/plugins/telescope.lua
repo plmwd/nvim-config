@@ -38,7 +38,7 @@ telescope.setup {
       find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
       mappings = {
         i = {
-          ['<c-u>'] = require('ui.actions').goto_parent_dir,
+          ['<c-u>'] = require('plmwd.ui.actions').goto_parent_dir,
         },
       },
     },

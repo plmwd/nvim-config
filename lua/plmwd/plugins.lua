@@ -62,7 +62,7 @@ packer.startup(function(use)
     'lukas-reineke/indent-blankline.nvim',
     after = 'nvim-treesitter',
     setup = function()
-      require('utils').on_file_open 'indent-blankline.nvim'
+      require('plmwd.utils').on_file_open 'indent-blankline.nvim'
     end,
     config = function()
       require 'plmwd.plugins.blankline'
@@ -73,7 +73,7 @@ packer.startup(function(use)
   use {
     'nvim-treesitter/nvim-treesitter',
     setup = function()
-      require('utils').on_file_open 'nvim-treesitter'
+      require('plmwd.utils').on_file_open 'nvim-treesitter'
     end,
     cmd = require('plmwd.config').treesitter.cmds,
     run = ':TSUpdate',
@@ -100,7 +100,7 @@ packer.startup(function(use)
   use {
     'lewis6991/gitsigns.nvim',
     setup = function()
-      require('utils').packer_lazy_load 'gitsigns.nvim'
+      require('plmwd.utils').packer_lazy_load 'gitsigns.nvim'
     end,
     -- config = function()
     --   require 'plmwd.plugins.gitsigns'
@@ -118,7 +118,7 @@ packer.startup(function(use)
   use {
     'folke/which-key.nvim',
     setup = function()
-      require('utils').packer_lazy_load 'which-key.nvim'
+      require('plmwd.utils').packer_lazy_load 'which-key.nvim'
     end,
     -- config = function()
     --   require 'whichkey'
@@ -131,7 +131,7 @@ packer.startup(function(use)
     opt = true,
     cmd = require('plmwd.config').lsp.cmds,
     setup = function()
-      require('utils').on_file_open 'nvim-lsp-installer'
+      require('plmwd.utils').on_file_open 'nvim-lsp-installer'
     end,
   }
 
