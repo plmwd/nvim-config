@@ -7,9 +7,9 @@ if not installer_present or not lspconfig_present then
   return
 end
 
-local keymaps = require 'keymaps.lsp'
-local lsp_ui = require 'ui.lsp'
-local config = require 'config'
+local keymaps = require 'plmwd.keymaps.lsp'
+local lsp_ui = require 'plmwd.ui.lsp'
+local config = require 'plmwd.config'
 
 lsp_installer.setup {
   automatic_installation = true,

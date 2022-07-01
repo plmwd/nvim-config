@@ -1,5 +1,5 @@
 local map = vim.keymap.set
-local utils = require 'utils'
+local utils = require 'plmwd.utils'
 local nmap, tmap = utils.nmap, utils.tmap
 
 nmap(':', ';', { silent = false })

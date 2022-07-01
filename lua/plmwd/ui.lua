@@ -26,4 +26,4 @@ if incline then
   incline.setup {}
 end
 
-require 'ui.statusline'
+require 'plmwd.ui.statusline'

@@ -3,7 +3,7 @@ if not present then
   return
 end
 
-local config = require 'config'
+local config = require 'plmwd.config'
 
 treesitter.setup {
   ensure_installed = config.treesitter.ensure_installed,

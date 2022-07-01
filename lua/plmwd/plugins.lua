@@ -13,7 +13,7 @@ if not present then
   return
 end
 
-packer.init(require 'config'.packer)
+packer.init(require 'plmwd.config'.packer)
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -21,7 +21,7 @@ packer.startup(function(use)
   use {
     'ahmedkhalf/project.nvim',
     config = function()
-      require('project_nvim').setup(require('config').project_nvim)
+      require('project_nvim').setup(require('plmwd.config').project_nvim)
     end,
   }
   use 'feline-nvim/feline.nvim'
@@ -30,7 +30,7 @@ packer.startup(function(use)
   use 'kyazdani42/nvim-web-devicons'
   use {
     'glepnir/dashboard-nvim',
-    config = function() require 'plugins.config.dashboard' end,
+    config = function() require 'plmwd.plugins.dashboard' end,
   }
   use 'NTBBloodbath/rest.nvim'
   use 'folke/zen-mode.nvim'
@@ -65,7 +65,7 @@ packer.startup(function(use)
       require('utils').on_file_open 'indent-blankline.nvim'
     end,
     config = function()
-      require 'plugins.config.blankline'
+      require 'plmwd.plugins.blankline'
     end,
   }
 
@@ -75,10 +75,10 @@ packer.startup(function(use)
     setup = function()
       require('utils').on_file_open 'nvim-treesitter'
     end,
-    cmd = require('config').treesitter.cmds,
+    cmd = require('plmwd.config').treesitter.cmds,
     run = ':TSUpdate',
     config = function()
-      require 'plugins.config.treesitter'
+      require 'plmwd.plugins.treesitter'
     end,
   }
 
@@ -87,14 +87,14 @@ packer.startup(function(use)
   use {
     'sindrets/diffview.nvim',
     config = function()
-      require 'plugins.config.diffview'
+      require 'plmwd.plugins.diffview'
     end,
   }
   use {
     'TimUntersberger/neogit',
     after = 'plenary.nvim',
     config = function()
-      require 'plugins.config.neogit'
+      require 'plmwd.plugins.neogit'
     end
   }
   use {
@@ -103,14 +103,14 @@ packer.startup(function(use)
       require('utils').packer_lazy_load 'gitsigns.nvim'
     end,
     -- config = function()
-    --   require 'plugins.config.gitsigns'
+    --   require 'plmwd.plugins.gitsigns'
     -- end,
   }
 
   use {
     'akinsho/toggleterm.nvim',
     config = function()
-      require 'plugins.config.toggleterm'
+      require 'plmwd.plugins.toggleterm'
     end,
   }
 
@@ -129,7 +129,7 @@ packer.startup(function(use)
   use {
     'williamboman/nvim-lsp-installer',
     opt = true,
-    cmd = require('config').lsp.cmds,
+    cmd = require('plmwd.config').lsp.cmds,
     setup = function()
       require('utils').on_file_open 'nvim-lsp-installer'
     end,
@@ -140,7 +140,7 @@ packer.startup(function(use)
     after = 'nvim-lsp-installer',
     module = 'lspconfig',
     config = function()
-      require 'plugins.config.lsp'
+      require 'plmwd.plugins.lsp'
     end,
   }
 
@@ -154,7 +154,7 @@ packer.startup(function(use)
     'hrsh7th/nvim-cmp',
     after = 'LuaSnip',
     config = function()
-      require 'plugins.config.cmp'
+      require 'plmwd.plugins.cmp'
     end,
   }
 
@@ -163,7 +163,7 @@ packer.startup(function(use)
     wants = 'friendly-snippets',
     after = 'friendly-snippets',
     config = function()
-      require 'plugins.config.luasnip'
+      require 'plmwd.plugins.luasnip'
     end,
   }
 
@@ -219,7 +219,7 @@ packer.startup(function(use)
   use {
     'jose-elias-alvarez/null-ls.nvim',
     config = function()
-      require 'plugins.config.null_ls'
+      require 'plmwd.plugins.null_ls'
     end
   }
 
@@ -231,6 +231,9 @@ packer.startup(function(use)
   use 'p00f/clangd_extensions.nvim'
   use 'lukas-reineke/lsp-format.nvim'
   use 'folke/lua-dev.nvim'
+
+  -- Debugging
+  use 'mfussenegger/nvim-dap'
 
   -- UI
   use {
@@ -244,7 +247,7 @@ packer.startup(function(use)
       'NvimTreeFindFileToggle',
     },
     config = function()
-      require 'plugins.config.nvimtree'
+      require 'plmwd.plugins.nvimtree'
     end,
   }
 
@@ -253,7 +256,7 @@ packer.startup(function(use)
     -- cmd = 'Telescope',
     -- module = { 'telescope', 'telescope.builtin' },
     config = function()
-      require 'plugins.config.telescope'
+      require 'plmwd.plugins.telescope'
     end,
     requires = {
       'nvim-telescope/telescope-media-files.nvim',

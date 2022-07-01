@@ -3,9 +3,9 @@ if not present then
   return
 end
 
-local formatting = null_ls.builtin.formatting
-local diagnostics = null_ls.builtin.diagnostics
-local completion = null_ls.builtin.completion
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+local completion = null_ls.builtins.completion
 
 null_ls.setup {
   sources = {

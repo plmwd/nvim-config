@@ -10,9 +10,9 @@ g.tokyonight_italic_comments = true
 g.tokyonight_sidebars = { 'terminal' }
 g.tokyonight_dark_float = true
 
-require 'options'
-require 'keymaps'
-require 'plugins'
-require 'ui'
+require 'plmwd.options'
+require 'plmwd.keymaps'
+require 'plmwd.plugins'
+require 'plmwd.ui'
 
 cmd 'silent! colo tokyonight'

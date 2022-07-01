@@ -1,4 +1,4 @@
-local lsp_config = require('config').lsp
+local lsp_config = require('plmwd.config').lsp
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
