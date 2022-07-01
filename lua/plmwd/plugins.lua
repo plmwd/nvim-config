@@ -274,6 +274,7 @@ packer.startup(function(use)
   use 'j-hui/fidget.nvim'
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-surround'
+  use 'ellisonleao/glow.nvim'
 
   -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'

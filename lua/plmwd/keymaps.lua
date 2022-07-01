@@ -34,7 +34,10 @@ nmap('<leader>`', '<cmd>NvimTreeFindFile<cr>')
 nmap('<leader>~', '<cmd>NvimTreeFocus<cr>')
 
 nmap('<leader>f', '<cmd>Telescope find_files<cr>')
+
 nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
+-- nmap('<leader>bp',)
+
 nmap('<leader>=', '<cmd>Telescope projects<cr>')
 nmap('<leader>/', '<cmd>Telescope live_grep<cr>')
 
