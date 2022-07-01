@@ -38,6 +38,30 @@ nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
 nmap('<leader>=', '<cmd>Telescope projects<cr>')
 nmap('<leader>/', '<cmd>Telescope live_grep<cr>')
 
+-- Let <leader>tnn toggle the line column and remember if rnu was set
+nmap('<leader>tnn', function()
+  if vim.opt.nu:get() or vim.opt.rnu:get() then
+    vim.g.was_rnu = vim.opt.rnu:get()
+    vim.opt.rnu = false
+    vim.opt.nu = false
+  else
+    vim.opt.rnu = vim.g.was_rnu
+    vim.opt.nu = true
+  end
+end)
+
+-- Toggle rnu if nu is set, else enable rnu and nu since I like seeing the current line number
+nmap('<leader>tnr', function()
+  if vim.opt.nu:get() then
+    vim.opt.rnu = not vim.opt.rnu:get()
+    vim.g.was_rnu = not vim.g.was_rnu
+  else
+    vim.opt.rnu = true
+    vim.opt.nu = true
+    vim.g.was_rnu = true
+  end
+end)
+
 tmap('<c-j><c-k>', '<c-\\><c-n>')
 tmap('<c-j>', '<c-\\><c-n><c-W>j')
 tmap('<c-k>', '<c-\\><c-n><c-W>k')
