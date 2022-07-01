@@ -11,18 +11,18 @@ autocmd('TextYankPost', {
   end
 })
 
-local _, todo_comments = pcall(require, 'todo-comments')
-if todo_comments then
+local todo_present, todo_comments = pcall(require, 'todo-comments')
+if todo_present then
   todo_comments.setup {}
 end
 
-local _, notify = pcall(require, 'notify')
-if notify then
+local notify_present, notify = pcall(require, 'notify')
+if notify_present then
   vim.notify = notify
 end
 
-local _, incline = pcall(require, 'incline')
-if incline then
+local incline_present, incline = pcall(require, 'incline')
+if incline_present then
   incline.setup {}
 end
 
