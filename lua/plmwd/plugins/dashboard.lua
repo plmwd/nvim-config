@@ -54,3 +54,10 @@ db.default_banner = vim.split([[
 █▀▄▒█▀▄▒█▀▒█▄█▒▒█▒▒█▀█▒█▒█▀██▒█▒█▐
 ▀▀▒▒▀▒▀▒▀▀▒▀▒▀▒▒▀▒▒▀▒▀▒▀▒▀▒▒▀▒▒▀▀▐
 ]], '\n')
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dashboard',
+  callback = function(opts)
+    vim.keymap.set('n', 'q', '<cmd>q<cr>', { buffer = opts.buf })
+  end
+})
