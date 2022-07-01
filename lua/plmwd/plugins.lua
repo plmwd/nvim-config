@@ -253,8 +253,6 @@ packer.startup(function(use)
 
   use {
     'nvim-telescope/telescope.nvim',
-    -- cmd = 'Telescope',
-    -- module = { 'telescope', 'telescope.builtin' },
     config = function()
       require 'plmwd.plugins.telescope'
     end,
@@ -273,19 +271,11 @@ packer.startup(function(use)
   use 'folke/todo-comments.nvim'
   use 'rcarriga/nvim-notify'
   use 'b0o/incline.nvim'
-  use {
-    'j-hui/fidget.nvim',
-    config = function()
-      require('fidget').setup {}
-    end
-  }
-  -- use {
-  --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-  --   config = function ()
-  --     require('lsp_lines').register_lsp_virtual_lines()
-  --   end
-  -- }
+  use 'j-hui/fidget.nvim'
+  use 'windwp/nvim-autopairs'
+  use 'tpope/vim-surround'
 
+  -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'
   use 'jparise/vim-graphql'
 

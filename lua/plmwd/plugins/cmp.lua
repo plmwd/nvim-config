@@ -4,6 +4,7 @@ if not present then
 end
 
 local luasnip = require 'luasnip'
+local utils = require 'plmwd.utils'
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -96,3 +97,10 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+utils.safe_setup('nvim-autopairs.completion.cmp', function(cmp_autopairs)
+  cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+  )
+end)
