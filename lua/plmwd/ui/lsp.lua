@@ -1,5 +1,5 @@
 local lsp_config = require('plmwd.config').lsp
-local augroup = vim.api.nvim_create_augroup
+local augroup = function(name) vim.api.nvim_create_augroup(name, {}) end
 local autocmd = vim.api.nvim_create_autocmd
 
 local M = {}
@@ -19,7 +19,7 @@ end
 
 function M.setup_buffer(client, bufnr)
   if client.resolved_capabilities.document_highlight then
-    local lsp_hl_group = augroup('lsp_document_highlight', {})
+    local lsp_hl_group = augroup('lsp_document_highlight')
     autocmd('CursorHold', {
       group = lsp_hl_group,
       buffer = bufnr,
@@ -29,6 +29,15 @@ function M.setup_buffer(client, bufnr)
       group = lsp_hl_group,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references
+    })
+  end
+
+  if client.resolved_capabilities.code_lens then
+    local codelens_group = augroup('lsp_codelens')
+    autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+      group = codelens_group,
+      buffer = bufnr,
+      callback = vim.lsp.codelens.refresh,
     })
   end
 end

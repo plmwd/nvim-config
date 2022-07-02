@@ -71,6 +71,9 @@ nmap('<leader>tdv', function()
   vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
 end)
 
+nmap('<leader>xx', '<cmd>Trouble document_diagnostics<cr>')
+nmap('<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
+
 nmap('<leader>tds', vim.diagnostic.show)
 nmap('<leader>tdh', vim.diagnostic.hide)
 

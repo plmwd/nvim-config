@@ -8,24 +8,12 @@ else
   lua_conf = {}
 end
 
+local home = vim.loop.os_homedir()
+
 M.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
 M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 
 M.lsp = {
-  cmds = {
-    'LspInfo',
-    'LspStart',
-    'LspRestart',
-    'LspStop',
-    'LspInstall',
-    'LspUnInstall',
-    'LspUnInstallAll',
-    'LspInstall',
-    'LspInstallInfo',
-    'LspInstallLog',
-    'LspLog',
-    'LspPrintInstalled',
-  },
   signs = {
     Error = '',
     Warn = '',
@@ -67,6 +55,19 @@ M.lsp = {
         server = {
           on_attach = on_attach,
           capabilities = capabilities,
+          standalone = false,
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = {
+                command = 'clippy',
+              },
+              files = {
+                excludeDirs = {
+                  home .. '/.rustup'
+                },
+              },
+            },
+          },
         },
       }
     end
@@ -102,14 +103,6 @@ M.treesitter = {
     'yaml',
     'markdown',
   },
-  cmds = {
-    "TSInstall",
-    "TSBufEnable",
-    "TSBufDisable",
-    "TSEnable",
-    "TSDisable",
-    "TSModuleInhfo",
-  }
 }
 
 M.project_nvim = {
@@ -132,6 +125,9 @@ M.packer = {
   profile = {
     enable = M.do_profile,
     threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+  },
+  display = {
+    open_fn = require('packer.util').float,
   },
 }
 

@@ -75,7 +75,14 @@ packer.startup(function(use)
     setup = function()
       require('plmwd.utils').on_file_open 'nvim-treesitter'
     end,
-    cmd = require('plmwd.config').treesitter.cmds,
+    cmd = {
+      "TSInstall",
+      "TSBufEnable",
+      "TSBufDisable",
+      "TSEnable",
+      "TSDisable",
+      "TSModuleInhfo",
+    },
     run = ':TSUpdate',
     config = function()
       require 'plmwd.plugins.treesitter'
@@ -129,7 +136,20 @@ packer.startup(function(use)
   use {
     'williamboman/nvim-lsp-installer',
     opt = true,
-    cmd = require('plmwd.config').lsp.cmds,
+    cmd = {
+      'LspInfo',
+      'LspStart',
+      'LspRestart',
+      'LspStop',
+      'LspInstall',
+      'LspUnInstall',
+      'LspUnInstallAll',
+      'LspInstall',
+      'LspInstallInfo',
+      'LspInstallLog',
+      'LspLog',
+      'LspPrintInstalled',
+    },
     setup = function()
       require('plmwd.utils').on_file_open 'nvim-lsp-installer'
     end,
@@ -140,7 +160,7 @@ packer.startup(function(use)
     after = 'nvim-lsp-installer',
     module = 'lspconfig',
     config = function()
-      require 'plmwd.plugins.lsp'
+      require 'plmwd.lsp'
     end,
   }
 
@@ -275,6 +295,7 @@ packer.startup(function(use)
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-surround'
   use 'ellisonleao/glow.nvim'
+  use 'mattn/webapi-vim'
 
   -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'

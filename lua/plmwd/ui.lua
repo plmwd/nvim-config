@@ -13,9 +13,9 @@ autocmd('TextYankPost', {
 })
 
 utils.safe_setup('todo-comments')
-utils.safe_setup('notify', function(notify)
-  vim.notify = notify
-end)
+-- utils.safe_setup('notify', function(notify)
+--   vim.notify = notify
+-- end)
 utils.safe_setup('incline')
 utils.safe_setup('fidget')
 utils.safe_setup('nvim-autopairs')

@@ -3,6 +3,7 @@ local g = vim.g
 
 -- Map leader
 g.mapleader = ' '
+g.maplocalleader = ','
 
 -- Plugin globals
 g.tokyonight_style = 'night'

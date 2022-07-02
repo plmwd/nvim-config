@@ -85,4 +85,23 @@ function M.safe_setup(plugin_name, opts_or_fun)
   end
 end
 
+function M.get_nearest_codelens(bufnr, win)
+  local line, _ = unpack(vim.api.nvim_win_get_cursor(win))
+  local codelenses = vim.lsp.codelens.get(bufnr)
+  if #codelenses == 0 then
+    return nil
+  end
+
+  iprint(codelenses)
+  local closest = codelenses[1]
+
+  for _, lens in pairs(codelenses) do
+    if vim.fn.abs(closest.range.start.line > line - lens.range.start.line) then
+      closest = lens
+    end
+  end
+
+  return closest
+end
+
 return M
