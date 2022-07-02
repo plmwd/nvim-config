@@ -61,9 +61,9 @@ packer.startup(function(use)
   use {
     'lukas-reineke/indent-blankline.nvim',
     after = 'nvim-treesitter',
-    setup = function()
-      require('plmwd.utils').on_file_open 'indent-blankline.nvim'
-    end,
+    -- setup = function()
+    --   require('plmwd.utils').on_file_open 'indent-blankline.nvim'
+    -- end,
     config = function()
       require 'plmwd.plugins.blankline'
     end,
