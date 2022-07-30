@@ -92,9 +92,7 @@ function M.get_nearest_codelens(bufnr, win)
     return nil
   end
 
-  iprint(codelenses)
   local closest = codelenses[1]
-
   for _, lens in pairs(codelenses) do
     if vim.fn.abs(closest.range.start.line > line - lens.range.start.line) then
       closest = lens
@@ -102,6 +100,15 @@ function M.get_nearest_codelens(bufnr, win)
   end
 
   return closest
+end
+
+function M.reload()
+  local lua_dirs = vim.fn.glob("./lua/*", 0, 1)
+  for _, dir in ipairs(lua_dirs) do
+    dir = string.gsub(dir, "./lua/", "")
+    require("plenary.reload").reload_module(dir)
+  end
+  print('Reloaded config!')
 end
 
 return M
