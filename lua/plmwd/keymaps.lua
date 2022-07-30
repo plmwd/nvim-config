@@ -68,7 +68,12 @@ nmap('<leader>tnr', function()
 end)
 
 nmap('<leader>tdv', function()
-  vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+  local lines_present, lsp_lines = pcall(require, 'lsp_lines')
+  if lines_present then
+    lsp_lines.toggle()
+  else
+    vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+  end
 end)
 
 nmap('<leader>xx', '<cmd>Trouble document_diagnostics<cr>')
@@ -76,6 +81,8 @@ nmap('<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
 
 nmap('<leader>tds', vim.diagnostic.show)
 nmap('<leader>tdh', vim.diagnostic.hide)
+
+nmap('<leader>R', utils.reload)
 
 tmap('<c-j><c-k>', '<c-\\><c-n>')
 tmap('<c-j>', '<c-\\><c-n><c-W>j')

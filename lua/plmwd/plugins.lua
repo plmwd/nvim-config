@@ -251,6 +251,12 @@ packer.startup(function(use)
   use 'p00f/clangd_extensions.nvim'
   use 'lukas-reineke/lsp-format.nvim'
   use 'folke/lua-dev.nvim'
+  use {
+    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    config = function()
+      require('lsp_lines').setup()
+    end
+  }
 
   -- Debugging
   use 'mfussenegger/nvim-dap'
