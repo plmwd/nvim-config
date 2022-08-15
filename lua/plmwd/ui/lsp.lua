@@ -18,7 +18,7 @@ function M.setup()
 end
 
 function M.setup_buffer(client, bufnr)
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     local lsp_hl_group = augroup('lsp_document_highlight')
     autocmd('CursorHold', {
       group = lsp_hl_group,
@@ -32,7 +32,7 @@ function M.setup_buffer(client, bufnr)
     })
   end
 
-  if client.resolved_capabilities.code_lens then
+  if client.server_capabilities.code_lens then
     local codelens_group = augroup('lsp_codelens')
     autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
       group = codelens_group,

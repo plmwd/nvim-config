@@ -85,6 +85,7 @@ packer.startup(function(use)
     },
     run = ':TSUpdate',
     config = function()
+      require("nvim-treesitter.install").prefer_git = true
       require 'plmwd.plugins.treesitter'
     end,
   }
@@ -223,11 +224,6 @@ packer.startup(function(use)
   }
 
   use {
-    'mtoohey31/cmp-fish',
-    after = 'cmp-nvim-lua',
-  }
-
-  use {
     'numToStr/Comment.nvim',
     module = 'Comment',
     keys = { 'gc', 'gb ' },
@@ -264,7 +260,6 @@ packer.startup(function(use)
   -- UI
   use {
     'kyazdani42/nvim-tree.lua',
-    -- ft = 'dashboard?'
     cmd = {
       'NvimTreeToggle',
       'NvimTreeFocus',

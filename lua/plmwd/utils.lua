@@ -3,7 +3,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local M = {}
 
 local function map(modes, lhs, rhs, opts)
-  local opts = vim.tbl_extend('force', { silent = true }, opts or {})
+  opts = vim.tbl_extend('force', { silent = true }, opts or {})
   vim.keymap.set(modes, lhs, rhs, opts)
 end
 
@@ -17,6 +17,15 @@ end
 
 function M.tmap(lhs, rhs, opts)
   map('t', lhs, rhs, opts)
+end
+
+function M.vmap(lhs, rhs, opts)
+  map('v', lhs, rhs, opts)
+end
+
+function M.getsel()
+  vim.cmd [[ yank z ]]
+  return vim.fn.getreg('z')
 end
 
 M.os_name = vim.loop.os_uname().sysname

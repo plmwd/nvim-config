@@ -58,6 +58,8 @@ db.default_banner = vim.split([[
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'dashboard',
   callback = function(opts)
-    vim.keymap.set('n', 'q', '<cmd>q<cr>', { buffer = opts.buf })
+    local opts = { buffer = opts.buf, silent = true }
+    vim.keymap.set('n', 'q', '<cmd>q<cr>', opts)
+    vim.keymap.set('n', '<leader>`', '<cmd>NvimTreeToggle<cr>', opts)
   end
 })

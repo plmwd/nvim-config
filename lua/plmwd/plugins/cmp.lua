@@ -63,7 +63,6 @@ cmp.setup({
     { name = 'nvim_lua ' },
   }, {
     { name = 'luasnip' },
-    { name = 'fish' },
   }, {
     { name = 'buffer' },
   })

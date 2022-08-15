@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 local utils = require 'plmwd.utils'
-local nmap, tmap = utils.nmap, utils.tmap
+local nmap, tmap, vmap = utils.nmap, utils.tmap, utils.vmap
+local telescope_builtin = require('telescope.builtin')
+local home = vim.loop.os_homedir()
 
 nmap(':', ';', { silent = false })
 nmap(';', ':', { silent = false })
@@ -14,8 +16,8 @@ nmap('?', 'ms?', { silent = false })
 nmap('*', 'ms*')
 nmap('<bs>', '<c-^>')
 nmap('<esc>', '<cmd>noh<cr>')
-nmap('<c-n>', '<cmd>cnext<cr>')
-nmap('<c-p>', '<cmd>cprev<cr>')
+nmap('<c-n>', '<cmd>cnext<cr>zt')
+nmap('<c-p>', '<cmd>cprev<cr>zt')
 
 nmap('<leader>gg', '<cmd>Neogit<cr>')
 nmap('<leader>gd', '<cmd>DiffviewOpen<cr>')
@@ -35,7 +37,11 @@ nmap('<leader>`', '<cmd>NvimTreeFindFile<cr>')
 nmap('<leader>~', '<cmd>NvimTreeFocus<cr>')
 nmap('<leader><tab>', '<cmd>NvimTreeToggle<cr>')
 
-nmap('<leader>f', '<cmd>Telescope find_files<cr>')
+nmap('<leader>ff', '<cmd>Telescope find_files<cr>')
+nmap('<leader>fs', '<cmd>Telescope grep_string<cr>')
+nmap('<leader>fcn', function()
+  telescope_builtin.find_files({ cwd = home .. '/.config/nvim' })
+end)
 
 nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
 -- nmap('<leader>bp',)
@@ -84,8 +90,15 @@ nmap('<leader>tdh', vim.diagnostic.hide)
 
 nmap('<leader>R', utils.reload)
 
+nmap('<leader>e', function()
+  local file_dir = vim.fn.expand('%:p:h')
+  vim.cmd('Telescope file_browser path=' .. file_dir)
+end)
+
 tmap('<c-j><c-k>', '<c-\\><c-n>')
 tmap('<c-j>', '<c-\\><c-n><c-W>j')
 tmap('<c-k>', '<c-\\><c-n><c-W>k')
 tmap('<c-h>', '<c-\\><c-n><c-W>h')
-tmap('<c-l>', '<c-\\><c-n><c-W>l')
+-- tmap('<c-l>', '<c-\\><c-n><c-W>l')
+
+-- vmap('s', '"zy:Telescope live_grep default_text=<C-r>z<cr>')
