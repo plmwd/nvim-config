@@ -28,6 +28,8 @@ function M.getsel()
   return vim.fn.getreg('z')
 end
 
+M.config_dir = vim.fn.fnamemodify("$MYVIMRC", ":p:h")
+
 M.os_name = vim.loop.os_uname().sysname
 
 function M.project_files()

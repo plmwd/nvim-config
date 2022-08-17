@@ -1,7 +1,6 @@
 local map = vim.keymap.set
 local utils = require 'plmwd.utils'
 local nmap, tmap, vmap = utils.nmap, utils.tmap, utils.vmap
-local telescope_builtin = require('telescope.builtin')
 local home = vim.loop.os_homedir()
 
 nmap(':', ';', { silent = false })
@@ -39,9 +38,7 @@ nmap('<leader><tab>', '<cmd>NvimTreeToggle<cr>')
 
 nmap('<leader>ff', '<cmd>Telescope find_files<cr>')
 nmap('<leader>fs', '<cmd>Telescope grep_string<cr>')
-nmap('<leader>fcn', function()
-  telescope_builtin.find_files({ cwd = home .. '/.config/nvim' })
-end)
+nmap('<leader>fcn', string.format('<cmd>Telescope find_files cwd=%s<cr>', utils.config_dir))
 
 nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
 -- nmap('<leader>bp',)
