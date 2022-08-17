@@ -284,6 +284,16 @@ packer.startup(function(use)
     },
   }
 
+  --[[
+  --  Build instructions for old versions of cmake
+   mkdir build
+   cd build
+   cmake  -DCMAKE_BUILD_TYPE=Release
+   cmake  -DCMAKE_BUILD_TYPE=Release ..
+   cmake --build build --config Release
+   cmake --build . --config Release
+   cmake --install . --prefix .
+  --]]
   use {
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
