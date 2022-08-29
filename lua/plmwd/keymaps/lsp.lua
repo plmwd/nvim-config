@@ -5,36 +5,45 @@ local M = {}
 
 local server_mappings = {
   rust_analyzer = {
-    a = '<cmd>RustEmitAsm<cr>',
-    i = '<cmd>RustToggleInlayHints<cr>',
-    r = '<cmd>RustRunnables<cr>',
-    R = '<cmd>RustReloadWorkspace<cr>',
-    e = '<cmd>RustExpandMacro<cr>',
-    E = '<cmd>RustExpand<cr>',
-    c = '<cmd>RustOpenCargo<cr>',
-    p = '<cmd>RustParentModule<cr>',
-    P = '<cmd>RustPlay<cr>',
-    j = '<cmd>RustMoveItemDown<cr>',
-    k = '<cmd>RustMoveItemUp<cr>',
-    l = '<cmd>RustJoinLines<cr>',
-    s = '<cmd>RustSSR<cr>',
-    d = '<cmd>RustOpenExternalDocs<cr>',
-  }
+    a = { '<cmd>RustEmitAsm<cr>', 'Emit ASM' },
+    i = { '<cmd>RustToggleInlayHints<cr>', 'Toggle Inlay Hints' },
+    r = { '<cmd>RustRunnables<cr>', 'Runnables' },
+    R = { '<cmd>RustReloadWorkspace<cr>', 'Reload Workspace' },
+    e = { '<cmd>RustExpandMacro<cr>', 'Expand Macro' },
+    E = { '<cmd>RustExpand<cr>', 'Expand' },
+    c = { '<cmd>RustOpenCargo<cr>', 'Open Cargo' },
+    p = { '<cmd>RustParentModule<cr>', 'Parent Module' },
+    P = { '<cmd>RustPlay<cr>', 'Play' },
+    j = { '<cmd>RustMoveItemDown<cr>', 'Move Down' },
+    k = { '<cmd>RustMoveItemUp<cr>', 'Move Up' },
+    l = { '<cmd>RustJoinLines<cr>', 'Join Lines' },
+    s = { '<cmd>RustSSR<cr>', 'SSR' },
+    d = { '<cmd>RustOpenExternalDocs<cr>', 'Open Docs' },
+  },
+  clangd = {
+    s = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch Source/Header' },
+  },
 }
 
 function M.setup(bufnr, server)
   local opts = { buffer = bufnr }
+  local wk_present, wk = pcall(require, 'which-key')
 
   if server_mappings[server] then
-    for lhs, rhs in pairs(server_mappings[server]) do
-      nmap('<localleader>' .. lhs, rhs)
+    if wk_present then
+      wk.register(server_mappings[server], { prefix = '<localleader>' })
+    else
+      for lhs, rhs in pairs(server_mappings[server]) do
+        nmap('<localleader>' .. lhs, rhs[0])
+      end
     end
   end
 
   nmap('gD', vim.lsp.buf.declaration, opts)
   nmap('gd', vim.lsp.buf.definition, opts)
-  nmap('K', vim.lsp.buf.hover, opts)
   nmap('gi', vim.lsp.buf.implementation, opts)
+  nmap('gu', vim.lsp.buf.incoming_calls, opts)
+  nmap('K', vim.lsp.buf.hover, opts)
   nmap('gl', function()
     local lens = utils.get_nearest_codelens(0, 0)
     iprint(lens)

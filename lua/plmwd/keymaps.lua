@@ -15,15 +15,25 @@ nmap('?', 'ms?', { silent = false })
 nmap('*', 'ms*N')
 nmap('<bs>', '<c-^>')
 nmap('<esc>', '<cmd>noh<cr>')
-nmap('<c-n>', '<cmd>cnext<cr>zt')
-nmap('<c-p>', '<cmd>cprev<cr>zt')
+nmap('<c-n>', '<cmd>cnext<cr>zz')
+nmap('<c-p>', '<cmd>cprev<cr>zz')
+
+nmap('<leader>1', '1gt')
+nmap('<leader>2', '2gt')
+nmap('<leader>3', '3gt')
+nmap('<leader>4', '4gt')
+nmap('<leader>5', '5gt')
+nmap('<leader>6', '6gt')
+nmap('<leader>7', '7gt')
+nmap('<leader>8', '8gt')
+nmap('<leader>9', '9gt')
 
 nmap('<leader>gg', '<cmd>Neogit<cr>')
 nmap('<leader>gd', '<cmd>DiffviewOpen<cr>')
 nmap('<leader>gD', function()
-  vim.ui.input({ prompt = 'git path: ' }, function(input)
-    vim.cmd('DiffviewOpen ' .. input)
-  end)
+    vim.ui.input({ prompt = 'git path: ' }, function(input)
+        vim.cmd('DiffviewOpen ' .. input)
+    end)
 end)
 
 nmap('<leader>ps', '<cmd>PackerSync<cr>')
@@ -32,9 +42,10 @@ nmap('<leader>pc', '<cmd>PackerCompile<cr>')
 nmap('<leader>cn', '<cmd>Telescope find_files cwd=~/.config/nvim<cr>')
 nmap('<leader>ck', '<cmd>Telescope find_files cwd=~/.config/kitty<cr>')
 
-nmap('<leader>`', '<cmd>NvimTreeFindFile<cr>')
-nmap('<leader>~', '<cmd>NvimTreeFocus<cr>')
-nmap('<leader><tab>', '<cmd>NvimTreeToggle<cr>')
+nmap('<leader>[', '<cmd>NvimTreeFindFile<cr>')
+nmap('<leader>{', function()
+    require('nvim-tree.api').tree.toggle(true, true, vim.fn.getcwd())
+end)
 
 nmap('<leader>ff', '<cmd>Telescope find_files<cr>')
 nmap('<leader>fs', '<cmd>Telescope grep_string<cr>')
@@ -46,37 +57,51 @@ nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
 nmap('<leader>=', '<cmd>Telescope projects<cr>')
 nmap('<leader>/', '<cmd>Telescope live_grep<cr>')
 
+nmap('<leader>]', '<cmd>SymbolsOutline<cr>')
+
+nmap('<leader>wp', '<c-w>p')
+nmap('<leader>wm', '<c-w>|<c-w>_')
+nmap('<leader>w=', '<c-w>=')
+nmap('<leader>wh', '<c-w>h')
+nmap('<leader>wj', '<c-w>j')
+nmap('<leader>wk', '<c-w>k')
+nmap('<leader>wl', '<c-w>l')
+nmap('<leader>wH', '<c-w>H')
+nmap('<leader>wJ', '<c-w>J')
+nmap('<leader>wK', '<c-w>K')
+nmap('<leader>wL', '<c-w>L')
+
 -- Let <leader>tnn toggle the line column and remember if rnu was set
 nmap('<leader>tnn', function()
-  if vim.opt.nu:get() or vim.opt.rnu:get() then
-    vim.g.was_rnu = vim.opt.rnu:get()
-    vim.opt.rnu = false
-    vim.opt.nu = false
-  else
-    vim.opt.rnu = vim.g.was_rnu
-    vim.opt.nu = true
-  end
+    if vim.opt.nu:get() or vim.opt.rnu:get() then
+        vim.g.was_rnu = vim.opt.rnu:get()
+        vim.opt.rnu = false
+        vim.opt.nu = false
+    else
+        vim.opt.rnu = vim.g.was_rnu
+        vim.opt.nu = true
+    end
 end)
 
 -- Toggle rnu if nu is set, else enable rnu and nu since I like seeing the current line number
 nmap('<leader>tnr', function()
-  if vim.opt.nu:get() then
-    vim.opt.rnu = not vim.opt.rnu:get()
-    vim.g.was_rnu = not vim.g.was_rnu
-  else
-    vim.opt.rnu = true
-    vim.opt.nu = true
-    vim.g.was_rnu = true
-  end
+    if vim.opt.nu:get() then
+        vim.opt.rnu = not vim.opt.rnu:get()
+        vim.g.was_rnu = not vim.g.was_rnu
+    else
+        vim.opt.rnu = true
+        vim.opt.nu = true
+        vim.g.was_rnu = true
+    end
 end)
 
 nmap('<leader>tdv', function()
-  local lines_present, lsp_lines = pcall(require, 'lsp_lines')
-  if lines_present then
-    lsp_lines.toggle()
-  else
-    vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-  end
+    local lines_present, lsp_lines = pcall(require, 'lsp_lines')
+    if lines_present then
+        lsp_lines.toggle()
+    else
+        vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+    end
 end)
 
 nmap('<leader>xx', '<cmd>Trouble document_diagnostics<cr>')
@@ -88,8 +113,8 @@ nmap('<leader>tdh', vim.diagnostic.hide)
 nmap('<leader>R', utils.reload)
 
 nmap('<leader>e', function()
-  local file_dir = vim.fn.expand('%:p:h')
-  vim.cmd('Telescope file_browser path=' .. file_dir)
+    local file_dir = vim.fn.expand('%:p:h')
+    vim.cmd('Telescope file_browser path=' .. file_dir)
 end)
 
 tmap('<c-j><c-k>', '<c-\\><c-n>')
