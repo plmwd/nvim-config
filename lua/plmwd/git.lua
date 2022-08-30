@@ -21,7 +21,6 @@ local function git_do(subcmd, opts, args)
 
   opts = opts or {}
   opts = apply_context(opts)
-  iprint(opts)
   local cmd = { 'git', subcmd }
   extend_opts(cmd, opts, args)
   local job_id = opts and vim.fn.jobstart(cmd, opts) or vim.fn.jobstart(cmd)
