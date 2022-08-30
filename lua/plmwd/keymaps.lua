@@ -50,6 +50,7 @@ nmap('<leader>pP', function()
     git.pull({ rebase = true })
     git.commit({ all = true, mes = 'A very creative message' })
     git.push()
+    vim.notify('pushed neovim config')
   end)
 end)
 
