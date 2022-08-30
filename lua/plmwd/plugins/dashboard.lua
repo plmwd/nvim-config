@@ -60,6 +60,6 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function(opts)
     local opts = { buffer = opts.buf, silent = true }
     vim.keymap.set('n', 'q', '<cmd>q<cr>', opts)
-    vim.keymap.set('n', '<leader>`', '<cmd>NvimTreeToggle<cr>', opts)
+    vim.keymap.set('n', '<leader>[', '<cmd>NvimTreeToggle<cr>', opts)
   end
 })
