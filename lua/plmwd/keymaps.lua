@@ -87,6 +87,8 @@ nmap('<leader>wH', '<c-w>H')
 nmap('<leader>wJ', '<c-w>J')
 nmap('<leader>wK', '<c-w>K')
 nmap('<leader>wL', '<c-w>L')
+nmap('<leader>wf', '<c-w>gf')
+nmap('<leader>wF', '<c-w>gF')
 
 -- Let <leader>tnn toggle the line column and remember if rnu was set
 nmap('<leader>tnn', function()
