@@ -38,6 +38,7 @@ opt.belloff = 'all' -- Just turn the dang bell off
 opt.signcolumn = 'yes:1'
 opt.autoread = true
 opt.laststatus = 3
+opt.nu = true
 opt.rnu = true
 
 opt.formatoptions = opt.formatoptions

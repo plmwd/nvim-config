@@ -49,10 +49,10 @@ end)
 
 nmap('<leader>pP', function()
   git.context({ cwd = utils.config_dir }, function()
-    git.pull({ rebase = true })
-    git.commit({ all = true, mes = 'A very creative message' })
-    git.push()
-    vim.notify('pushed neovim config')
+    if not git.pull({ rebase = true }) then return end
+    if not git.commit({ all = true, mes = 'A very creative message' }) then return end
+    if not git.push() then return end
+    vim.notify('Updated Neovim config')
   end)
 end)
 
