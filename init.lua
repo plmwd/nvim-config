@@ -18,4 +18,4 @@ require 'plmwd.plugins'
 require 'plmwd.ui'
 require 'plmwd.ft'
 
-cmd 'silent! colo rose-pine'
+cmd 'silent! colo tokyonight-night'

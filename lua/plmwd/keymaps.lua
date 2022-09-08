@@ -66,6 +66,7 @@ end)
 
 nmap('<leader>ff', '<cmd>Telescope find_files<cr>')
 nmap('<leader>fs', '<cmd>Telescope grep_string<cr>')
+nmap('<leader>fr', '<cmd>Telescope oldfiles<cr>')
 nmap('<leader>fcn', string.format('<cmd>Telescope find_files cwd=%s<cr>', utils.config_dir))
 
 nmap('<leader>bb', '<cmd>Telescope buffers<cr>')
