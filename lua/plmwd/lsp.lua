@@ -1,24 +1,22 @@
-local installer_present, lsp_installer = pcall(require, 'nvim-lsp-installer')
 local lspconfig_present, lspconfig = pcall(require, 'lspconfig')
-local navic_present, navic = pcall(require, 'nvim-navic')
-local lsp_format_present, lsp_format = pcall(require, 'lsp-format')
 
-if not installer_present or not lspconfig_present then
+if not lspconfig_present then
   return
 end
 
 local keymaps = require 'plmwd.keymaps.lsp'
 local lsp_ui = require 'plmwd.ui.lsp'
 local config = require 'plmwd.config'
+local utils = require 'plmwd.utils'
 
-lsp_installer.setup {
+utils.safe_setup('nvim-lsp-installer', {
   automatic_installation = true,
-}
+})
+
 lsp_ui.setup()
 
-if lsp_format_present then
-  lsp_format.setup()
-end
+utils.safe_setup('lsp-format', {})
+utils.safe_setup('lua-dev', {})
 
 local function make_on_attach(server)
   return function(client, bufnr)
@@ -30,13 +28,13 @@ local function make_on_attach(server)
     keymaps.setup(bufnr, server)
     lsp_ui.setup_buffer(client, bufnr)
 
-    if navic_present then
+    utils.safe_setup('nvim-navic', function(navic)
       navic.attach(client, bufnr)
-    end
+    end)
 
-    if lsp_format_present then
+    utils.safe_setup('lsp-format', function(lsp_format)
       lsp_format.on_attach(client)
-    end
+    end)
   end
 end
 

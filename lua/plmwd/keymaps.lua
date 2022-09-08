@@ -143,3 +143,7 @@ tmap('<c-h>', '<c-\\><c-n><c-W>h')
 -- tmap('<c-l>', '<c-\\><c-n><c-W>l')
 
 -- vmap('s', '"zy:Telescope live_grep default_text=<C-r>z<cr>')
+
+
+nmap('<leader>zz', '<cmd>TZAtaraxis<cr>')
+nmap('<leader>zm', '<cmd>TZMinimalist<cr>')

@@ -1,13 +1,5 @@
 local M = {}
 
-local present, lua_dev = pcall(require, 'lua-dev')
-local lua_conf = {}
-if present then
-  lua_conf = lua_dev.setup()
-else
-  lua_conf = {}
-end
-
 local home = vim.loop.os_homedir()
 
 M.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
@@ -35,7 +27,7 @@ M.lsp = {
     texlab = {},
     vimls = {},
     yamlls = {},
-    sumneko_lua = lua_conf,
+    sumneko_lua = {},
     tsserver = {
       on_attach = function(client, _)
         require('nvim-lsp-ts-utils').setup_client(client)

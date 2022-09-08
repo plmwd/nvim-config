@@ -16,5 +16,6 @@ require 'plmwd.options'
 require 'plmwd.keymaps'
 require 'plmwd.plugins'
 require 'plmwd.ui'
+require 'plmwd.ft'
 
-cmd 'silent! colo tokyonight'
+cmd 'silent! colo rose-pine'

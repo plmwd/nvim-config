@@ -20,5 +20,13 @@ utils.safe_setup('incline')
 utils.safe_setup('fidget')
 utils.safe_setup('nvim-autopairs')
 utils.safe_setup('nvim-surround')
+utils.safe_setup('rose-pine', {
+  dark_variant = 'moon',
+})
+utils.safe_setup('true-zen', {
+  integrations = {
+    lualine = true,
+  }
+})
 
 require 'plmwd.ui.statusline'

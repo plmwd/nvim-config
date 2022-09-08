@@ -33,7 +33,7 @@ packer.startup(function(use)
     config = function() require 'plmwd.plugins.dashboard' end,
   }
   use 'NTBBloodbath/rest.nvim'
-  use 'folke/zen-mode.nvim'
+  use 'Pocco81/true-zen.nvim'
   use 'ggandor/leap.nvim'
   use 'baskerville/vim-sxhkdrc'
   use 'elkowar/yuck.vim'
@@ -318,6 +318,7 @@ packer.startup(function(use)
   -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'
   use 'jparise/vim-graphql'
+  use 'ron-rs/ron.vim'
 
   if packer_bootstrap then
     packer.sync()
