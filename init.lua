@@ -11,6 +11,8 @@ g.tokyonight_italic_comments = true
 g.tokyonight_sidebars = { 'terminal' }
 g.tokyonight_dark_float = true
 
+g.catppuccin_flavour = 'mocha'
+
 require 'plmwd.globals'
 require 'plmwd.options'
 require 'plmwd.keymaps'
@@ -18,4 +20,4 @@ require 'plmwd.plugins'
 require 'plmwd.ui'
 require 'plmwd.ft'
 
-cmd 'silent! colo rose-pine'
+cmd 'silent! colo catppuccin'

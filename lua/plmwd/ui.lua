@@ -23,6 +23,7 @@ utils.safe_setup('nvim-surround')
 utils.safe_setup('rose-pine', {
   dark_variant = 'moon',
 })
+utils.safe_setup('catppuccin')
 utils.safe_setup('true-zen', {
   integrations = {
     lualine = true,
