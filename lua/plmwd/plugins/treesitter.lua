@@ -7,7 +7,10 @@ local config = require 'plmwd.config'
 
 treesitter.setup {
   ensure_installed = config.treesitter.ensure_installed,
-  highlight = { enable = true, use_languagetree = true },
+  highlight = { 
+    enable = true,
+    disable = { 'help' },
+  },
   indent = { enable = false },
   autotag = {
     enable = true,

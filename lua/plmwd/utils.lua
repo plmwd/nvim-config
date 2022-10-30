@@ -4,6 +4,9 @@ local M = {}
 
 local function map(modes, lhs, rhs, opts)
   opts = vim.tbl_extend('force', { silent = true }, opts or {})
+  -- if vim.is_callable(rhs) then
+  --   rhs = function() pcall(rhs) end
+  -- end
   vim.keymap.set(modes, lhs, rhs, opts)
 end
 

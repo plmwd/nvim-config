@@ -24,7 +24,6 @@ packer.startup(function(use)
       require('project_nvim').setup({ patterns = require('plmwd.config').project_roots })
     end,
   }
-  use 'feline-nvim/feline.nvim'
   use 'nvim-lualine/lualine.nvim'
   use 'SmiteshP/nvim-navic'
   use 'kyazdani42/nvim-web-devicons'
@@ -34,7 +33,6 @@ packer.startup(function(use)
   }
   use 'NTBBloodbath/rest.nvim'
   use 'Pocco81/true-zen.nvim'
-  use 'ggandor/leap.nvim'
   use 'baskerville/vim-sxhkdrc'
   use 'elkowar/yuck.vim'
   use 'fladson/vim-kitty'
@@ -123,35 +121,15 @@ packer.startup(function(use)
   }
 
   -- LSP
-  use {
-    'williamboman/nvim-lsp-installer',
-    opt = true,
-    cmd = {
-      'LspInfo',
-      'LspStart',
-      'LspRestart',
-      'LspStop',
-      'LspInstall',
-      'LspUnInstall',
-      'LspUnInstallAll',
-      'LspInstall',
-      'LspInstallInfo',
-      'LspInstallLog',
-      'LspLog',
-      'LspPrintInstalled',
-    },
-    setup = function()
-      require('plmwd.utils').on_file_open 'nvim-lsp-installer'
-    end,
-  }
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
 
   use {
     'neovim/nvim-lspconfig',
-    after = 'nvim-lsp-installer',
-    module = 'lspconfig',
+    after = 'cmp-nvim-lsp',
     config = function()
       require 'plmwd.lsp'
-    end,
+    end
   }
 
   use {
@@ -161,19 +139,19 @@ packer.startup(function(use)
   }
 
   use {
-    'hrsh7th/nvim-cmp',
-    after = 'LuaSnip',
-    config = function()
-      require 'plmwd.plugins.cmp'
-    end,
-  }
-
-  use {
     'L3MON4D3/LuaSnip',
     wants = 'friendly-snippets',
     after = 'friendly-snippets',
     config = function()
       require 'plmwd.plugins.luasnip'
+    end,
+  }
+
+  use {
+    'hrsh7th/nvim-cmp',
+    after = 'LuaSnip',
+    config = function()
+      require 'plmwd.plugins.cmp'
     end,
   }
 
@@ -235,7 +213,6 @@ packer.startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'p00f/clangd_extensions.nvim'
   use 'lukas-reineke/lsp-format.nvim'
-  use 'folke/lua-dev.nvim'
   use {
     'simrat39/symbols-outline.nvim',
     config = function()
@@ -300,10 +277,19 @@ packer.startup(function(use)
   use 'b0o/incline.nvim'
   use 'j-hui/fidget.nvim'
   use 'windwp/nvim-autopairs'
-  use 'tpope/vim-surround'
+  use {
+    'kylechui/nvim-surround',
+    config = function()
+      require('nvim-surround').setup()
+    end
+  }
   use 'ellisonleao/glow.nvim'
   use 'mattn/webapi-vim'
+  use 'https://gitlab.com/yorickpeterse/nvim-window'
+
+  -- Lua dev
   use 'bfredl/nvim-luadev'
+  use 'folke/neodev.nvim'
 
   -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'

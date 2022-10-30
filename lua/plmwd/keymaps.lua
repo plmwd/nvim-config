@@ -77,6 +77,7 @@ nmap('<leader>/', '<cmd>Telescope live_grep<cr>')
 
 nmap('<leader>]', '<cmd>SymbolsOutline<cr>')
 
+nmap('<leader>ww', function() require('nvim-window').pick() end)
 nmap('<leader>wp', '<c-w>p')
 nmap('<leader>wm', '<c-w>|<c-w>_')
 nmap('<leader>w=', '<c-w>=')

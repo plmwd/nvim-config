@@ -1,48 +1,40 @@
 local lspconfig_present, lspconfig = pcall(require, 'lspconfig')
 
 if not lspconfig_present then
+  vim.notify('error loading lsp config', vim.log.levels.ERROR)
   return
 end
 
 local keymaps = require 'plmwd.keymaps.lsp'
 local lsp_ui = require 'plmwd.ui.lsp'
 local config = require 'plmwd.config'
-local utils = require 'plmwd.utils'
-
-utils.safe_setup('nvim-lsp-installer', {
-  automatic_installation = true,
-})
 
 lsp_ui.setup()
 
-utils.safe_setup('lsp-format', {})
-utils.safe_setup('lua-dev', {})
+safe_setup('lsp-format')
+safe_setup('neodev')
+safe_setup('mason').next('mason-lspconfig', { automatic_installation = true })
 
-local function make_on_attach(server)
-  return function(client, bufnr)
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local function on_attach(client, bufnr)
+  local server = client.name
 
-    -- Enable completion triggered by <c-x><c-o>
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  keymaps.setup(bufnr, server)
+  lsp_ui.setup_buffer(client, bufnr)
 
-    keymaps.setup(bufnr, server)
-    lsp_ui.setup_buffer(client, bufnr)
+  safe_setup('nvim-navic', function(navic)
+    navic.attach(client, bufnr)
+  end)
 
-    utils.safe_setup('nvim-navic', function(navic)
-      navic.attach(client, bufnr)
-    end)
-
-    utils.safe_setup('lsp-format', function(lsp_format)
-      lsp_format.on_attach(client)
-    end)
-  end
+  safe_setup('lsp-format', function(lsp_format)
+    lsp_format.on_attach(client)
+  end)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+-- spec is a function(client, bufnr) to manually setup server
+-- Or, it's a table to be passed to lspconfig[<server>].setup()
 for server, spec in pairs(config.lsp.servers) do
-  local on_attach = make_on_attach(server)
   if vim.is_callable(spec) then
     spec(on_attach, capabilities)
   else
