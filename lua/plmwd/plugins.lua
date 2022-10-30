@@ -21,7 +21,7 @@ packer.startup(function(use)
   use {
     'ahmedkhalf/project.nvim',
     config = function()
-      require('project_nvim').setup(require('plmwd.config').project_nvim)
+      require('project_nvim').setup({ patterns = require('plmwd.config').project_roots })
     end,
   }
   use 'feline-nvim/feline.nvim'
@@ -72,17 +72,6 @@ packer.startup(function(use)
 
   use {
     'nvim-treesitter/nvim-treesitter',
-    setup = function()
-      require('plmwd.utils').on_file_open 'nvim-treesitter'
-    end,
-    cmd = {
-      "TSInstall",
-      "TSBufEnable",
-      "TSBufDisable",
-      "TSEnable",
-      "TSDisable",
-      "TSModuleInhfo",
-    },
     run = ':TSUpdate',
     config = function()
       require("nvim-treesitter.install").prefer_git = true
@@ -314,6 +303,7 @@ packer.startup(function(use)
   use 'tpope/vim-surround'
   use 'ellisonleao/glow.nvim'
   use 'mattn/webapi-vim'
+  use 'bfredl/nvim-luadev'
 
   -- Syntax highlighting support
   use 'ARM9/arm-syntax-vim'

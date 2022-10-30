@@ -1,11 +1,11 @@
-local M = {}
+local config = {}
 
 local home = vim.loop.os_homedir()
 
-M.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
-M.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
+config.minimal_install = not (vim.fn.getenv('NVIM_MINIMAL_INSTALL') == '0')
+config.do_profile = not (vim.fn.getenv('NVIM_PROFILE') == '0')
 
-M.lsp = {
+config.lsp = {
   signs = {
     Error = '',
     Warn = '',
@@ -71,7 +71,7 @@ M.lsp = {
   },
 }
 
-M.treesitter = {
+config.treesitter = {
   ensure_installed = {
     'tsx',
     'typescript',
@@ -97,25 +97,23 @@ M.treesitter = {
   },
 }
 
-M.project_nvim = {
-  patterns = {
-    '.git',
-    '_darcs',
-    '.hg',
-    '.bzr',
-    '.svn',
-    'Makefile',
-    'package.json',
-    'CMakeLists.txt',
-    'Cargo.toml',
-  }
+config.project_roots = {
+  '.git',
+  '_darcs',
+  '.hg',
+  '.bzr',
+  '.svn',
+  'Makefile',
+  'package.json',
+  'CMakeLists.txt',
+  'Cargo.toml',
 }
 
-M.packer = {
+config.packer = {
   ensure_dependences = true,
   max_jobs = 64,
   profile = {
-    enable = M.do_profile,
+    enable = config.do_profile,
     threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
   },
   display = {
@@ -123,6 +121,6 @@ M.packer = {
   },
 }
 
-M.minimal_plugins = {}
+config.minimal_plugins = {}
 
-return M
+return config

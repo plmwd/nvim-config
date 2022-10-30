@@ -2,7 +2,6 @@ local map = vim.keymap.set
 local utils = require 'plmwd.utils'
 local nmap, tmap, vmap = utils.nmap, utils.tmap, utils.vmap
 local git = require 'plmwd.git'
-local packer = require 'packer'
 
 nmap(':', ';', { silent = false })
 nmap(';', ':', { silent = false })
@@ -42,6 +41,7 @@ end)
 nmap('<leader>ps', '<cmd>PackerSync<cr>')
 nmap('<leader>pc', '<cmd>PackerCompile<cr>')
 nmap('<leader>pp', function()
+  local packer = require 'packer'
   git.pull({ rebase = true, cwd = utils.config_dir })
   vim.notify('pulled neovim config')
   packer.sync()

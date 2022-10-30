@@ -1,2 +1,0 @@
--- require 'plmwd.ft.markdown'
--- require 'plmwd.ft.lua'

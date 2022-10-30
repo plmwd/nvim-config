@@ -17,7 +17,6 @@ require 'plmwd.globals'
 require 'plmwd.options'
 require 'plmwd.keymaps'
 require 'plmwd.plugins'
-require 'plmwd.ui'
-require 'plmwd.ft'
+--require 'plmwd.ui'
 
 cmd 'silent! colo catppuccin'
