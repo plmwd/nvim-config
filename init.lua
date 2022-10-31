@@ -18,5 +18,4 @@ require 'plmwd.options'
 require 'plmwd.keymaps'
 require 'plmwd.plugins'
 require 'plmwd.ui'
-print(vim.opt.winbar:get())
 cmd 'silent! colo catppuccin'
