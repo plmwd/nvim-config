@@ -29,6 +29,7 @@ packer.startup(function(use)
   use 'kyazdani42/nvim-web-devicons'
   use {
     'glepnir/dashboard-nvim',
+    disabled = true,
     config = function() require 'plmwd.plugins.dashboard' end,
   }
   use 'NTBBloodbath/rest.nvim'
@@ -76,6 +77,7 @@ packer.startup(function(use)
       require 'plmwd.plugins.treesitter'
     end,
   }
+  use 'nvim-treesitter/nvim-treesitter-context'
 
   -- Git
   use 'tpope/vim-fugitive'

@@ -1,6 +1,7 @@
 local db = require 'dashboard'
 local home = os.getenv('HOME')
 
+db.hide_winbar = false
 db.custom_center = {
   -- {
   --   icon = '  ',

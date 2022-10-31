@@ -7,7 +7,7 @@ local config = require 'plmwd.config'
 
 treesitter.setup {
   ensure_installed = config.treesitter.ensure_installed,
-  highlight = { 
+  highlight = {
     enable = true,
     disable = { 'help' },
   },

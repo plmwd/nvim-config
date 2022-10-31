@@ -2,6 +2,8 @@ function _G.iprint(...)
   print(vim.inspect(...))
 end
 
+_G.failed_setups = {}
+
 -- TODO: add some kind of error reporting
 function _G.safe_setup(plugin_name, opts_or_fun)
   local plugin_present, plugin = pcall(require, plugin_name)
@@ -13,6 +15,10 @@ function _G.safe_setup(plugin_name, opts_or_fun)
     else
       plugin.setup()
     end
+  elseif _G.failed_setups[plugin_name] then
+    _G.failed_setups[plugin_name] = _G.failed_setups[plugin_name] + 1
+  else
+    _G.failed_setups[plugin_name] = 1
   end
 
   return {

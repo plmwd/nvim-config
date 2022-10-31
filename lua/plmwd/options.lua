@@ -40,6 +40,7 @@ opt.autoread = true
 opt.laststatus = 3
 opt.nu = true
 opt.rnu = true
+opt.winbar = '%f'
 
 opt.formatoptions = opt.formatoptions
     - 'a' -- Auto formatting is BAD.
@@ -50,4 +51,6 @@ opt.formatoptions = opt.formatoptions
     + 'r' -- But do continue when pressing enter.
     + 'n' -- Indent past the formatlistpat, not underneath it.
     + 'j' -- Auto-remove comments if possible.
+    - '2' -- I'm not in gradeschool anymore
+    - '2' -- I'm not in gradeschool anymore
     - '2' -- I'm not in gradeschool anymore

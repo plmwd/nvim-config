@@ -12,22 +12,23 @@ autocmd('TextYankPost', {
   end
 })
 
--- utils.safe_setup('todo-comments')
--- -- utils.safe_setup('notify', function(notify)
--- --   vim.notify = notify
--- -- end)
+utils.safe_setup('todo-comments')
+-- utils.safe_setup('notify', function(notify)
+--   vim.notify = notify
+-- end)
 -- safe_setup('incline')
--- safe_setup('fidget')
--- safe_setup('nvim-autopairs')
--- safe_setup('nvim-surround')
--- safe_setup('rose-pine', {
---   dark_variant = 'moon',
--- })
--- -- utils.safe_setup('catppuccin')
--- safe_setup('true-zen', {
---   integrations = {
---     lualine = true,
---   }
--- })
---
--- require 'plmwd.ui.statusline'
+safe_setup('nvim-autopairs')
+safe_setup('nvim-surround')
+safe_setup('rose-pine', {
+  dark_variant = 'moon',
+})
+-- utils.safe_setup('catppuccin')
+safe_setup('true-zen', {
+  integrations = {
+    lualine = true,
+  }
+})
+
+safe_setup('treesitter-context')
+
+require 'plmwd.ui.statusline'
