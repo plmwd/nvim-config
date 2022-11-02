@@ -12,3 +12,4 @@
 
 ## Features
 - highlight current markdown block #
+- vs code like settings search
