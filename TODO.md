@@ -5,6 +5,8 @@
 - DAP
 
 # Update
+- disable spelling in Man
+- refactor config to use lazy.nvim and organized by function
 
 # Add
 ## Plugins
@@ -13,3 +15,4 @@
 ## Features
 - highlight current markdown block #
 - vs code like settings search
+- Auto delete trailing whitespace on write
