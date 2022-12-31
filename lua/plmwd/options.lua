@@ -41,6 +41,7 @@ opt.laststatus = 3
 opt.nu = true
 opt.rnu = true
 opt.winbar = '%f'
+opt.spell = true
 
 opt.formatoptions = opt.formatoptions
     - 'a' -- Auto formatting is BAD.

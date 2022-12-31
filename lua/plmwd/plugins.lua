@@ -193,6 +193,15 @@ packer.startup(function(use)
   }
 
   use {
+    'saecki/crates.nvim',
+    event = { "BufRead Cargo.toml" },
+    requires = { { 'nvim-lua/plenary.nvim' } },
+    config = function()
+      require 'plmwd.plugins.crates'
+    end,
+  }
+
+  use {
     'numToStr/Comment.nvim',
     module = 'Comment',
     keys = { 'gc', 'gb ' },

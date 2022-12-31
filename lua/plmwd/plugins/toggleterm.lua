@@ -14,6 +14,11 @@ toggleterm.setup {
     end
   end,
   open_mapping = [[<c-\>]],
+  on_create = function(term)
+    if vim.o.lines * 2 > vim.o.columns then
+      term.direction = "horizontal"
+    end
+  end,
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
   shade_terminals = true,
@@ -21,7 +26,7 @@ toggleterm.setup {
   start_in_insert = true,
   insert_mappings = true, -- whether or not the open mapping applies in insert mode
   persist_size = true,
-  direction = 'vertical',
+  direction = 'horizontal',
   close_on_exit = true, -- close the terminal window when the process exits
   shell = vim.o.shell, -- change the default shell
   -- This field is only relevant if direction is set to 'float'
