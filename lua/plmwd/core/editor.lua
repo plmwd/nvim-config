@@ -218,9 +218,7 @@ return {
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = {
-                    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release',
-                    'cmake --build build --config Release',
-                    'cmake --install build --prefix build'
+                    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
                 }
             },
         },
@@ -271,8 +269,9 @@ return {
                 previewer = false,
             },
         },
-        config = function()
+        config = function(_, opts)
             local telescope = require('telescope')
+            telescope.setup(opts)
             telescope.load_extension 'fzf'
             telescope.load_extension 'projects'
             telescope.load_extension 'media_files'

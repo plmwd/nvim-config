@@ -175,16 +175,22 @@ return {
                         key = 'f',
                     },
                     {
-                        desc = ' Apps',
-                        group = 'DiagnosticHint',
-                        action = 'Telescope app',
+                        desc = ' Projects',
+                        group = 'Keyword',
+                        action = 'Telescope projects',
                         key = 'a',
                     },
                     {
                         desc = ' dotfiles',
                         group = 'Number',
-                        action = 'Telescope dotfiles',
+                        action = 'Telescope find_files cwd=~/.config',
                         key = 'd',
+                    },
+                    {
+                        desc = ' git branches',
+                        group = 'Character',
+                        action = 'Telescope git_branches',
+                        key = 'g',
                     },
                     {
                         desc = '󰗼 exit',

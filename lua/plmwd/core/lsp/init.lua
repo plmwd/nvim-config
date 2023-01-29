@@ -97,11 +97,6 @@ return {
                 -- end,
                 -- Specify * to use this function as a fallback for any server
                 -- ["*"] = function(server, opts) end,
-                tsserver = function(client, _)
-                    require('nvim-lsp-ts-utils').setup_client(client)
-                    return true
-                end
-                ,
                 clangd = function(_, opts)
                     require('clangd_extensions').setup {
                         server = {
