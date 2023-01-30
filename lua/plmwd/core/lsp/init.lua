@@ -53,6 +53,17 @@ return {
                 gopls = {},
                 html = {},
                 pyright = {},
+                pylsp = {
+                    settings = {
+                        pylsp = {
+                            plugins = {
+                                pycodestyle = {
+                                    maxLineLength = 99,
+                                },
+                            },
+                        },
+                    },
+                },
                 terraformls = {},
                 texlab = {},
                 vimls = {},
