@@ -24,3 +24,7 @@
 - Automatically add unimplemented methods when implementing trait for struct
 - bdelete doesn't close vim if last open window
 - automatically delete nvim config buffers when opening files with an already set project root
+
+# Config Options
+- debugpy location
+- debug adapters/config (launch.json)
