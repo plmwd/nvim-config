@@ -65,7 +65,7 @@ vim.keymap.set('n', '<leader>[', '<cmd>NvimTreeFindFile<cr>')
 vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
 vim.keymap.set('n', '<leader>fs', '<cmd>Telescope grep_string<cr>')
 vim.keymap.set('n', '<leader>fr', '<cmd>Telescope oldfiles<cr>')
-vim.keymap.set('n', '<leader>fcn', string.format('<cmd>Telescope find_files cwd=%s<cr>', utils.config_dir))
+-- vim.keymap.set('n', '<leader>fcn', string.format('<cmd>Telescope find_files cwd=%s<cr>', ))
 
 vim.keymap.set('n', '<leader>bb', '<cmd>Telescope buffers<cr>')
 -- vim.keymap.set('n', '<leader>bp',)

@@ -137,6 +137,7 @@ return {
                 require('plmwd.core.lsp.keymaps').on_attach(client, bufnr)
                 require('plmwd.core.lsp.ui').on_attach(client, bufnr)
                 require('plmwd.core.lsp.format').on_attach(client, bufnr)
+                client.server_capabilities.semanticTokensProvider = nil
             end)
 
             -- diagnostics
