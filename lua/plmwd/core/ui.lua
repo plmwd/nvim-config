@@ -1,52 +1,3 @@
--- Setup custom UI
-local function tab_name(tab)
-    return string.gsub(tab, "%[..%]", "")
-end
-
-local function tab_modified(tab)
-    local wins = require("tabby.module.api").get_tab_wins(tab)
-    for i, x in pairs(wins) do
-        if vim.bo[vim.api.nvim_win_get_buf(x)].modified then
-            return ""
-        end
-    end
-    return ""
-end
-
-local function lsp_diag(buf)
-    local diagnostics = vim.diagnostic.get(buf)
-    local count = { 0, 0, 0, 0 }
-
-    for _, diagnostic in ipairs(diagnostics) do
-        count[diagnostic.severity] = count[diagnostic.severity] + 1
-    end
-    if count[1] > 0 then
-        return vim.bo[buf].modified and "" or ""
-    elseif count[2] > 0 then
-        return vim.bo[buf].modified and "" or ""
-    end
-    return vim.bo[buf].modified and "" or ""
-end
-
-local function get_modified(buf)
-    if vim.bo[buf].modified then
-        return ''
-    else
-        return ''
-    end
-end
-
-local function buffer_name(buf)
-    if string.find(buf, "NvimTree") then
-        return "NvimTree"
-    end
-    return buf
-end
-
-local function get_time_str()
-    return os.date('%Y-%m-%d %H:%M:%S')
-end
-
 ---@diagnostic disable-next-line
 local heavy_breathing = vim.split([[
 
@@ -78,10 +29,10 @@ local heavy_breathing = vim.split([[
 
 -- Chose dashboard header hear and add some other stuff to it
 local dash_header = heavy_breathing
-table.insert(dash_header, get_time_str())
 
 -- Return plugin UI
 return {
+    { 'nvim-lualine/lualine.nvim', name = 'lualine', lazy = false },
     'Pocco81/true-zen.nvim',
     'rcarriga/nvim-notify',
     'j-hui/fidget.nvim',
@@ -141,19 +92,6 @@ return {
             show_trailing_blankline_indent = false,
             show_first_indent_level = false,
         }
-    },
-    {
-        'windwp/windline.nvim',
-        config = function()
-            require('wlsample.bubble')
-        end
-    },
-    {
-        'nanozuki/tabby.nvim',
-        opts = {},
-        config = function(_, opts)
-            require('tabby.tabline').use_preset('active_wins_at_tail')
-        end,
     },
     {
         'glepnir/dashboard-nvim',
