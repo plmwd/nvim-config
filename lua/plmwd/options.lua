@@ -66,3 +66,6 @@ opt.listchars = {
 }
 opt.sessionoptions = 'buffers,curdir,folds,globals,localoptions,options,tabpages,winpos,winsize'
 opt.shortmess:append { W = true, m = true }
+opt.exrc = true
+vim.g.trim_trailing_whitespace = true
+vim.g.trim_empty_eof_lines = true

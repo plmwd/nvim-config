@@ -20,26 +20,6 @@ local config = require('plmwd.config')
 --     end,
 -- }
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-    callback = function()
-        local cursor_pos = vim.api.nvim_win_get_cursor(0)
-
-        -- delete trailing whitespace
-        vim.cmd([[:keepjumps keeppatterns %s/\s\+$//e]])
-
-        -- delete lines @ eof
-        vim.cmd([[:keepjumps keeppatterns silent! 0;/^\%(\n*.\)\@!/,$d_]])
-
-        local num_rows = vim.api.nvim_buf_line_count(0)
-
-        if cursor_pos[1] > num_rows then
-            cursor_pos[1] = num_rows
-        end
-
-        vim.api.nvim_win_set_cursor(0, cursor_pos)
-    end,
-})
-
 return {
     'norcalli/nvim-colorizer.lua',
     'tpope/vim-fugitive',
@@ -56,7 +36,15 @@ return {
             end)
         end
     },
-    'ThePrimeagen/harpoon',
+    {
+        'ThePrimeagen/harpoon',
+        keys = {
+            { '<leader>h', function() require('harpoon.ui').toggle_quick_menu() end },
+            { '<leader>H', function() require('harpoon.mark').add_file() end },
+            { '<leader>[', function() require('harpoon.ui').nav_prev() end },
+            { '<leader>]', function() require('harpoon.ui').nav_next() end },
+        }
+    },
     {
         'm-demare/hlargs.nvim',
         dependencies = 'nvim-treesitter',
@@ -73,17 +61,8 @@ return {
         }
     },
     {
-        'nvim-neorg/neorg',
-        dependencies = {
-            'nvim-treesitter',
-        },
-        opts = {
-            load = { ['core.defaults'] = {} }
-        }
-    },
-    {
         'TimUntersberger/neogit',
-        lazy = false,
+        lazy = true,
         dependencies = {
             'nvim-lua/plenary.nvim',
             {
@@ -130,13 +109,13 @@ return {
             hide_numbers = true, -- hide the number column in toggleterm buffers
             shade_filetypes = {},
             shade_terminals = true,
-            shading_factor = 3, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+            shading_factor = 3,     -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
             start_in_insert = true,
             insert_mappings = true, -- whether or not the open mapping applies in insert mode
             persist_size = true,
             direction = 'horizontal',
             close_on_exit = true, -- close the terminal window when the process exits
-            shell = vim.o.shell, -- change the default shell
+            shell = vim.o.shell,  -- change the default shell
             -- This field is only relevant if direction is set to 'float'
             float_opts = {
                 -- The border key is *almost* the same as 'nvim_open_win'

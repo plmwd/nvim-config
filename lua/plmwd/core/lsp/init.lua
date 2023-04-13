@@ -17,8 +17,8 @@ return {
         "neovim/nvim-lspconfig",
         event = "BufReadPre",
         dependencies = {
-            { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-            { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
+            { "folke/neoconf.nvim", cmd = "Neoconf",                                config = true },
+            { "folke/neodev.nvim",  opts = { experimental = { pathStrict = true } } },
             "mason.nvim",
             'lukas-reineke/lsp-format.nvim',
             "williamboman/mason-lspconfig.nvim",
@@ -137,7 +137,7 @@ return {
                 require('plmwd.core.lsp.keymaps').on_attach(client, bufnr)
                 require('plmwd.core.lsp.ui').on_attach(client, bufnr)
                 require('plmwd.core.lsp.format').on_attach(client, bufnr)
-                client.server_capabilities.semanticTokensProvider = nil
+                -- client.server_capabilities.semanticTokensProvider = nil
             end)
 
             -- diagnostics
@@ -167,7 +167,6 @@ return {
         end,
     },
     {
-
         "williamboman/mason.nvim",
         cmd = "Mason",
         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },

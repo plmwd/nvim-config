@@ -15,17 +15,23 @@ return {
     'shaunsingh/nord.nvim',
     'mangeshrex/uwu.vim',
     'rebelot/kanagawa.nvim',
-    'projekt0n/github-nvim-theme',
     {
-        'catppuccin/nvim', name = 'catppuccin',
+        'projekt0n/github-nvim-theme',
+        lazy = false,
+        tag = 'v0.0.7',
+        priority = 1000,
+        config = function()
+            require('github-theme').setup()
+        end
+    },
+    {
+        'catppuccin/nvim',
+        name = 'catppuccin',
         lazy = false,
         priority = 1000,
         opts = {
             dark_variant = 'moon'
         },
-        config = function()
-            vim.cmd.colorscheme('catppuccin-frappe')
-        end
     },
     { 'rose-pine/neovim', name = 'rose-pine' },
     'AlexvZyl/nordic.nvim'

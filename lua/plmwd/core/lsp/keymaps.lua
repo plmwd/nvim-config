@@ -24,7 +24,7 @@ local server_mappings = {
 }
 
 function M.on_attach(client, bufnr)
-    local opts = { buffer = bufnr }
+    local opts = { buffer = true }
     local wk_present, wk = pcall(require, 'which-key')
     local server = client.name
 
@@ -38,7 +38,7 @@ function M.on_attach(client, bufnr)
         end
     end
 
-    vim.keymap.set('n', '<leader>s', 'Telescope lsp_document_symbols', opts)
+    vim.keymap.set('n', '<leader>s', '<cmd>Telescope lsp_document_symbols symbol_width=100 theme=ivy<cr>', opts)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
@@ -53,7 +53,7 @@ function M.on_attach(client, bufnr)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<leader>bf', '<cmd>Format<cr>', opts)
+    vim.keymap.set('n', '<leader>=', '<cmd>Format<cr>', opts)
 end
 
 return M

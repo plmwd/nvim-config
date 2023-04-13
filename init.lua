@@ -14,9 +14,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 math.randomseed(vim.fn.localtime())
 
+vim.loader.enable()
+
 require 'plmwd.options'
 require 'plmwd.keymaps'
 require 'plmwd.autocmds'
 
 -- colorscheme in plmwd.core.colorscheme
 require('lazy').setup('plmwd.core')
+
+vim.cmd.colo('github_dark_default')

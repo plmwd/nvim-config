@@ -35,3 +35,34 @@ vim.api.nvim_create_autocmd('BufEnter', {
         vim.bo.spell = false
     end
 })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function()
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+        -- delete trailing whitespace
+        if vim.g.trim_trailing_whitespace then
+            vim.cmd([[:keepjumps keeppatterns %s/\s\+$//e]])
+        end
+
+        -- delete lines @ eof
+        if vim.g.trim_empty_eof_lines then
+            vim.cmd([[:keepjumps keeppatterns silent! 0;/^\%(\n*.\)\@!/,$d_]])
+        end
+
+        local num_rows = vim.api.nvim_buf_line_count(0)
+
+        if cursor_pos[1] > num_rows then
+            cursor_pos[1] = num_rows
+        end
+
+        vim.api.nvim_win_set_cursor(0, cursor_pos)
+    end,
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+    pattern = { '.nvim.lua' },
+    callback = function(event)
+        vim.bo[event.buf].bufhidden = 'hide'
+    end
+})

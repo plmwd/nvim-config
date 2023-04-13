@@ -32,7 +32,7 @@ local dash_header = heavy_breathing
 
 -- Return plugin UI
 return {
-    { 'nvim-lualine/lualine.nvim', name = 'lualine', lazy = false },
+    { 'nvim-lualine/lualine.nvim', name = 'lualine', lazy = false, config = function() require('lualine').setup() end },
     'Pocco81/true-zen.nvim',
     'rcarriga/nvim-notify',
     'j-hui/fidget.nvim',
@@ -65,8 +65,8 @@ return {
             -- you can enable a preset for easier configuration
             presets = {
                 long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = true, -- add a border to hover docs and signature help
+                inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = true,        -- add a border to hover docs and signature help
             },
         }
     },
@@ -138,7 +138,6 @@ return {
                     },
                 },
                 header = dash_header,
-
                 -- Inspirational quote
                 footer = { '', require('plmwd.quotes').random() }
             }
