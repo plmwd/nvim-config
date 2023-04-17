@@ -4,6 +4,9 @@ local augroup = function(name) vim.api.nvim_create_augroup(name, { clear = true 
 local M = {}
 
 function M.on_attach(client, bufnr)
+    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+        vim.api.nvim_set_hl(0, group, {})
+    end
     if client.server_capabilities.document_highlight then
         local lsp_hl_group = augroup('lsp_document_highlight')
         autocmd('CursorHold', {

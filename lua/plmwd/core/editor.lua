@@ -25,7 +25,10 @@ return {
     'tpope/vim-fugitive',
     'lewis6991/gitsigns.nvim',
     'rest-nvim/rest.nvim',
-    'numToStr/Comment.nvim',
+    {
+        'numToStr/Comment.nvim',
+        config = function() require('Comment').setup() end,
+    },
     {
         'lukas-reineke/lsp-format.nvim',
         opts = {},
@@ -42,7 +45,11 @@ return {
             { '<leader>h', function() require('harpoon.ui').toggle_quick_menu() end },
             { '<leader>H', function() require('harpoon.mark').add_file() end },
             { '<leader>[', function() require('harpoon.ui').nav_prev() end },
-            { '<leader>]', function() require('harpoon.ui').nav_next() end },
+            { '<leader>1', function() require('harpoon.ui').nav_file(1) end },
+            { '<leader>2', function() require('harpoon.ui').nav_file(2) end },
+            { '<leader>3', function() require('harpoon.ui').nav_file(3) end },
+            { '<leader>4', function() require('harpoon.ui').nav_file(4) end },
+            { '<leader>5', function() require('harpoon.ui').nav_file(5) end },
         }
     },
     {
@@ -63,24 +70,30 @@ return {
     {
         'TimUntersberger/neogit',
         lazy = true,
+        cmd = 'Neogit',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            {
-                'sindrets/diffview.nvim',
-                opts = {
-                    enhanced_diff_hl = true,
-                    keymaps = {
-                        view = {
-                            ['q'] = '<cmd>tabclose<cr>',
-                        },
-                        file_panel = {
-                            ['q'] = '<cmd>tabclose<cr>',
-                        },
-                    },
-                }
-            },
+            'sindrets/diffview.nvim',
         },
-        opts = {}
+        opts = {
+            integrations = {
+                diffview = true,
+            }
+        }
+    },
+    {
+        'sindrets/diffview.nvim',
+        opts = {
+            enhanced_diff_hl = true,
+            keymaps = {
+                view = {
+                    ['q'] = '<cmd>tabclose<cr>',
+                },
+                file_panel = {
+                    ['q'] = '<cmd>tabclose<cr>',
+                },
+            },
+        }
     },
     {
         'folke/todo-comments.nvim',
