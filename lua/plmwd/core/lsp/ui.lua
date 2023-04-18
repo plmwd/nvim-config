@@ -7,7 +7,7 @@ function M.on_attach(client, bufnr)
     for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
         vim.api.nvim_set_hl(0, group, {})
     end
-    if client.server_capabilities.document_highlight then
+    if client.server_capabilities.documentHighlightProvider then
         local lsp_hl_group = augroup('lsp_document_highlight')
         autocmd('CursorHold', {
             group = lsp_hl_group,
@@ -21,7 +21,7 @@ function M.on_attach(client, bufnr)
         })
     end
 
-    if client.server_capabilities.code_lens then
+    if client.server_capabilities.codeLensProvider then
         local codelens_group = augroup('lsp_codelens')
         autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
             group = codelens_group,
