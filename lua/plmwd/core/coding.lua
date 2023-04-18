@@ -1,11 +1,13 @@
 return {
     'kylechui/nvim-surround',
-    { 'windwp/nvim-autopairs',
+    {
+        'windwp/nvim-autopairs',
         opts = {
             disable_filetype = { "TelescopePrompt", "vim" }
         }
     },
-    { "L3MON4D3/LuaSnip",
+    {
+        "L3MON4D3/LuaSnip",
         dependencies = {
             "rafamadriz/friendly-snippets",
             config = function()
@@ -23,13 +25,29 @@ return {
                 function()
                     return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
                 end,
-                expr = true, silent = true, mode = "i",
+                expr = true,
+                silent = true,
+                mode = "i",
             },
-            { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
+            { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
             { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
+        config = function(_, opts)
+            local ls = require("luasnip")
+            ls.setup(opts)
+            local s = ls.snippet
+            local sn = ls.snippet_node
+            local t = ls.text_node
+
+            ls.add_snippets("markdown", {
+                s("today", {
+                    t("# " .. os.date("%a %B %d, %Y"))
+                })
+            })
+        end,
     },
-    { "hrsh7th/nvim-cmp",
+    {
+        "hrsh7th/nvim-cmp",
         version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {

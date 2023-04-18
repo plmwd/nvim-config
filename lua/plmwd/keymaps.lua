@@ -69,29 +69,8 @@ vim.keymap.set('n', '<leader>/', '<cmd>Telescope live_grep<cr>')
 
 vim.keymap.set('n', '<leader>W', function() require('nvim-window').pick() end)
 vim.keymap.set('n', '<leader>n', '<cmd>Telescope file_browser cwd=~/notes depth=false<cr>')
-
--- Let <leader>tnn toggle the line column and remember if rnu was set
-vim.keymap.set('n', '<leader>tnn', function()
-    if vim.opt.nu:get() or vim.opt.rnu:get() then
-        vim.g.was_rnu = vim.opt.rnu:get()
-        vim.opt.rnu = false
-        vim.opt.nu = false
-    else
-        vim.opt.rnu = vim.g.was_rnu
-        vim.opt.nu = true
-    end
-end)
-
--- Toggle rnu if nu is set, else enable rnu and nu since I like seeing the current line number
-vim.keymap.set('n', '<leader>tnr', function()
-    if vim.opt.nu:get() then
-        vim.opt.rnu = not vim.opt.rnu:get()
-        vim.g.was_rnu = not vim.g.was_rnu
-    else
-        vim.opt.rnu = true
-        vim.opt.nu = true
-        vim.g.was_rnu = true
-    end
+vim.keymap.set('n', '<leader>N', function()
+    vim.cmd.tabe('~/notes/daily.md')
 end)
 
 vim.keymap.set('n', '<leader>tdv', function()
@@ -101,7 +80,7 @@ vim.keymap.set('n', '<leader>tdv', function()
     else
         vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
     end
-end)
+end, { desc = 'Toggle LSP lines' })
 
 vim.keymap.set('n', '<leader>xx', '<cmd>Trouble document_diagnostics<cr>')
 vim.keymap.set('n', '<leader>xw', '<cmd>Trouble workspace_diagnostics<cr>')
