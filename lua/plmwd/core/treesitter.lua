@@ -12,8 +12,8 @@ return {
             indent = { enable = false },
             context_commentstring = { enable = true, enable_autocmd = false },
             ensure_installed = {
+                "vimdoc",
                 "bash",
-                "help",
                 "html",
                 "javascript",
                 "json",
