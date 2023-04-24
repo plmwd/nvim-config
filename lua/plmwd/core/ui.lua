@@ -1,7 +1,6 @@
 ---@diagnostic disable-next-line
 local heavy_breathing = vim.split([[
 
-
     ▄▀▀▄                ▄▀▀▄
      ▐▒▒▒▒▌              ▌▒▒▒▒▌
      ▌▒▒▒▒▐▄▄▄▄▄▀▀▀▀▄▄▄▄▐▒▒▒▒▒▐
@@ -95,11 +94,13 @@ return {
     },
     {
         'glepnir/dashboard-nvim',
-        event = 'VimEnter',
+        -- event = 'VimEnter',
         dependencies = { 'nvim-web-devicons' },
         opts = {
             theme = 'hyper',
             config = {
+                project = { limit = 4 },
+                mru = { limit = 4 },
                 week_header = {
                     enable = false,
                     concat = true,

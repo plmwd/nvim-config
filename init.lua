@@ -23,4 +23,4 @@ require 'plmwd.autocmds'
 -- colorscheme in plmwd.core.colorscheme
 require('lazy').setup('plmwd.core')
 
-vim.cmd.colo('github_dark_default')
+vim.cmd.colo('tokyonight-night')

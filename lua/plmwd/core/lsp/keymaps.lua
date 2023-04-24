@@ -39,6 +39,7 @@ function M.on_attach(client, bufnr)
     end
 
     vim.keymap.set('n', '<leader>s', '<cmd>Telescope lsp_document_symbols symbol_width=100 theme=ivy<cr>', opts)
+    vim.keymap.set('n', '<leader>S', '<cmd>Telescope lsp_workspace_symbols symbol_width=100 theme=ivy<cr>', opts)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
