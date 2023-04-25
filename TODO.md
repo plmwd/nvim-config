@@ -28,3 +28,7 @@
 # Config Options
 - debugpy location
 - debug adapters/config (launch.json)
+
+
+- add gpt4
+- add copilot ?

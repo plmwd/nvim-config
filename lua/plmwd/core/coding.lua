@@ -154,6 +154,8 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-nvim-lsp-document-symbol",
         },
         opts = function()
             local cmp = require("cmp")
@@ -239,10 +241,24 @@ return {
                     end),
                 }),
                 sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                    { name = "buffer" },
+                    {
+                        name = "nvim_lsp",
+                        entry_filter = function(entry, ctx)
+                            local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
+                            if kind == "Text" then
+                                return false
+                            end
+                            return true
+                        end,
+                    },
                     { name = "path" },
+                    { name = "luasnip" },
+                    { name = "nvim_lua" },
+                    { name = "buffer" },
+                    { name = "calc" },
+                    { name = "emoji" },
+                    { name = "treesitter" },
+                    { name = "crates" },
                 }),
                 experimental = {
                     ghost_text = {
@@ -256,6 +272,13 @@ return {
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             cmp.setup(opts)
             cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+            cmp.setup.cmdline({ '/', '?' }, {
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp_document_symbol' }
+                }, {
+                    { name = 'buffer' }
+                })
+            })
         end
     },
 }

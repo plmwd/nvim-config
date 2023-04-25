@@ -1,7 +1,7 @@
 vim.g.tokyonight_style = "night"
 vim.g.tokyonight_italic_functions = true
 vim.g.dashboard_default_executive = "telescope"
-vim.g.material_style = "darker"
+vim.g.material_style = "deep ocean"
 vim.g.rose_pine_variant = "moon"
 vim.g.rose_pine_disable_italics = false
 
