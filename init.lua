@@ -1,6 +1,6 @@
 vim.g.mapleader = ","
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system {
     "git",
@@ -19,4 +19,4 @@ vim.opt.rtp:prepend(lazypath)
 -- Set up lazy, and load my `lua/custom/plugins/` folder
 require("lazy").setup { import = "custom/plugins" }
 
-vim.cmd.colorscheme "duskfox"
+vim.cmd.colorscheme "rose-pine"

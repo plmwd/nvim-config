@@ -7,6 +7,9 @@ opt.ignorecase = true
 opt.number = true
 opt.relativenumber = true
 
+-- One global status line
+opt.laststatus = 3
+
 opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
@@ -20,15 +23,14 @@ opt.signcolumn = "yes"
 
 opt.clipboard = "unnamedplus"
 
-
 -- ignored when expanding wildcards
 opt.wildignore = {
-    '__pycache__',
-    '*.o',
-    '*~',
-    '*.pyc',
-    '*pycache*',
-    '**/node_modules/*',
+  "__pycache__",
+  "*.o",
+  "*~",
+  "*.pyc",
+  "*pycache*",
+  "**/node_modules/*",
 }
 opt.wildignorecase = true
 
@@ -46,4 +48,4 @@ opt.confirm = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
